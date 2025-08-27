@@ -1,13 +1,15 @@
 ---
-title: "Paper Title Number 4"
+title: "Effects of biochar application on the loss characteristics of Cd from acidic soil under simulated rainfall conditions"
 collection: publications
-category: conferences
-permalink: /publication/2024-02-17-paper-title-number-4
-excerpt: 'This paper is about fixing template issue #693.'
-date: 2024-02-17
-venue: 'GitHub Journal of Bugs'
-paperurl: 'http://academicpages.github.io/files/paper3.pdf'
-citation: 'Your Name, You. (2024). &quot;Paper Title Number 3.&quot; <i>GitHub Journal of Bugs</i>. 1(3).'
+category: manuscripts
+permalink: /publication/2022-07-01-biochar-cd-loss
+excerpt: 'This study investigated the effects of biochar application on Cd loss characteristics in acidic soil under simulated rainfall, showing that appropriate biochar addition can reduce Cd mobility but excessive application may aggravate erosion and Cd loss.'
+date: 2022-07-01
+venue: 'Environmental Science and Pollution Research'
+slidesurl: ''
+paperurl: 'https://doi.org/10.1007/s11356-022-21623-x'
+bibtexurl: ''
+citation: 'Yuan, Zaijian, Song, Yueyan, Li, Dingqiang, Huang, Bin, Zheng, Mingguo, Liao, Yishan, Xie, Zhenyue, Chen, Yunhui, **Ge Xiaojun**. (2022). "Effects of biochar application on the loss characteristics of Cd from acidic soil under simulated rainfall conditions." <i>Environmental Science and Pollution Research</i>. 29: 83969–83980. https://doi.org/10.1007/s11356-022-21623-x'
 ---
 
 The contents above will be part of a list of publications, if the user clicks the link for the publication than the contents of section will be rendered as a full page, allowing you to provide more information about the paper for the reader. When publications are displayed as a single page, the contents of the above "citation" field will automatically be included below this section in a smaller font.
