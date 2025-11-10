@@ -9,11 +9,14 @@ redirect_from:
 
 I hold an M.S. in Environmental Science & Engineering from [South China Normal University](https://www.scnu.edu.cn/). I am currently a researcher at [Guangxi Research Institute of Metrology & Test](http://www.gxjl.cn/), specializing in **quantitative measurement and uncertainty analysis of forest/agricultural carbon sinks**.
 
+
 My research expertise encompasses **soil-ecosystem material cycling processes and regulatory mechanisms**, with demonstrated experience in:
 - Soil nutrient cycling and coupling mechanisms
 - Solute transport and soil-water processes
 - Ecosystem carbon budget quantification and uncertainty analysis
 - Nutrient-carbon cycling synergy and optimized management
+
+
 
 I am very fotunate to be advised by:
 - [**Dr. Xianli Xu**](https://www.researchgate.net/profile/Xianli-Xu) from [*Institute of Subtropical Agriculture*](https://www.isa.cas.cn/sourcedb/zw/zjrc/202012/t20201222_5873088.html), Chinese Academy of Sciences.
