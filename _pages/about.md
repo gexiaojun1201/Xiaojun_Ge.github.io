@@ -7,7 +7,7 @@ redirect_from:
   - /about.html
 ---
 
-I'm a third year undergraduate sutdent from [South China Normal University](https://www.scnu.edu.cn/). Now I am work at [Guangxi Research Institute of Metrology & Test](https://www.scnu.edu.cn/) focus on *metrology of forest/agricultrual carbon sink*
+I hold an M.S. in Environmental Science & Engineering from [South China Normal University](https://www.scnu.edu.cn/). I am currently a researcher at [Guangxi Research Institute of Metrology & Test](http://www.gxjl.cn/), specializing in **quantitative measurement and uncertainty analysis of forest/agricultural carbon sinks**.
 
 My research expertise encompasses **soil-ecosystem material cycling processes and regulatory mechanisms**, with demonstrated experience in:
 - Soil nutrient cycling and coupling mechanisms
