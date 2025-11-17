@@ -1,47 +1,33 @@
+---
+layout: archive
+title: "Publications"
+permalink: /publications/
+author_profile: true
+---
+
+{% if site.author.googlescholar %}
+  <div class="wordwrap">You can also find my articles on <a href="{{site.author.googlescholar}}">my Google Scholar profile</a>.</div>
+{% endif %}
+
 {% include base_path %}
 
-{% if post.header.teaser %}
-  {% capture teaser %}{{ post.header.teaser }}{% endcapture %}
-{% else %}
-  {% assign teaser = site.teaser %}
-{% endif %}
-
-{% if post.id %}
-  {% assign title = post.title | markdownify | remove: "<p>" | remove: "</p>" %}
-{% else %}
-  {% assign title = post.title %}
-{% endif %}
-
-<div class="{{ include.type | default: 'list' }}__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      {% if post.link %}
-        <a href="{{ post.link }}">{{ title }}</a> <a href="{{ base_path }}{{ post.url }}" rel="permalink"><i class="fa fa-link" aria-hidden="true" title="permalink"></i><span class="sr-only">Permalink</span></a>
-      {% else %}
-        <a href="{{ base_path }}{{ post.url }}" rel="permalink">{{ title }}</a>
+<!-- New style rendering if publication categories are defined -->
+{% if site.publication_category %}
+  {% for category in site.publication_category  %}
+    {% assign title_shown = false %}
+    {% for post in site.publications reversed %}
+      {% if post.category != category[0] %}
+        {% continue %}
       {% endif %}
-    </h2>
-    
-    {% if post.status %}
-      <p class="page__meta"><strong>Status:</strong> {{ post.status }}</p>
-    {% endif %}
-    
-    {% if post.authors %}
-      <p class="page__meta"><strong>Authors:</strong> {{ post.authors | markdownify | remove: '<p>' | remove: '</p>' }}</p>
-    {% endif %}
-    
-    {% if post.excerpt %}
-      <p class="archive__item-excerpt" itemprop="description">{{ post.excerpt | markdownify | strip_html | truncate: 300 }}</p>
-    {% endif %}
-    
-    {% if post.paperurl %}
-      <p class="page__meta"><strong>DOI:</strong> <a href="{{ post.paperurl }}" target="_blank">{{ post.paperurl }}</a></p>
-    {% endif %}
-    
-    {% if post.venue %}
-      <p class="archive__item-venue"><em>{{ post.venue }}</em>, {{ post.date | date: "%Y" }}</p>
-    {% endif %}
-    
-  </article>
-</div>
+      {% unless title_shown %}
+        <h2>{{ category[1].title }}</h2><hr />
+        {% assign title_shown = true %}
+      {% endunless %}
+      {% include archive-single.html %}
+    {% endfor %}
+  {% endfor %}
+{% else %}
+  {% for post in site.publications reversed %}
+    {% include archive-single.html %}
+  {% endfor %}
+{% endif %}
