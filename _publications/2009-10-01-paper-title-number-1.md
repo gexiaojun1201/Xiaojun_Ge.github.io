@@ -2,7 +2,6 @@
 title: "Risk and driving factors of nitrogen and phosphorus runoff losses under extreme rainfall conditions: sludge application strategies in forest soils"
 collection: publications
 category: manuscripts
-permalink: /publication/2025-sludge-nitrogen-phosphorus-runoff
 date: 2025-11-01
 venue: 'CATENA'
 status: 'Published'  # 或 'In Press', 'Under Review' 等
