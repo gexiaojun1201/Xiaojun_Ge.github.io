@@ -25,22 +25,22 @@ author:
   avatar           : "profile.png"
   name             : "Xiaojun Ge"
   pronouns         : # example: "she/her"  
-  bio              : "Short biography for the left-hand sidebar"
+  bio              : "Soil & Environmental Science Researcher | C‑N‑P Cycling & Ecosystem Carbon Budget | Seeking PhD Opportunities"
   location         : "Nanning"
  # employer         : "Red Brick University"
  # uri              : # URL
-  email            : "2019023441@m.scnu.edu.cn" 
+  email            : "isgexiaojun@gmail.com" 
 
   # Academic websites
-  academia         : # URL
-  arxiv            : # URL - Update with the correct link to your profile
-  googlescholar    : "https://scholar.google.com/citations?user=PS_CX0AAAAAJ"
-  inspire-hep      : # URL
-  impactstory      : # URL
-  orcid            : "http://orcid.org/yourorcidurl"
-  semantic         : # URL
-  pubmed           : "https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
-  researchgate     : # URL
+  #academia         : # URL
+ # arxiv            : # URL - Update with the correct link to your profile
+ # googlescholar    : "https://scholar.google.com/citations?user=PS_CX0AAAAAJ"
+ # inspire-hep      : # URL
+ # impactstory      : # URL
+  orcid            : "https://orcid.org/0009-0002-9282-2804"
+ # semantic         : # URL
+ # pubmed           : "https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
+ # researchgate     : # URL
   scopus           : # URL
 
   # Repositories and software development
