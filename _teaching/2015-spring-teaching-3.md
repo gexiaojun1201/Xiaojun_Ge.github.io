@@ -1,70 +1,69 @@
 ---
-title: "Hydrological and Ecological Effects of Deep Vertical Rotary Tillage"
+title: "Forest Ecosystem Carbon Dynamics and Soil Biogeochemistry"
 collection: research
-type: "Visiting Student Research"
-permalink: /research/2019-tillage-erosion
-venue: "Institute of Subtropical Agriculture, Chinese Academy of Sciences"
-date: 2019-11-01
-location: "Changsha, Hunan, China"
-excerpt: "Assessed soil erosion dynamics and nutrient losses in sugarcane systems comparing deep vertical rotary tillage with conventional methods using rainfall simulation experiments"
+type: "Field Research Station Project"
+permalink: /research/forest-ecosystem
+venue: "Nanling Forest National Field Observation and Research Station"
+date: 2020-05-01
+location: "Guangzhou, China"
 ---
 
-## Project Overview
-Investigation of the hydrological and ecological responses to Deep Vertical Rotary Tillage (DVRT) method in sugarcane cultivation systems under simulated rainfall conditions.
+**Position:** Research Student  
+**Supervisors:** Zaijian Yuan, Xiaomin Li  
+**Duration:** May 2020 - December 2021
 
-## Key Responsibilities & Achievements
+This research investigated soil carbon dynamics and microbial nutrient cycling along altitudinal gradients in subtropical montane forests, contributing to understanding of climate change impacts on forest carbon storage.
 
-### Experimental Infrastructure Development
-* **Engineered and constructed a portable rainfall simulation device** enabling controlled experiments under field conditions
-* Device specifications:
-  - Adjustable rainfall intensity and duration
-  - Uniform spatial distribution across test plots
-  - Deployed for multiple hydrological research projects
+## Research Focus Areas
 
-### Field Experiment Implementation
-* **Led two-month field campaign** conducting rainfall simulations across experimental plots with graduate student team
-* Compared DVRT versus conventional tillage across multiple no-tillage recovery periods
-* Collected runoff and sediment samples for comprehensive laboratory analysis
+### Altitudinal Gradient Studies
+======
 
-### Soil Quality Assessment
-* Analyzed **soil structural stability** parameters:
-  - Aggregate size distribution and water stability
-  - Bulk density and porosity changes
-  - Infiltration capacity
+- **Plot Establishment:** Participated in establishing permanent soil monitoring plots across five altitudinal zones (300m - 1,900m elevation)
+- **Seasonal Sampling Campaigns:** Conducted quarterly soil sampling over 18 months to capture seasonal variations in carbon and nutrient dynamics
+- **Environmental Monitoring:** Installed and maintained data loggers for continuous monitoring of soil temperature, moisture, and microclimate conditions
 
-* Characterized **sesquioxide (Fe/Al oxides) distribution**:
-  - Free iron and aluminum oxides
-  - Poorly crystalline oxide forms
-  - Role in soil aggregate binding
+### Soil Carbon Fractionation Analysis
+======
 
-* Evaluated **soil organic carbon fractions**:
-  - Particulate organic carbon (POC)
-  - Mineral-associated organic carbon (MAOC)
-  - Dissolved organic carbon (DOC)
+- **Physical Fractionation:** Separated soil organic carbon into particulate organic matter (POM) and mineral-associated organic matter (MAOM) fractions
+- **Chemical Characterization:** Analyzed dissolved organic carbon (DOC), microbial biomass carbon (MBC), and hot water extractable carbon (HWEC)
+- **Stability Assessment:** Evaluated carbon stability indices and mean residence times across different forest types and elevations
 
-### Erosion Dynamics & Nutrient Loss Quantification
-* **Quantitatively assessed soil erosion risk** under DVRT management:
-  - Sediment yield under varying rainfall intensities
-  - Temporal patterns of erosion during events
+## Biogeochemical Investigations
 
-* **Measured nutrient leaching and surface losses**:
-  - Nitrogen (NH₄⁺-N, NO₃⁻-N, Total N)
-  - Phosphorus (Dissolved P, Particulate P)
-  - Potassium and other essential nutrients
+### Soil Property Characterization
+======
 
-* Provided mechanistic understanding of how tillage depth and method influence:
-  - Hydrological connectivity and runoff generation
-  - Nutrient cycling and retention capacity
-  - Long-term soil quality under intensive sugarcane cultivation
+- **Physicochemical Analysis:** Comprehensive assessment of soil pH, texture, bulk density, and aggregate stability
+- **Nutrient Cycling:** Quantified nitrogen mineralization rates, available phosphorus, and exchangeable cations
+- **Enzyme Activities:** Measured extracellular enzyme activities related to C, N, and P cycling
 
-## Scientific Contributions
-* Demonstrated that DVRT can reduce surface erosion while potentially increasing subsurface nutrient leaching
-* Identified optimal no-tillage recovery periods following DVRT implementation
-* Provided data-driven recommendations for sustainable sugarcane production in subtropical regions
+### Microbial Community Dynamics
+======
 
-## Technical Skills Applied
-* Rainfall simulation equipment design
-* Field-scale hydrological monitoring
-* Soil physical and chemical analysis
-* Nutrient quantification (colorimetry, ion chromatography)
-* Statistical analysis for paired treatment comparisons
+- **Biomass Quantification:** Determined microbial biomass C, N, and P using chloroform fumigation-extraction method
+- **Community Structure:** Analyzed phospholipid fatty acid (PLFA) profiles to characterize microbial community composition
+- **Functional Relationships:** Investigated correlations between microbial communities and soil carbon fractions
+
+## Key Research Findings
+======
+
+- **Elevation Effects:** Documented 45% increase in soil organic carbon stocks from 300m to 1,500m elevation, with declining trends above treeline
+- **Temperature Sensitivity:** Revealed higher temperature sensitivity (Q10) of soil respiration at higher elevations, indicating vulnerability to warming
+- **Microbial Controls:** Identified shifts from bacteria-dominated to fungi-dominated communities with increasing elevation
+- **Seasonal Patterns:** Characterized distinct seasonal patterns in labile carbon fractions, with peaks during the growing season
+
+## Methodological Contributions
+======
+
+- Developed standardized protocols for soil sampling in steep montane terrain
+- Optimized extraction methods for soil carbon fractions in highly weathered subtropical soils
+- Created comprehensive database linking soil properties, carbon fractions, and microbial parameters
+
+## Research Applications
+======
+
+- Results contributed to regional carbon budget assessments for Guangdong Province
+- Data incorporated into process-based models for predicting forest carbon dynamics under climate change scenarios
+- Findings informed forest management strategies for enhancing carbon sequestration in subtropical forests
