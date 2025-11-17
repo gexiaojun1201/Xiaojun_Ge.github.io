@@ -6,10 +6,16 @@ date: 2025-11-01
 venue: 'CATENA'
 permalink: /publication/2024-04-12-agricultural-net-carbon-sink-guangxi
 status: 'Published'  # 或 'In Press', 'Under Review' 等
-authors: ''
+authors: 'First author'
 paperurl: 'https://doi.org/10.1016/j.catena.2025.109318'
 share: false
 ---
+
+
+
+## DOI
+
+[https://doi.org/10.1016/j.catena.2025.109318](https://doi.org/10.1016/j.catena.2025.109318)
 
 ## Abstract
 
@@ -18,7 +24,3 @@ This study systematically quantified nitrogen and phosphorus runoff losses under
 ## Citation
 
 Yang, Y., **Ge, X.**, Feng, W., Xian, L., Shao, G., Liao, J., Zeng, S. (2025). Risk and driving factors of nitrogen and phosphorus runoff losses under extreme rainfall conditions: sludge application strategies in forest soils. *CATENA*, 259, 109318.
-
-## DOI
-
-[https://doi.org/10.1016/j.catena.2025.109318](https://doi.org/10.1016/j.catena.2025.109318)
