@@ -1,0 +1,12 @@
+<!-- 列表页显示顺序 -->
+<h3>{{ post.title }}</h3>
+<p><strong>Status:</strong> {{ post.status }}</p>
+<p><strong>Authors:</strong> {{ post.authors }}</p>
+<p>{{ post.excerpt }}</p>
+<p><strong>DOI:</strong> <a href="{{ post.paperurl }}">{{ post.paperurl }}</a></p>
+
+<!-- 详情页显示顺序 -->
+<h1>{{ page.title }}</h1>
+<p><strong>Status:</strong> {{ page.status }}</p>
+<h2>Abstract</h2>
+<!-- 正文内容 -->
