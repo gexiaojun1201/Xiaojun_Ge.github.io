@@ -6,10 +6,8 @@ permalink: /publication/2025-sludge-nitrogen-phosphorus-runoff
 date: 2025-11-01
 venue: 'CATENA'
 status: 'Published'  # 或 'In Press', 'Under Review' 等
-authors: 'Yang, Yuantong, **Ge Xiaojun**, Feng, Weixun, Xian, Lihua, Shao, Guodong, Liao, Jianbo, Zeng, Shucai'
-excerpt: 'This study systematically quantified nitrogen and phosphorus runoff losses under simulated extreme rainfall in eucalyptus forest soils amended with sewage sludge, identifying sludge application rate and rainfall intensity as key drivers, and recommending safe thresholds for sustainable management.'
+authors: ''
 paperurl: 'https://doi.org/10.1016/j.catena.2025.109318'
-citation: 'Yang, Y., **Ge, X.**, Feng, W., Xian, L., Shao, G., Liao, J., Zeng, S. (2025). Risk and driving factors of nitrogen and phosphorus runoff losses under extreme rainfall conditions: sludge application strategies in forest soils. *CATENA*, 259, 109318.'
 share: false
 ---
 
