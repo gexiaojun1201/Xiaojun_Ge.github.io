@@ -4,6 +4,7 @@ collection: publications
 category: manuscripts
 date: 2025-11-01
 venue: 'CATENA'
+permalink: /publication/2024-04-12-agricultural-net-carbon-sink-guangxi
 status: 'Published'  # 或 'In Press', 'Under Review' 等
 authors: ''
 paperurl: 'https://doi.org/10.1016/j.catena.2025.109318'
