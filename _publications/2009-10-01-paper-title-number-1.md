@@ -8,6 +8,7 @@ permalink: /publication/2024-04-12-agricultural-net-carbon-sink-guangxi
 status: 'Published'
 authors: 'First author'
 paperurl: 'https://doi.org/10.1016/j.catena.2025.109318'
+excerpt: 'This study systematically quantified nitrogen and phosphorus runoff losses under simulated extreme rainfall in eucalyptus forest soils amended with sewage sludge, identifying sludge application rate and rainfall intensity as key drivers of nutrient runoff.'
 share: false
 ---
 
