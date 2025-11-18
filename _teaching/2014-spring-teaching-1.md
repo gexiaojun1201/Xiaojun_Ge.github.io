@@ -10,8 +10,7 @@ location: "Nanning, China"
 
 **Position:** Research Assistant  
 **Supervisors:** Shubin Li, Qiang An, Ge Ren  
-**Duration:** November 2022 - Present
-
+**Duration:** November 2022 - Present<br>
 **Project Description:** This ongoing research focuses on developing high-resolution carbon sink assessment systems for eucalyptus plantations and integrating multi-scale monitoring data with machine learning approaches to optimize carbon sequestration models.
 
 ## Key Research Projects
