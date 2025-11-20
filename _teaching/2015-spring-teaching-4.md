@@ -1,5 +1,5 @@
 ---
-title: "Innovative Tillage Systems and Soil Erosion Control"
+title: "Hydrological and ecological responses to deep vertical rotary tillage (DVRT) "
 collection: research
 type: "Visiting Student Research"
 permalink: /research/soil-erosion-tillage
