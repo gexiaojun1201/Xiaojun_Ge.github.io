@@ -1,15 +1,15 @@
 ---
-title: "Carbon Sink Quantification in Forest and Agricultural Ecosystems"
+title: "Development and validation of a high-resolution carbon sink assessment system for plantations"
 collection: research
 type: "Research Assistant"
 permalink: /research/carbon-sink-quantification
 venue: "Guangxi Research Institute of Metrology & Test"
-date: 2022-11-01
+date: 2022
 location: "Nanning, China"
 ---
 
 **Position:** Research Assistant  
-**Supervisors:** Shubin Li, Qiang An, Ge Ren  
+**Supervisors:** Shubin Li, Ge Ren  
 **Duration:** November 2022 - Present<br>
 **Project Description:** This ongoing research focuses on developing high-resolution carbon sink assessment systems for eucalyptus plantations and integrating multi-scale monitoring data with machine learning approaches to optimize carbon sequestration models.
 
