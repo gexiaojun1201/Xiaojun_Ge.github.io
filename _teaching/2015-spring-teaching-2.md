@@ -1,10 +1,10 @@
 ---
-title: "Constructed Wetlands for Agricultural Wastewater Treatment"
+title: "Technology Integration and Demonstration of Manure Pollution Ecological Treatment in Swine Farms Project"
 collection: research
 type: "Joint Educational Program"
 permalink: /research/constructed-wetlands
 venue: "Institute of Eco-environmental and Soil Sciences, Guangdong Academy of Science"
-date: 2020-09-01
+date: 2020
 location: "Guangzhou, China"
 ---
 
