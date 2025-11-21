@@ -17,31 +17,36 @@ author_profile: true
     gap: 16px;
     margin-top: 20px;
   }
+
+  /* 👇 亮色模式：浅灰卡片背景 */
   .skill-card {
     flex: 1;
     min-width: 240px;
     padding: 14px 18px;
     border-radius: 12px;
-    border: 1px solid rgba(148,163,184,0.6); /* slate-400 */
-    background: rgba(248,250,252,0.9);       /* 亮色背景，略透明 */
+    border: 1px solid rgba(148,163,184,0.35);  /* 浅边框 */
+    background: #f2f4f7;                       /* 亮色灰背景 */
   }
+
   .skill-card h3 {
     margin: 0 0 6px 0;
     font-size: 1rem;
   }
+
   .skill-card ul {
     margin: 0;
     padding-left: 1.1em;
   }
+
   .skill-card li {
     margin: 0;
   }
 
-  /* 深色模式下自动换背景和边框色 */
+  /* 👇 暗色模式：深色背景 + 自动使用深色模式文字 */
   @media (prefers-color-scheme: dark) {
     .skill-card {
-      background: rgba(15,23,42,0.9);        /* 深色卡片背景 */
-      border-color: rgba(148,163,184,0.5);
+      background: #1e293b;                     /* 深灰蓝背景 */
+      border-color: rgba(148,163,184,0.25);    /* 深色边框 */
     }
   }
 </style>
