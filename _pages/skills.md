@@ -38,7 +38,7 @@ author_profile: true
 
   .skill-card h3 {
     margin: 0 0 8px 0;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     color: #1e293b;
   }
 
