@@ -83,8 +83,7 @@ author_profile: true
       <li>Hydrological monitoring device usage</li>
       <li>On-site water quality monitoring</li>
       <li>Multi-depth soil profile & coring sampling</li>
-      <li>Soil/Water GHG sampling (chamber)</li>
-      <li>Forest flux measurement (tower)</li>
+      <li>Ecosystem GHG sampling (chamber&flux)</li>
     </ul>
   </div>
   
@@ -92,6 +91,7 @@ author_profile: true
     <h3>🔬 Nutrient Transformation</h3>
     <ul>
       <li>¹⁵N isotopic tracing method</li>
+      <li>Anaerobic and aerobic transformation assays of soil nutrients</li>
     </ul>
   </div>
   
@@ -122,11 +122,8 @@ author_profile: true
     <ul>
       <li>Automated & continuous flow analyzers</li>
       <li>UV-Vis spectroscopy</li>
-      <li>HPLC</li>
-      <li>LC-MS/MS</li>
-      <li>Gas Chromatography</li>
+      <li>HPLC-MS-MS</li>
       <li>CRDS</li>
-      <li>Mass spectrometry</li>
     </ul>
   </div>
   
@@ -134,52 +131,47 @@ author_profile: true
     <h3>💻 Software Skills</h3>
     <ul>
       <li>R</li>
-      <li>GIS</li>
+      <li>ArcGIS</li>
+      <li>Matlab</li>
+      <li>STATA</li>
     </ul>
   </div>
 </div>
 
-===
+---
 
 ## Detail
 
 ### Field Experimentation
 
-- Hydrological monitoring device usage
-- On-site water quality monitoring
-- Multi-depth soil profile & coring sampling
-- Soil/water GHG sampling (chamber, tower)
+- **Hydrological monitoring device usage**: Design and fabrication of portable rainfall simulators and field study of rainfall-induced erosion processes
+- **On-site water quality monitoring**: Regular cross-sectional sampling and on-site analytical testing in wastewater treatment wetlands and mesocosm wetlands
+- **Multi-depth soil profile & coring sampling**: Soil profile excavation and intact core collection
+- **Ecosystem GHG sampling (chamber & flux)**: GHG collection from soil and constructed wetland water surface using chamber method; site selection and data acquisition with eddy covariance towers and greenhouse gas analyzers in the field
 
 ### Nutrient Transformation
 
-- ¹⁵N isotopic tracing method
-- Sediment incubation
-- Nutrient fractionation separation (C, N, P)
+- **¹⁵N isotopic tracing method**: Quantification of DNRA, anammox, and denitrification processes in soil
+- **Anaerobic and aerobic transformation assays of soil nutrients**: Measurement of nitrification and denitrification rates in sediments
 
 ### Soil Physicochemical Measurement
 
-- Soil enzyme activity assays
-- Soil aggregate and stability measurement
-- Soil sesquioxide quantification
+- **Soil enzyme activity assays**: Extracellular enzymes related to C, N, and P transformation in soil
+- **Soil aggregate and stability measurement**: Analysis of soil aggregates and their breakdown mechanisms (Le Bissonnais method)
+- **Sediment incubation**: Pre-incubation for anaerobic-aerobic process transitions in soil
+- **Soil sesquioxide quantification**: Quantification of sesquioxides (Fe, Al, and Mn) related to soil stability
+- **Nutrient fractionation separation (C, N, P)**: Available nitrogen and phosphorus; various organic carbon fractions; soil microbial biomass C, N, and P
 
 ### Microbial & Genetic Analysis
 
-- 16S rRNA amplicon sequencing
-- qPCR (Quantitative Polymerase Chain Reaction)
-- QIIME2 analysis: phylogeny, QC, visualization
-- Functional gene annotation & analysis
+- **16S rRNA amplicon sequencing**: Calculation of microbial diversity indices (α-diversity, β-diversity)
+- **qPCR (Quantitative Polymerase Chain Reaction)**: Absolute quantification of functional genes (e.g., genes related to nitrification and denitrification)
+- **QIIME2 analysis: phylogeny, QC & visualization**: Sequence quality control, denoising, clustering analysis, phylogenetic tree construction, diversity statistical analysis (PCoA, NMDS) and visualization; data mining and graphical visualization using R
+- **Functional gene annotation & analysis**: Metabolic function prediction based on Tax4Fun2/PICRUSt2 and correlation analysis between microbial community functions and environmental factors
 
 ### Instrumental Operation & Maintenance
 
-- Automated & continuous flow analyzers
-- UV-Vis spectroscopy
-- CRDS (Cavity Ring-Down Spectroscopy)
-- Mass spectrometry
-- HPLC (High-performance liquid chromatography)
-- LC-MS/MS
-- Gas Chromatography
-
-### Software Skills
-
-- R programming
-- GIS applications
+- **Automated & continuous flow analyzers**: Automated continuous flow analysis for different components of nutrients (C, N, P, etc.) in water samples and soil extracts
+- **UV-Vis spectroscopy**: Spectrophotometric determination of dissolved organic carbon, inorganic nitrogen, and other parameters
+- **HPLC-MS/MS**: Determination of antibiotics
+- **CRDS (Cavity Ring-Down Spectroscopy)**: High-precision monitoring and isotopic analysis of greenhouse gases (CO₂, CH₄, N₂O)
