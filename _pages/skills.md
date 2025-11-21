@@ -18,56 +18,59 @@ author_profile: true
     margin-top: 20px;
   }
 
-  /* 默认（亮色）样式 */
+  /* 默认（亮色模式）样式 */
   .skill-card {
     flex: 1;
     min-width: 240px;
     padding: 14px 18px;
     border-radius: 18px;
-    border: 1px solid rgba(148,163,184,0.4);
-    background: #f3f4f6;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+    /* 亮色模式：白色背景，浅灰色边框 */
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .skill-card:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
   }
 
   .skill-card h3 {
-    margin: 0 0 6px 0;
-    font-size: 1rem;
+    margin: 0 0 8px 0;
+    font-size: 1.1rem;
+    color: #1e293b;
   }
 
   .skill-card ul {
     margin: 0;
-    padding-left: 1.1em;
+    padding-left: 1.2em;
   }
 
   .skill-card li {
-    margin: 0;
+    margin: 4px 0;
+    color: #475569;
   }
 
-  /* 深色模式 - 多种选择器组合确保兼容性 */
-  [data-theme="dark"] .skill-card,
-  .dark .skill-card,
-  html[data-theme="dark"] .skill-card,
-  html.dark .skill-card,
-  body[data-theme="dark"] .skill-card,
-  body.dark .skill-card,
-  [class*="dark"] .skill-card {
-    background: #1f2937 !important;  /* 使用 !important 确保优先级 */
-    border-color: rgba(148,163,184,0.3) !important;
+  /* 深色模式样式 - 使用主题的正确选择器 */
+  html[data-theme="dark"] .skill-card {
+    /* 深色模式：比背景色浅一些，形成对比 */
+    background: #5a5a5a;
+    border: 1px solid #6b6b6b;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   }
 
-  /* 系统深色模式兜底 */
-  @media (prefers-color-scheme: dark) {
-    .skill-card {
-      background: #1f2937;
-      border-color: rgba(148,163,184,0.3);
-    }
+  html[data-theme="dark"] .skill-card:hover {
+    background: #636363;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
   }
 
-  /* 针对 Academic 主题的特定选择器 */
-  .dark-mode .skill-card,
-  #dark-mode .skill-card {
-    background: #1f2937 !important;
-    border-color: rgba(148,163,184,0.3) !important;
+  html[data-theme="dark"] .skill-card h3 {
+    color: #f1f5f9;
+  }
+
+  html[data-theme="dark"] .skill-card li {
+    color: #e2e8f0;
   }
 </style>
 
