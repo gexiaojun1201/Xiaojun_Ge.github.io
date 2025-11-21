@@ -78,7 +78,7 @@ author_profile: true
 <div class="skills-grid">
   <!-- First Row -->
   <div class="skill-card">
-    <h3>🌿 Field Experimentation</h3>
+    <h3> Field Experimentation</h3>
     <ul>
       <li>Hydrological monitoring device usage</li>
       <li>On-site water quality monitoring</li>
@@ -88,7 +88,7 @@ author_profile: true
   </div>
   
   <div class="skill-card">
-    <h3>🔬 Nutrient Transformation</h3>
+    <h3> Nutrient Transformation</h3>
     <ul>
       <li>¹⁵N isotopic tracing method</li>
       <li>Anaerobic and aerobic transformation assays of soil nutrients</li>
@@ -96,7 +96,7 @@ author_profile: true
   </div>
   
   <div class="skill-card">
-    <h3>🧪 Soil Physicochemical Measurement</h3>
+    <h3> Soil Physicochemical Measurement</h3>
     <ul>
       <li>Soil enzyme activity assays</li>
       <li>Soil aggregate and stability measurement</li>
@@ -108,7 +108,7 @@ author_profile: true
 
   <!-- Second Row -->
   <div class="skill-card">
-    <h3>🧬 Microbial & Genetic Analysis</h3>
+    <h3> Microbial & Genetic Analysis</h3>
     <ul>
       <li>16S rRNA amplicon sequencing</li>
       <li>qPCR (Quantitative Polymerase Chain Reaction)</li>
@@ -118,7 +118,7 @@ author_profile: true
   </div>
   
   <div class="skill-card">
-    <h3>🔭 Instrumental Operation & Maintenance</h3>
+    <h3> Instrumental Operation & Maintenance</h3>
     <ul>
       <li>Automated & continuous flow analyzers</li>
       <li>UV-Vis spectroscopy</li>
@@ -128,7 +128,7 @@ author_profile: true
   </div>
   
   <div class="skill-card">
-    <h3>💻 Software Skills</h3>
+    <h3> Software Skills</h3>
     <ul>
       <li>R</li>
       <li>ArcGIS</li>
