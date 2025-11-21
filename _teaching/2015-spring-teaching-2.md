@@ -4,7 +4,7 @@ collection: research
 type: "Joint Educational Program"
 permalink: /research/constructed-wetlands
 venue: "Institute of Eco-environmental and Soil Sciences, Guangdong Academy of Science"
-date: 2020
+date: 2020-09-01
 location: "Guangzhou, China"
 ---
 

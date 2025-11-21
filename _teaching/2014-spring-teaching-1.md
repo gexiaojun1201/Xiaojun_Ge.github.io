@@ -4,7 +4,7 @@ collection: research
 type: "Research Assistant"
 permalink: /research/carbon-sink-quantification
 venue: "Guangxi Research Institute of Metrology & Test"
-date: 2022
+date: 2022-11-01
 location: "Nanning, China"
 ---
 
