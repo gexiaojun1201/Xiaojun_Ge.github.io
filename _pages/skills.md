@@ -10,13 +10,34 @@ author_profile: true
 
 ## Summary
 
-| **Research Area** | **Core Technical Skills** |
-|:---:|:---|
-| **Field Work** | Hydrological monitoring • Soil sampling • GHG flux measurement |
-| **Laboratory** | ¹⁵N isotope tracing • Enzyme assays • Nutrient fractionation |
-| **Instrumentation** | LC-MS/MS • HPLC • GC • CRDS • UV-Vis |
-| **Molecular Biology** | 16S rRNA sequencing • qPCR • QIIME2 |
-| **Computing** | R • GIS |
+<div style="display:flex; flex-wrap:wrap; gap:16px; margin-top:20px;">
+
+  <div style="flex:1; min-width:260px; background:#f7f9fc; padding:16px; border-radius:12px; border:1px solid #e5e7eb;">
+    <h3 style="margin-top:0;">Field Work</h3>
+    <p>Hydrological monitoring · Soil sampling · GHG flux measurement</p>
+  </div>
+
+  <div style="flex:1; min-width:260px; background:#f7f9fc; padding:16px; border-radius:12px; border:1px solid #e5e7eb;">
+    <h3 style="margin-top:0;">Laboratory</h3>
+    <p>¹⁵N isotope tracing · Enzyme assays · Nutrient fractionation</p>
+  </div>
+
+  <div style="flex:1; min-width:260px; background:#f7f9fc; padding:16px; border-radius:12px; border:1px solid #e5e7eb;">
+    <h3 style="margin-top:0;">🔭 Instrumentation</h3>
+    <p>LC-MS/MS · HPLC · GC · CRDS · UV-Vis</p>
+  </div>
+
+  <div style="flex:1; min-width:260px; background:#f7f9fc; padding:16px; border-radius:12px; border:1px solid #e5e7eb;">
+    <h3 style="margin-top:0;">Molecular Biology</h3>
+    <p>16S rRNA sequencing · qPCR · QIIME2</p>
+  </div>
+
+  <div style="flex:1; min-width:260px; background:#f7f9fc; padding:16px; border-radius:12px; border:1px solid #e5e7eb;">
+    <h3 style="margin-top:0;">Computing</h3>
+    <p>R · GIS</p>
+  </div>
+
+</div>
 
 ## Detail
 
