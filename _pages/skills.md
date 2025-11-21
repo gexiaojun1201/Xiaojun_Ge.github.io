@@ -76,53 +76,67 @@ author_profile: true
 
 
 <div class="skills-grid">
-
+  <!-- First Row -->
   <div class="skill-card">
-    <h3>🌿 Field Work</h3>
+    <h3>🌿 Field Experimentation</h3>
     <ul>
-      <li>Hydrological monitoring</li>
-      <li>Soil sampling</li>
-      <li>GHG flux measurement</li>
+      <li>Hydrological monitoring device usage</li>
+      <li>On-site water quality monitoring</li>
+      <li>Multi-depth soil profile & coring sampling</li>
+      <li>Soil/Water GHG sampling (chamber)</li>
+      <li>Forest flux measurement (tower)</li>
+    </ul>
+  </div>
+  
+  <div class="skill-card">
+    <h3>🔬 Nutrient Transformation</h3>
+    <ul>
+      <li>¹⁵N isotopic tracing method</li>
+    </ul>
+  </div>
+  
+  <div class="skill-card">
+    <h3>🧪 Soil Physicochemical Measurement</h3>
+    <ul>
+      <li>Soil enzyme activity assays</li>
+      <li>Soil aggregate and stability measurement</li>
+      <li>Sediment incubation</li>
+      <li>Soil sesquioxide quantification</li>
+      <li>Nutrient fractionation separation (C, N, P)</li>
     </ul>
   </div>
 
+  <!-- Second Row -->
   <div class="skill-card">
-    <h3>🔬 Laboratory</h3>
+    <h3>🧬 Microbial & Genetic Analysis</h3>
     <ul>
-      <li>¹⁵N isotope tracing</li>
-      <li>Enzyme assays</li>
-      <li>Nutrient fractionation</li>
+      <li>16S rRNA amplicon sequencing</li>
+      <li>qPCR (Quantitative Polymerase Chain Reaction)</li>
+      <li>QIIME2 analysis: phylogeny, QC & visualization</li>
+      <li>Functional gene annotation & analysis</li>
     </ul>
   </div>
-
+  
   <div class="skill-card">
-    <h3>🔭 Instrumentation</h3>
+    <h3>🔭 Instrumental Operation & Maintenance</h3>
     <ul>
-      <li>LC-MS/MS</li>
+      <li>Automated & continuous flow analyzers</li>
+      <li>UV-Vis spectroscopy</li>
       <li>HPLC</li>
-      <li>GC</li>
+      <li>LC-MS/MS</li>
+      <li>Gas Chromatography</li>
       <li>CRDS</li>
-      <li>UV-Vis</li>
+      <li>Mass spectrometry</li>
     </ul>
   </div>
-
+  
   <div class="skill-card">
-    <h3>🧬 Molecular Biology</h3>
-    <ul>
-      <li>16S rRNA sequencing</li>
-      <li>qPCR</li>
-      <li>QIIME2</li>
-    </ul>
-  </div>
-
-  <div class="skill-card">
-    <h3>💻 Computing</h3>
+    <h3>💻 Software Skills</h3>
     <ul>
       <li>R</li>
       <li>GIS</li>
     </ul>
   </div>
-
 </div>
 
 ===
