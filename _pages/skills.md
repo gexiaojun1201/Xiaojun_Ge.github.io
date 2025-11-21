@@ -18,14 +18,14 @@ author_profile: true
     margin-top: 20px;
   }
 
-  /* 👇 亮色模式：浅灰卡片背景 */
+  /* 默认（亮色）样式：浅灰背景 */
   .skill-card {
     flex: 1;
     min-width: 240px;
     padding: 14px 18px;
-    border-radius: 12px;
-    border: 1px solid rgba(148,163,184,0.35);  /* 浅边框 */
-    background: #f2f4f7;                       /* 亮色灰背景 */
+    border-radius: 18px;
+    border: 1px solid rgba(148,163,184,0.4);
+    background: #f3f4f6;              /* 浅灰 */
   }
 
   .skill-card h3 {
@@ -42,11 +42,24 @@ author_profile: true
     margin: 0;
   }
 
-  /* 👇 暗色模式：深色背景 + 自动使用深色模式文字 */
+  /* ✅ 和大部分 Hugo / Academic 主题兼容的暗色标记：
+     - html[data-theme="dark"]
+     - html.dark
+     - body.dark
+  */
+  html[data-theme="dark"] .skill-card,
+  html.dark .skill-card,
+  body.dark .skill-card {
+    background: #111827;              /* 深色卡片背景 */
+    border-color: rgba(148,163,184,0.3);
+  }
+
+  /* 兜底：如果主题没加 class，只靠系统深色模式 */
   @media (prefers-color-scheme: dark) {
-    .skill-card {
-      background: #1e293b;                     /* 深灰蓝背景 */
-      border-color: rgba(148,163,184,0.25);    /* 深色边框 */
+    html:not([data-theme="light"]) .skill-card,
+    body:not([data-theme="light"]) .skill-card {
+      background: #111827;
+      border-color: rgba(148,163,184,0.3);
     }
   }
 </style>
