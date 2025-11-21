@@ -10,13 +10,13 @@ author_profile: true
 
 ## Summary
 
-| **Area**        | **Skills**                                                   |
-| --------------- | ------------------------------------------------------------ |
-| **Field**       | Hydrological monitoring • Soil sampling • GHG flux measurement |
-| **Lab**         | ¹⁵N isotope tracing • Enzyme assays • Nutrient fractionation |
-| **Instruments** | LC-MS/MS • HPLC • GC • CRDS • UV-Vis                         |
-| **Molecular**   | 16S rRNA sequencing • qPCR • QIIME2                          |
-| **Software**    | R • GIS                                                      |
+| **Research Area** | **Core Technical Skills** |
+|:---:|:---|
+| **Field Work** | Hydrological monitoring • Soil sampling • GHG flux measurement |
+| **Laboratory** | ¹⁵N isotope tracing • Enzyme assays • Nutrient fractionation |
+| **Instrumentation** | LC-MS/MS • HPLC • GC • CRDS • UV-Vis |
+| **Molecular Biology** | 16S rRNA sequencing • qPCR • QIIME2 |
+| **Computing** | R • GIS |
 
 ## Detail
 
