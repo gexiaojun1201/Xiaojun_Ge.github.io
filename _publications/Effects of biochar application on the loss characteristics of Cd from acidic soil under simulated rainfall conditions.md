@@ -1,5 +1,5 @@
 ---
-title: "Effects of biochar application on the loss characteristics of Cdfrom acidic soil under simulated rainfall conditions"
+title: "Effects of biochar application on the loss characteristics of Cd from acidic soil under simulated rainfall conditions"
 collection: publications
 category: manuscripts
 date: 2022-07-01
