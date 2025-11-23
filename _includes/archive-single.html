@@ -27,6 +27,9 @@
     {% endif %}
 
     <h2 class="archive__item-title" itemprop="headline">
+      {% if include.number %}
+        {{ include.number }}.
+      {% endif %}
       {% if post.category == 'unpublished' %}
         {{ title }}
       {% elsif post.link %}
