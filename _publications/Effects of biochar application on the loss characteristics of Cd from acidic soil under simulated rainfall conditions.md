@@ -3,7 +3,7 @@ title: "Effects of biochar application on the loss characteristics of Cdfrom aci
 collection: publications
 category: manuscripts
 date: 2022-07-01
-venue: 'CATENA'
+venue: 'Environmental Science and Pollution Research '
 permalink: /publication/2022-07-01-biochar-cd-loss-acidic-red-soil
 status: 'Published'
 authors: 'Fourth author'
