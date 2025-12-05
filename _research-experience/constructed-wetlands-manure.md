@@ -11,8 +11,9 @@ location: "Guangzhou, China"
 **Position:** Collaboratively Trained Student  
 **Supervisors:** Zaijian Yuan, Xiaomin Li  
 **Duration:** September 2020 - June 2022
+**Project Description:** This research focused on developing ecological treatment solutions for swine farm wastewater using constructed wetlands, with emphasis on understanding nitrogen transformation processes under antibiotic exposure.
 
-This research focused on developing ecological treatment solutions for swine farm wastewater using constructed wetlands, with emphasis on understanding nitrogen transformation processes under antibiotic exposure.
+
 
 ## Major Research Achievements
 
