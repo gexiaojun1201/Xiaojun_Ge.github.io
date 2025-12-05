@@ -1,6 +1,6 @@
 ---
 title: "Nanling Forest National Field Observation and Research Station Project "
-collection: research
+collection: research_experience
 type: "Field Research Station Project"
 permalink: /research/forest-ecosystem
 venue: "Nanling Forest National Field Observation and Research Station"

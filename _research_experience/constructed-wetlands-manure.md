@@ -1,6 +1,6 @@
 ---
 title: "Technology Integration and Demonstration of Manure Pollution Ecological Treatment in Swine Farms Project"
-collection: research
+collection: research_experience
 type: "Joint Educational Program"
 permalink: /research/constructed-wetlands
 venue: "Institute of Eco-environmental and Soil Sciences, Guangdong Academy of Science"

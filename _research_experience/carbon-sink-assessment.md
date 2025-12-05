@@ -1,6 +1,6 @@
 ---
 title: "Development and validation of a high-resolution carbon sink assessment system for plantations"
-collection: research
+collection: research_experience
 type: "Research Assistant"
 permalink: /research/carbon-sink-quantification
 venue: "Guangxi Research Institute of Metrology & Test"
