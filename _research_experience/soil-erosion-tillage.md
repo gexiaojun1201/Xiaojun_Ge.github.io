@@ -1,6 +1,6 @@
 ---
 title: "Hydrological and ecological responses to deep vertical rotary tillage (DVRT) "
-collection: research
+collection: research_experience
 type: "Visiting Student Research"
 permalink: /research/soil-erosion-tillage
 venue: "Institute of Subtropical Agriculture, Chinese Academy of Sciences"
