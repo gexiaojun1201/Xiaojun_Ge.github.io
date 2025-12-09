@@ -37,6 +37,3 @@ location: "Guangzhou, China"
 
 - Contributed to Lian River water environment assessment and biochar-soil interaction studies as part of broader research group activities
 
----
-
-**需要我调整任何细节吗？**
