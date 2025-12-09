@@ -1,3 +1,7 @@
+好的，按你原来的格式生成：
+
+---
+
 ---
 title: "Technology Integration and Demonstration of Manure Pollution Ecological Treatment in Swine Farms Project"
 collection: research_experience
@@ -8,54 +12,38 @@ date: 2020-09-01
 location: "Guangzhou, China"
 ---
 
-**Position:** Collaboratively Trained Student  
-**Supervisors:** Zaijian Yuan, Xiaomin Li  
-**Duration:** September 2020 - June 2022<br>
-**Project Description:** This research focused on developing ecological treatment solutions for swine farm wastewater using constructed wetlands, with emphasis on understanding nitrogen transformation processes under antibiotic exposure.
+**Position:** Graduate Research Student (M.S. Thesis Research)
 
+**Supervisors:** Zaijian Yuan, Xiaomin Li
 
+**Duration:** September 2020 – June 2022
 
-## Major Research Achievements
+**Project Description:** Investigated nitrogen cycling processes in constructed wetlands treating swine farm wastewater, with focus on microbial-mediated nitrogen transformations under antibiotic stress.
 
-### Mesocosm Wetland Studies
+## Core Research (M.S. Thesis)
 
+### Mesocosm Experiment System
+- Designed and operated mesocosm surface flow constructed wetlands with *Myriophyllum elatinoides* to study antibiotic effects on nitrogen removal
+- Conducted ¹⁵N isotope labeling experiments to quantify gross nitrogen transformation rates, including mineralization, nitrification, and denitrification pathways
+- Performed DNA extraction and bioinformatic analysis of 16S rRNA amplicon sequencing data (PICRUSt2, FAPROTAX) to characterize microbial community shifts and functional responses
 
-- **System Design and Construction:** Led the design and establishment of mesocosm surface flow constructed wetlands featuring *Myriophyllum elatinoides* for controlled experimental studies
-- **Antibiotic Impact Assessment:** Conducted comprehensive studies on the effects of veterinary antibiotics on nitrogen removal efficiency, revealing critical thresholds for wetland performance
-- **Isotope Tracing Studies:** Utilized ¹⁵N isotope labeling techniques to quantify gross nitrogen transformation rates and identify key nitrogen cycling pathways under antibiotic stress
+### Analytical Skills Applied
+- Routine water quality monitoring (NH₄⁺-N, NO₃⁻-N, NO₂⁻-N, TN, COD, DO)
+- Sample preparation for LC-MS/MS antibiotic residue analysis and qPCR quantification of nitrogen cycling genes
 
-### Field-Scale Implementation
+## Field Support Work
 
+- Participated in construction and maintenance of a 2,000 m² field-scale constructed wetland, including plant management, hydraulic system upkeep, and water quality sampling
 
-- **Full-Scale Wetland Development:** Participated in the design and construction of field-scale surface flow constructed wetlands covering 2,000 m²
-- **Operation and Maintenance:** Managed day-to-day operations including plant harvesting schedules, hydraulic loading optimization, and seasonal maintenance protocols
-- **Performance Monitoring:** Established comprehensive monitoring programs for water quality parameters, sediment characteristics, and treatment efficiency evaluation
+## Publications
 
-## Advanced Research Techniques
+- **[First Author]** Sediment nitrogen transformation rates in constructed wetlands under antibiotic exposure: a ¹⁵N isotope tracing study. *Manuscript in preparation*
+- **[First Author]** Long-term performance and microbial community dynamics in constructed wetlands treating swine wastewater. *Manuscript in preparation*
 
-### Molecular Biology Applications
+## Additional Project Involvement
 
+- Contributed to Lian River water environment assessment and biochar-soil interaction studies as part of broader research group activities
 
-- **Microbial Community Analysis:** Applied high-throughput sequencing (16S rRNA gene amplicon sequencing) to characterize microbial community shifts under long-term antibiotic exposure
-- **Functional Gene Quantification:** Employed qPCR techniques to quantify nitrogen cycling genes (amoA, nirS, nirK, nosZ) and antibiotic resistance genes
-- **Bioinformatics Analysis:** Performed statistical analysis of microbial diversity indices and functional prediction using PICRUSt2 and FAPROTAX
+---
 
-### Environmental Monitoring
-
-
-- **Water Quality Analysis:** Conducted routine monitoring of NH₄⁺-N, NO₃⁻-N, NO₂⁻-N, TN, TP, COD, and dissolved oxygen levels
-- **Antibiotic Residue Detection:** Analyzed veterinary antibiotic concentrations using LC-MS/MS techniques
-- **Sediment Characterization:** Assessed sediment accumulation rates, organic matter content, and nutrient storage capacity
-
-## Research Impact and Outcomes
-
-- Revealed that sustained antibiotic exposure (>30 days) significantly reduced nitrogen removal efficiency by 35-40%
-- Identified key microbial taxa responsible for maintaining nitrogen removal under antibiotic stress
-- Developed operational guidelines for constructed wetland management in the presence of emerging contaminants
-- Contributed to provincial non-point source pollution assessment database for Guangdong Province
-
-## Additional Project Contributions
-
-
-- **Lian River Water Environment Project (Aug 2021 - Mar 2022):** Assessed ecological management strategies for river water quality improvement
-- **Biochar Amendment Studies (Aug 2020 - Mar 2021):** Investigated the effects of biochar on cadmium mobilization in red soil under simulated rainfall erosion
+**需要我调整任何细节吗？**
