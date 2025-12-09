@@ -9,11 +9,8 @@ location: "Guangzhou, China"
 ---
 
 **Position:** Research Student
-
 **Supervisors:** Zaijian Yuan, Xiaomin Li
-
-**Duration:** May 2020 – December 2021
-
+**Duration:** May 2020 – December 2021<br>
 **Project Description:** Investigated soil carbon dynamics and microbial nutrient cycling along altitudinal gradients (300m – 1,900m) in subtropical montane forests.
 
 ## Field Work
@@ -46,6 +43,3 @@ location: "Guangzhou, China"
 - Soil carbon fractionation and biogeochemical analysis techniques
 - Microbial community characterization methods (PLFA)
 
----
-
-**还有需要调整的吗？** 如果没问题，可以继续下一个项目。
