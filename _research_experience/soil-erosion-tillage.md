@@ -8,8 +8,8 @@ date: 2019-11-01
 location: "Changsha, China"
 ---
 
-**Position:** Visiting Research Student
-**Supervisors:** Xianli Xu, Xuezhang Li
+**Position:** Visiting Research Student<br>
+**Supervisors:** Xianli Xu, Xuezhang Li<br>
 **Duration:** November 2019 – June 2021<br>
 **Project Description:** Evaluated the effects of Deep Vertical Rotary Tillage (DVRT) on soil erosion, aggregate stability, and nutrient loss in sugarcane cultivation systems.
 
