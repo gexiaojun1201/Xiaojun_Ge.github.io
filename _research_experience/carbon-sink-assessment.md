@@ -11,43 +11,32 @@ location: "Nanning, China"
 **Position:** Research Assistant  
 **Supervisors:** Shubin Li, Ge Ren  
 **Duration:** November 2022 - Present<br>
-**Project Description:** This ongoing research focuses on developing high-resolution carbon sink assessment systems for eucalyptus plantations and integrating multi-scale monitoring data with machine learning approaches to optimize carbon sequestration models.
+**Project Description:** This ongoing research focuses on developing a high-resolution (1 km × 1 h) carbon sink assessment system for eucalyptus plantations in Guangxi, integrating ground-based flux monitoring, remote sensing, and Bayesian inversion approaches to support regional carbon trading and policy implementation.
 
-## Key Research Projects
+## Key Contributions
 
-### High-Resolution Carbon Sink Assessment System Development
+### Field Operations and Monitoring Infrastructure
+- **Site Reconnaissance:** Conducted field surveys and stakeholder coordination for flux tower site selection across eucalyptus plantation areas
+- **Instrument Operation:** Operated and maintained carbon flux monitoring systems including eddy covariance towers and Picarro G2401 cavity ring-down greenhouse gas analyzers
+- **Data Acquisition:** Managed continuous data collection from monitoring networks, ensuring data quality and long-term system reliability
 
+### Field Sampling and Data Processing
+- **Ground-truthing Campaigns:** Performed regular field sampling for soil carbon, plant biomass, and litterfall measurements across plantation sites of varying ages
+- **Data Processing:** Processed and quality-controlled carbon flux and concentration datasets for model validation
+- **3D Site Visualization:** Developed UAV-based photogrammetric models using DJI Terra and Bentley ContextCapture for monitoring site documentation and spatial analysis
 
-- **Integrated Multi-scale Monitoring:** Developed and validated a comprehensive carbon sink assessment system combining high temporal and spatial resolution monitoring techniques for eucalyptus plantations
-- **Machine Learning Optimization:** Applied advanced ML algorithms and AI techniques to optimize carbon flux calculations and improve model parameters, achieving more accurate carbon sink predictions
-- **Field-to-Lab Integration:** Coordinated extensive field sampling campaigns for soil, plant biomass, and litter fall measurements, ensuring robust ground-truthing for remote sensing data
+### Research Outputs and Standards Development
+- **Lead Author:** Primary writer for research manuscript on carbon sink quantification methodologies (in preparation)
+- **Proposal Development:** Contributed to project proposal writing, supporting acquisition of ¥100,000 preliminary research funding
+- **Standards Participation:** Participated in developing regional technical standards for plantation carbon measurement
 
-### Carbon Economics and Policy Implementation
+## Technical Skills Acquired
+- Flux monitoring instrumentation (eddy covariance systems, cavity ring-down spectroscopy)
+- UAV photogrammetry and 3D reconstruction (DJI Terra, ContextCapture)
+- Fundamentals of atmospheric transport modeling (WRF-STILT) and Bayesian inversion methods
+- Carbon budget assessment integrating multiple carbon pools
 
-
-- **Economic Pathway Analysis:** Assessed and developed pathways for economic realization of plantation carbon sinks through empirical analysis and policy evaluation
-- **Funding Achievement:** Successfully secured ¥200,000 in project funding through comprehensive proposal development combining technical expertise with policy implications
-- **Stakeholder Engagement:** Collaborated with government agencies and industry partners to develop practical implementation frameworks for carbon peak and carbon neutrality initiatives in Guangxi province
-
-## Technical Contributions
-
-### Experimental Design and Implementation
-
-
-- Led the experimental design for multi-scale carbon monitoring systems
-- Established and maintained automated carbon flux monitoring devices and eddy covariance towers
-- Developed standardized protocols for soil carbon sampling across different plantation ages
-
-### Data Analysis and Modeling
-
-
-- Performed comparative analysis of carbon sink data across different monitoring scales (plot, stand, landscape)
-- Developed machine learning models to predict carbon sequestration rates under various management scenarios
-- Created comprehensive carbon budget assessments integrating above- and below-ground carbon pools
-
-## Research Outputs
-
-
-- Technical documentation for government funding applications on carbon measurement methodologies
-- Policy briefs on carbon sink quantification standards for regional implementation
-- Database management systems for long-term carbon monitoring data
+## Prior Related Work
+### Carbon Economics Assessment (Before November 2024)
+- Conducted preliminary assessment of economic pathways for plantation carbon sink realization in Guangxi province
+- Collaborated with government agencies on carbon peak and carbon neutrality policy frameworks
