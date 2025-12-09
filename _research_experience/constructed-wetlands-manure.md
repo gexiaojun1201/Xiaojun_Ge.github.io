@@ -1,7 +1,3 @@
-好的，按你原来的格式生成：
-
----
-
 ---
 title: "Technology Integration and Demonstration of Manure Pollution Ecological Treatment in Swine Farms Project"
 collection: research_experience
