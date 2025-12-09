@@ -9,11 +9,8 @@ location: "Guangzhou, China"
 ---
 
 **Position:** Graduate Research Student (M.S. Thesis Research)
-
 **Supervisors:** Zaijian Yuan, Xiaomin Li
-
-**Duration:** September 2020 – June 2022
-
+**Duration:** September 2020 – June 2022<br>
 **Project Description:** Investigated nitrogen cycling processes in constructed wetlands treating swine farm wastewater, with focus on microbial-mediated nitrogen transformations under antibiotic stress.
 
 ## Core Research (M.S. Thesis)
