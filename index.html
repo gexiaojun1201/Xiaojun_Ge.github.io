@@ -21,6 +21,30 @@
   /* The 12px --radius-pill override is gone, so the navbar CTA and the
      modal button are real pills again — 9999px, as measured. Card radius
      stays on the token this site already used. */
+  /* ── layout rhythm ────────────────────────────────────────────────
+     One content column for the whole page. --pad-x collapses to the
+     gutter on narrow screens and grows into real margin on wide ones,
+     so nothing ever runs edge to edge. */
+  :root{
+    --page-max: 1290px;   /* content column width */
+    --page-gutter: 24px;  /* hard minimum side gutter */
+    --space-y: .85;       /* vertical rhythm multiplier */
+    --pad-x: max(var(--page-gutter), calc((100% - var(--page-max)) / 2));
+  }
+  /* Navbar and Footer ship from the design system with a hard-coded 32px
+     side padding — pull them onto the same column as everything else. */
+  body nav, body footer{
+    padding-left: var(--pad-x) !important;
+    padding-right: var(--pad-x) !important;
+  }
+  body nav, body nav > div{flex-wrap:wrap;row-gap:10px}
+  /* Narrow screens: the About/Advisors split stacks instead of squeezing
+     two columns past the edge of the card. */
+  @media (max-width: 760px){
+    body .wur-about{grid-template-columns:1fr !important;gap:26px !important;padding:28px 24px !important}
+    body .wur-about__main{border-right:0 !important;padding-right:0 !important;
+      border-bottom:1px solid var(--border-subtle);padding-bottom:24px}
+  }
   body{margin:0;background:var(--bg-page)}
   a{color:var(--link);text-decoration:none}
   a:hover{color:var(--link-hover)}
@@ -37,7 +61,7 @@
 <div>
 
 <div>
-  <div style="background: #153816; padding: 64px clamp(24px,5vw,64px) 96px">
+  <div style="background: #153816; padding:calc(64px * var(--space-y)) var(--pad-x) calc(96px * var(--space-y))">
     <div style="display:flex;align-items:center;gap:40px;flex-wrap:wrap">
       <img src="https://gexiaojun1201.github.io/Xiaojun_Ge.github.io/images/profile.png" alt="Xiaojun Ge" style="width:150px;height:150px;border-radius:24px;object-fit:cover;border:1px solid rgba(251,246,229,0.3);flex-shrink:0;background:rgba(251,246,229,0.08)">
       <div style="flex:1 1 400px;min-width:280px">
@@ -61,9 +85,9 @@
     </div>
   </div>
 
-  <div style="max-width:1120px;margin:-48px auto 0;padding:0 clamp(24px,5vw,64px) 72px">
-    <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-card); box-shadow: 0 8px 24px rgba(21,56,22,0.10); padding: 40px 48px; display: grid; grid-template-columns: 1.5fr 1fr; gap: 48px; height: 401px; width: 1120px">
-      <div style="border-right:1px solid var(--border-subtle);padding-right:48px">
+  <div style="margin:-48px auto 0;padding:0 var(--pad-x) calc(72px * var(--space-y))">
+    <div class="wur-about" style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-card); box-shadow: 0 8px 24px rgba(21,56,22,0.10); padding: 40px 48px; display: grid; grid-template-columns: 1.5fr 1fr; gap: 48px; min-height: 401px">
+      <div class="wur-about__main" style="border-right:1px solid var(--border-subtle);padding-right:48px">
         <h2 style="font-family: var(--font-serif); font-size: 38px; font-weight: 700; color: var(--pine-green); margin: 0 0 14px">About</h2>
         <p style="font-family: var(--font-sans); font-size: 22px; line-height: 1.7; color: var(--forest-text); margin: 0 0 12px; text-wrap: pretty; text-align: justify">I hold an M.S. in Environmental Science &amp; Engineering from <a href="https://www.scnu.edu.cn/" target="_blank" rel="noopener" style="color:var(--color-primary);text-decoration:underline;text-decoration-color:rgba(0,138,0,.45);text-underline-offset:3px">South China Normal University</a>, and I am currently a researcher at <a href="http://www.gxjl.cn/" target="_blank" rel="noopener" style="color:var(--color-primary);text-decoration:underline;text-decoration-color:rgba(0,138,0,.45);text-underline-offset:3px">Guangxi Research Institute of Metrology &amp; Test</a>, specializing in quantitative measurement and uncertainty analysis of forest and agricultural carbon sinks.</p>
         <p style="font-family: var(--font-sans); font-size: 22px; line-height: 1.7; color: var(--text-muted); margin: 0; text-wrap: pretty; text-align: left">My expertise covers soil-ecosystem material cycling processes and their regulatory mechanisms: nutrient coupling, solute transport, carbon budget quantification, and optimized management.</p>
@@ -83,7 +107,7 @@
   </div>
 </div>
 
-<section style="padding:36px clamp(24px,5vw,64px) 48px">
+<section style="padding:calc(36px * var(--space-y)) var(--pad-x) calc(48px * var(--space-y))">
   <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:20px">
     <div>
       <div style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:16px">Selected work</div>
@@ -103,7 +127,7 @@
   </div>
 </section>
 
-<section style="padding:36px clamp(24px,5vw,64px) 48px">
+<section style="padding:calc(36px * var(--space-y)) var(--pad-x) calc(48px * var(--space-y))">
   <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:20px">
     <div>
       <div style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:16px">In the field</div>
@@ -125,7 +149,7 @@
 </section>
 
 <sc-if value="{{ showEducation }}" hint-placeholder-val="{{ false }}">
-<section style="padding:32px clamp(24px,5vw,64px) 36px">
+<section style="padding:calc(32px * var(--space-y)) var(--pad-x) calc(36px * var(--space-y))">
   <div style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:16px">Background</div>
   <h2 style="font-family:var(--font-serif);font-size:30px;font-weight:700;color:var(--pine-green);margin:0 0 20px">Education &amp; appointments</h2>
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
@@ -144,12 +168,12 @@
 
 <sc-if value="{{ isPublications }}" hint-placeholder-val="{{ false }}">
 <div>
-  <section style="padding:40px clamp(24px,5vw,64px) 26px">
+  <section style="padding:calc(40px * var(--space-y)) var(--pad-x) calc(26px * var(--space-y))">
     <a href="#home" class="wur-arrowlink wur-arrowlink--back"><span class="wur-arrow" aria-hidden="true">←</span> Home</a>
     <h1 style="font-family:var(--font-serif);font-size:42px;font-weight:700;color:var(--pine-green);margin:16px 0 8px">Publications</h1>
     
   </section>
-  <section style="padding:0 clamp(24px,5vw,64px) 44px">
+  <section style="padding:0 var(--pad-x) calc(44px * var(--space-y))">
     <div style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:18px">Published</div>
     <div style="display:flex;flex-direction:column;gap:16px">
       <sc-for list="{{ publications }}" as="p" hint-placeholder-count="4">
@@ -163,7 +187,7 @@
       </sc-for>
     </div>
   </section>
-  <section style="padding:32px clamp(24px,5vw,64px) 72px">
+  <section style="padding:calc(32px * var(--space-y)) var(--pad-x) calc(72px * var(--space-y))">
     <div style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:18px">Manuscripts under review &amp; in preparation</div>
     <div style="display:flex;flex-direction:column;gap:16px">
       <sc-for list="{{ manuscripts }}" as="m" hint-placeholder-count="4">
@@ -181,13 +205,13 @@
 
 <sc-if value="{{ isResearch }}" hint-placeholder-val="{{ false }}">
 <div>
-  <section style="padding:40px clamp(24px,5vw,64px) 26px">
+  <section style="padding:calc(40px * var(--space-y)) var(--pad-x) calc(26px * var(--space-y))">
     <a href="#home" class="wur-arrowlink wur-arrowlink--back"><span class="wur-arrow" aria-hidden="true">←</span> Home</a>
     <h1 style="font-family:var(--font-serif);font-size:42px;font-weight:700;color:var(--pine-green);margin:16px 0 8px">Research experience</h1>
     
   </section>
 
-  <section style="padding:0 clamp(24px,5vw,64px) 44px">
+  <section style="padding:0 var(--pad-x) calc(44px * var(--space-y))">
     <div style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:18px">Ongoing</div>
     <div style="display:flex;flex-direction:column;gap:16px">
       <sc-for list="{{ ongoingProjects }}" as="e" hint-placeholder-count="4">
@@ -202,7 +226,7 @@
     </div>
   </section>
 
-  <section style="padding:32px clamp(24px,5vw,64px) 72px">
+  <section style="padding:calc(32px * var(--space-y)) var(--pad-x) calc(72px * var(--space-y))">
     <div style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:18px">Finished</div>
     <div style="display:flex;flex-direction:column;gap:16px">
       <sc-for list="{{ finishedProjects }}" as="e" hint-placeholder-count="4">
@@ -221,12 +245,12 @@
 
 <sc-if value="{{ isSkills }}" hint-placeholder-val="{{ false }}">
 <div>
-  <section style="padding:40px clamp(24px,5vw,64px) 26px">
+  <section style="padding:calc(40px * var(--space-y)) var(--pad-x) calc(26px * var(--space-y))">
     <a href="#home" class="wur-arrowlink wur-arrowlink--back"><span class="wur-arrow" aria-hidden="true">←</span> Home</a>
     <h1 style="font-family:var(--font-serif);font-size:42px;font-weight:700;color:var(--pine-green);margin:16px 0 8px">Skills</h1>
     <p style="font-family: var(--font-sans); font-size: 17px; color: var(--text-muted); margin: 0; display: none">Field and laboratory methods, analytical instrumentation, and statistical, geospatial and bioinformatic tools</p><p style="font-family: var(--font-sans); font-size: 17px; color: var(--text-muted); margin: 0; display: none">Field and laboratory methods, analytical instrumentation, and statistical, geospatial and bioinformatic tools</p>
   </section>
-  <section style="padding:0 clamp(24px,5vw,64px) 72px">
+  <section style="padding:0 var(--pad-x) calc(72px * var(--space-y))">
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;align-items:start">
       <sc-for list="{{ skillGroups }}" as="g" hint-placeholder-count="3">
         <div style="background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:26px 28px">
