@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+<link rel="stylesheet" href="_ds/wur-design-system-fcf266a9-50a7-420d-bee6-00e313ecfd49/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/wur-design-system-fcf266a9-50a7-420d-bee6-00e313ecfd49/tokens/colors.css">
+<link rel="stylesheet" href="_ds/wur-design-system-fcf266a9-50a7-420d-bee6-00e313ecfd49/tokens/typography.css">
+<link rel="stylesheet" href="_ds/wur-design-system-fcf266a9-50a7-420d-bee6-00e313ecfd49/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/wur-design-system-fcf266a9-50a7-420d-bee6-00e313ecfd49/tokens/effects.css">
+<link rel="stylesheet" href="_ds/wur-design-system-fcf266a9-50a7-420d-bee6-00e313ecfd49/styles.css">
+<script src="_ds/wur-design-system-fcf266a9-50a7-420d-bee6-00e313ecfd49/_ds_bundle.js"></script>
+<style>
+  :root{--radius-pill:12px}
+  body{margin:0;background:var(--bg-page)}
+  a{color:var(--link);text-decoration:none}
+  a:hover{color:var(--link-hover)}
+  p a{text-decoration:underline}
+</style>
+</helmet>
+
+<div style="background:var(--bg-page);min-height:100vh">
+
+<x-import component-from-global-scope="WURDesignSystem_fcf266.Navbar" from="" brand="Xiaojun Ge" links="{{ navLinks }}" cta-label="Contact" hint-size="100%,72px"></x-import>
+
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<div>
+
+<div>
+  <div style="background: #153816; padding: 64px clamp(24px,5vw,64px) 96px">
+    <div style="display:flex;align-items:center;gap:40px;flex-wrap:wrap">
+      <img src="https://gexiaojun1201.github.io/Xiaojun_Ge.github.io/images/profile.png" alt="Xiaojun Ge" style="width:150px;height:150px;border-radius:24px;object-fit:cover;border:1px solid rgba(251,246,229,0.3);flex-shrink:0;background:rgba(251,246,229,0.08)">
+      <div style="flex:1 1 400px;min-width:280px">
+        <span style="display: inline-flex; align-items: center; gap: 8px; background: rgba(251,246,229,0.12); color: #FBF6E5; font-family: var(--font-sans); font-size: 20px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; border-radius: 9999px; padding: 7px 15px; margin-bottom: 18px">
+          <span style="width:7px;height:7px;border-radius:50%;background:#FBF6E5;flex-shrink:0"></span>Seeking PhD opportunities
+        </span>
+        <h1 style="font-family:var(--font-serif);font-size:64px;font-weight:400;line-height:1.05;color:#FBF6E5;margin:0 0 10px">Xiaojun Ge</h1>
+        <p style="font-family: var(--font-sans); font-size: 20px; color: rgba(251,246,229,0.85); margin: 0 0 6px">Soil &amp; Environmental Science Researcher</p>
+        <p style="font-family:var(--font-sans);font-size:15px;color:rgba(251,246,229,0.62);margin:0 0 22px">Guangxi Research Institute of Metrology &amp; Test · Nanning, China</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:22px">
+          <a href="{{ cvHref }}" style="display: inline-flex; align-items: center; font-family: var(--font-sans); font-size: 20px; font-weight: 600; color: #153816; background: #FBF6E5; border-radius: 9999px; padding: 14px 28px; text-decoration: none; transition: background 180ms ease-out" style-hover="background:#F3ECD3">Download CV (PDF)</a>
+          <a href="mailto:isgexiaojun@gmail.com" style="display:inline-flex;align-items:center;font-family:var(--font-sans);font-size:16px;font-weight:600;color:#FBF6E5;border:1px solid rgba(251,246,229,0.5);border-radius:9999px;padding:13px 27px;text-decoration:none;transition:border-color 180ms ease-out" style-hover="border-color:#FBF6E5">Email me</a>
+          <a href="https://orcid.org/0009-0002-9282-2804" style="display:inline-flex;align-items:center;font-family:var(--font-sans);font-size:16px;font-weight:600;color:#FBF6E5;border:1px solid rgba(251,246,229,0.5);border-radius:9999px;padding:13px 27px;text-decoration:none;transition:border-color 180ms ease-out" style-hover="border-color:#FBF6E5">ORCID</a>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:0.6em">
+          <sc-for list="{{ interestsColored }}" as="it" hint-placeholder-count="5">
+            <span style="font-family: var(--font-sans); font-size: 16px; font-weight: 600; line-height: 1.2; border-radius: 12px; padding: 0.5em 1.05em; background: {{ it.bg }}; color: {{ it.fg }}">{{ it.label }}</span>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width:1120px;margin:-48px auto 0;padding:0 clamp(24px,5vw,64px) 72px">
+    <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-card); box-shadow: 0 8px 24px rgba(21,56,22,0.10); padding: 40px 48px; display: grid; grid-template-columns: 1.5fr 1fr; gap: 48px; height: 401px; width: 1120px">
+      <div style="border-right:1px solid var(--border-subtle);padding-right:48px">
+        <h2 style="font-family: var(--font-serif); font-size: 38px; font-weight: 700; color: var(--pine-green); margin: 0 0 14px">About</h2>
+        <p style="font-family: var(--font-sans); font-size: 22px; line-height: 1.7; color: var(--forest-text); margin: 0 0 12px; text-wrap: pretty; text-align: justify">I hold an M.S. in Environmental Science &amp; Engineering from <a href="https://www.scnu.edu.cn/" target="_blank" rel="noopener" style="color:var(--color-primary);text-decoration:underline;text-decoration-color:rgba(0,138,0,.45);text-underline-offset:3px">South China Normal University</a>, and I am currently a researcher at <a href="http://www.gxjl.cn/" target="_blank" rel="noopener" style="color:var(--color-primary);text-decoration:underline;text-decoration-color:rgba(0,138,0,.45);text-underline-offset:3px">Guangxi Research Institute of Metrology &amp; Test</a>, specializing in quantitative measurement and uncertainty analysis of forest and agricultural carbon sinks.</p>
+        <p style="font-family: var(--font-sans); font-size: 22px; line-height: 1.7; color: var(--text-muted); margin: 0; text-wrap: pretty; text-align: left">My expertise covers soil-ecosystem material cycling processes and their regulatory mechanisms: nutrient coupling, solute transport, carbon budget quantification, and optimized management.</p>
+      </div>
+      <div>
+        <h2 style="font-family: var(--font-serif); font-size: 38px; font-weight: 700; color: var(--pine-green); margin: 0 0 14px">Advisors</h2>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <sc-for list="{{ advisors }}" as="a" hint-placeholder-count="3">
+            <div style="font-family:var(--font-sans);font-size:16px;line-height:1.5">
+              <a href="{{ a.link }}" target="_blank" rel="noopener" style="font-weight: 600; color: var(--forest-text); font-size: 25px" style-hover="color:var(--color-primary)">{{ a.name }}</a>
+              <div style="color: var(--text-muted); font-size: 20px; margin-top: 2px; text-wrap: pretty">{{ a.affiliation }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section style="padding:36px clamp(24px,5vw,64px) 48px">
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:20px">
+    <div>
+      <div style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:16px">Selected work</div>
+      <h2 style="font-family:var(--font-serif);font-size:30px;font-weight:700;color:var(--pine-green);margin:0">Publications</h2>
+    </div>
+    <a href="#publications" style="font-family:var(--font-sans);font-size:16px;font-weight:600">All publications →</a>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:14px">
+    <sc-for list="{{ homePublications }}" as="p" hint-placeholder-count="3">
+      <a href="{{ p.hash }}" style="display:block;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:20px 24px;color:var(--text-primary);cursor:pointer;transition:border-color 150ms ease-out,transform 180ms cubic-bezier(0.87,0,0.13,1),box-shadow 180ms ease-out" style-hover="border-color:var(--color-primary);transform:scale(1.012);box-shadow:0 8px 20px rgba(21,56,22,0.10)">
+        <div style="font-family:var(--font-sans);font-size:15px;font-weight:600;color:var(--text-muted);margin-bottom:7px">{{ p.meta }}</div>
+        <div style="font-family:var(--font-serif);font-size:20px;font-weight:600;line-height:1.35">{{ p.title }}</div>
+      </a>
+    </sc-for>
+  </div>
+</section>
+
+<section style="padding:36px clamp(24px,5vw,64px) 48px">
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:20px">
+    <div>
+      <div style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:16px">In the field</div>
+      <h2 style="font-family:var(--font-serif);font-size:30px;font-weight:700;color:var(--pine-green);margin:0">Research experience</h2>
+    </div>
+    <a href="#research" style="font-family:var(--font-sans);font-size:16px;font-weight:600">All projects →</a>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:14px">
+    <sc-for list="{{ homeProjects }}" as="e" hint-placeholder-count="3">
+      <a href="{{ e.hash }}" style="display:block;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:20px 24px;color:var(--text-primary);cursor:pointer;transition:border-color 150ms ease-out,transform 180ms cubic-bezier(0.87,0,0.13,1),box-shadow 180ms ease-out" style-hover="border-color:var(--color-primary);transform:scale(1.012);box-shadow:0 8px 20px rgba(21,56,22,0.10)">
+        <div style="font-family:var(--font-sans);font-size:15px;font-weight:600;color:var(--text-muted);margin-bottom:7px">{{ e.meta }}</div>
+        <div style="font-family:var(--font-serif);font-size:20px;font-weight:600;line-height:1.35;margin-bottom:6px">{{ e.title }}</div>
+        <div style="font-family:var(--font-sans);font-size:16px;line-height:1.55;color:var(--text-muted);text-wrap:pretty">{{ e.focus }}</div>
+      </a>
+    </sc-for>
+  </div>
+</section>
+
+<sc-if value="{{ showEducation }}" hint-placeholder-val="{{ false }}">
+<section style="padding:32px clamp(24px,5vw,64px) 36px">
+  <div style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:16px">Background</div>
+  <h2 style="font-family:var(--font-serif);font-size:30px;font-weight:700;color:var(--pine-green);margin:0 0 20px">Education &amp; appointments</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+    <sc-for list="{{ education }}" as="ed" hint-placeholder-count="2">
+      <div style="background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:22px 24px">
+        <div style="font-family: var(--font-sans); font-size: 15px; font-weight: 600; letter-spacing: 0.03em; color: var(--text-muted); margin-bottom: 10px">{{ ed.period }}</div>
+        <div style="font-family:var(--font-serif);font-size:20px;font-weight:600;line-height:1.35;color:var(--forest-text);margin-bottom:6px">{{ ed.title }}</div>
+        <div style="font-family:var(--font-sans);font-size:16px;line-height:1.5;color:var(--text-muted)"><a href="{{ ed.link }}" target="_blank" rel="noopener">{{ ed.org }}</a></div>
+      </div>
+    </sc-for>
+  </div>
+</section>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isPublications }}" hint-placeholder-val="{{ false }}">
+<div>
+  <section style="padding:40px clamp(24px,5vw,64px) 26px">
+    <a href="#home" style="font-family:var(--font-sans);font-size:16px;font-weight:600">← Home</a>
+    <h1 style="font-family:var(--font-serif);font-size:42px;font-weight:700;color:var(--pine-green);margin:16px 0 8px">Publications</h1>
+    
+  </section>
+  <section style="padding:0 clamp(24px,5vw,64px) 44px">
+    <div style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:18px">Published</div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <sc-for list="{{ publications }}" as="p" hint-placeholder-count="4">
+        <a href="{{ p.hash }}" style="display:block;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:24px 28px;color:var(--text-primary);cursor:pointer;transition:border-color 150ms ease-out,transform 180ms cubic-bezier(0.87,0,0.13,1),box-shadow 180ms ease-out" style-hover="border-color:var(--color-primary);transform:scale(1.012);box-shadow:0 8px 20px rgba(21,56,22,0.10)">
+          <div style="font-family: var(--font-sans); font-size: 16px; font-weight: 600; color: var(--text-muted); margin-bottom: 7px">{{ p.meta }}</div>
+          <div style="font-family: var(--font-serif); font-size: 25px; font-weight: 600; line-height: 1.35; margin-bottom: 7px">{{ p.title }}</div>
+          <div style="font-family: var(--font-sans); font-size: 18px; line-height: 1.55; color: var(--text-muted); text-wrap: pretty">{{ p.teaser }}</div>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+  <section style="padding:32px clamp(24px,5vw,64px) 72px">
+    <div style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:18px">Manuscripts under review &amp; in preparation</div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <sc-for list="{{ manuscripts }}" as="m" hint-placeholder-count="4">
+        <a href="{{ m.hash }}" style="display:block;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:22px 28px;color:var(--text-primary);cursor:pointer;transition:border-color 150ms ease-out,transform 180ms cubic-bezier(0.87,0,0.13,1),box-shadow 180ms ease-out" style-hover="border-color:var(--color-primary);transform:scale(1.012);box-shadow:0 8px 20px rgba(21,56,22,0.10)">
+          <div style="font-family: var(--font-sans); font-size: 16px; font-weight: 600; color: var(--text-muted); margin-bottom: 7px">{{ m.meta }}</div>
+          <div style="font-family: var(--font-serif); font-size: 25px; font-weight: 600; line-height: 1.35">{{ m.title }}</div>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+</div>
+</sc-if>
+
+<sc-if value="{{ isResearch }}" hint-placeholder-val="{{ false }}">
+<div>
+  <section style="padding:40px clamp(24px,5vw,64px) 26px">
+    <a href="#home" style="font-family:var(--font-sans);font-size:16px;font-weight:600">← Home</a>
+    <h1 style="font-family:var(--font-serif);font-size:42px;font-weight:700;color:var(--pine-green);margin:16px 0 8px">Research experience</h1>
+    
+  </section>
+
+  <section style="padding:0 clamp(24px,5vw,64px) 44px">
+    <div style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:18px">Ongoing</div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <sc-for list="{{ ongoingProjects }}" as="e" hint-placeholder-count="4">
+        <a href="{{ e.hash }}" style="display:block;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:22px 28px;color:var(--text-primary);cursor:pointer;transition:border-color 150ms ease-out,transform 180ms cubic-bezier(0.87,0,0.13,1),box-shadow 180ms ease-out" style-hover="border-color:var(--color-primary);transform:scale(1.012);box-shadow:0 8px 20px rgba(21,56,22,0.10)">
+          <div style="font-family: var(--font-sans); font-size: 16px; font-weight: 600; color: var(--text-muted); margin-bottom: 7px">{{ e.meta }}</div>
+          <div style="font-family: var(--font-serif); font-size: 25px; font-weight: 600; line-height: 1.35; color: var(--text-primary); margin-bottom: 7px">{{ e.title }}</div>
+          <div style="font-family: var(--font-sans); font-size: 18px; line-height: 1.55; color: var(--text-muted); text-wrap: pretty">{{ e.focus }}</div>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="padding:32px clamp(24px,5vw,64px) 72px">
+    <div style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:18px">Finished</div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <sc-for list="{{ finishedProjects }}" as="e" hint-placeholder-count="4">
+        <a href="{{ e.hash }}" style="display:block;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:22px 28px;color:var(--text-primary);cursor:pointer;transition:border-color 150ms ease-out,transform 180ms cubic-bezier(0.87,0,0.13,1),box-shadow 180ms ease-out" style-hover="border-color:var(--color-primary);transform:scale(1.012);box-shadow:0 8px 20px rgba(21,56,22,0.10)">
+          <div style="font-family: var(--font-sans); font-size: 16px; font-weight: 600; color: var(--text-muted); margin-bottom: 7px">{{ e.meta }}</div>
+          <div style="font-family: var(--font-serif); font-size: 25px; font-weight: 600; line-height: 1.35; color: var(--text-primary); margin-bottom: 7px">{{ e.title }}</div>
+          <div style="font-family: var(--font-sans); font-size: 18px; line-height: 1.55; color: var(--text-muted); text-wrap: pretty">{{ e.focus }}</div>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+</div>
+</sc-if>
+
+<sc-if value="{{ isSkills }}" hint-placeholder-val="{{ false }}">
+<div>
+  <section style="padding:40px clamp(24px,5vw,64px) 26px">
+    <a href="#home" style="font-family:var(--font-sans);font-size:16px;font-weight:600">← Home</a>
+    <h1 style="font-family:var(--font-serif);font-size:42px;font-weight:700;color:var(--pine-green);margin:16px 0 8px">Skills</h1>
+    <p style="font-family: var(--font-sans); font-size: 17px; color: var(--text-muted); margin: 0; display: none">Field and laboratory methods, analytical instrumentation, and statistical, geospatial and bioinformatic tools</p><p style="font-family: var(--font-sans); font-size: 17px; color: var(--text-muted); margin: 0; display: none">Field and laboratory methods, analytical instrumentation, and statistical, geospatial and bioinformatic tools</p>
+  </section>
+  <section style="padding:0 clamp(24px,5vw,64px) 72px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;align-items:start">
+      <sc-for list="{{ skillGroups }}" as="g" hint-placeholder-count="3">
+        <div style="background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:26px 28px">
+          <h2 style="font-family: var(--font-serif); font-size: 25px; font-weight: 700; color: var(--pine-green); margin: 0 0 18px">{{ g.heading }}</h2>
+          <div style="display:flex;flex-direction:column;gap:18px">
+            <sc-for list="{{ g.subs }}" as="s" hint-placeholder-count="4">
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <div style="font-family: var(--font-sans); font-size: 18px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-primary)">{{ s.label }}</div>
+                <div style="display:flex;flex-direction:column;gap:6px">
+                  <sc-for list="{{ s.itemList }}" as="it" hint-placeholder-count="3">
+                    <div style="display:flex;gap:10px">
+                      <span style="flex:none;width:5px;height:5px;border-radius:50%;background:var(--color-primary);opacity:0.5;margin-top:9px"></span>
+                      <span style="font-family:var(--font-sans);font-size:16px;line-height:1.5;color:var(--text-primary);text-wrap:pretty">{{ it }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+</div>
+</sc-if>
+
+<x-import component-from-global-scope="WURDesignSystem_fcf266.Footer" from="" brand="Xiaojun Ge" columns="{{ footerColumns }}" hint-size="100%,240px"></x-import>
+
+<sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
+<div onClick="{{ closeModal }}" style="position:fixed;inset:0;background:rgba(20,25,20,0.45);backdrop-filter:blur(2.5px);-webkit-backdrop-filter:blur(2.5px);display:flex;align-items:center;justify-content:center;padding:clamp(16px,4vw,40px);z-index:100">
+  <div onClick="{{ stop }}" style="background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:0 24px 60px rgba(21,56,22,0.25);max-width:780px;width:100%;max-height:84vh;overflow-y:auto;overflow-x:hidden;padding:clamp(24px,4vw,40px)">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-bottom:14px">
+      <div style="font-family:var(--font-sans);font-size:16px;font-weight:600;color:var(--text-muted)">{{ modalMeta }}</div>
+      <div onClick="{{ closeModal }}" style="font-family:var(--font-sans);font-size:26px;line-height:1;color:var(--text-muted);cursor:pointer;padding:2px 6px;flex-shrink:0">×</div>
+    </div>
+    <h2 style="font-family:var(--font-serif);font-size:28px;line-height:1.25;font-weight:700;color:var(--pine-green);margin:0 0 12px">{{ modalTitle }}</h2>
+    <sc-if value="{{ modalAuthors }}" hint-placeholder-val="{{ false }}">
+      <p style="font-family:var(--font-sans);font-size:16px;line-height:1.5;color:var(--text-muted);margin:0 0 22px">{{ modalAuthors }}</p>
+    </sc-if>
+    <div style="display:flex;flex-direction:column;gap:22px">
+      <sc-for list="{{ modalSections }}" as="s" hint-placeholder-count="3">
+        <div>
+          <div style="font-family:var(--font-sans);font-size:14px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-primary);margin-bottom:8px">{{ s.label }}</div>
+          <sc-if value="{{ s.hasText }}" hint-placeholder-val="{{ true }}">
+            <p style="font-family:var(--font-sans);font-size:17px;line-height:1.7;color:var(--text-primary);margin:0;text-wrap:pretty">{{ s.text }}</p>
+          </sc-if>
+          <sc-if value="{{ s.hasBullets }}" hint-placeholder-val="{{ false }}">
+            <ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:7px">
+              <sc-for list="{{ s.bullets }}" as="b" hint-placeholder-count="3">
+                <li style="font-family:var(--font-sans);font-size:17px;line-height:1.6;color:var(--text-primary);text-wrap:pretty">{{ b }}</li>
+              </sc-for>
+            </ul>
+          </sc-if>
+        </div>
+      </sc-for>
+    </div>
+    <sc-if value="{{ modalHasPhotos }}" hint-placeholder-val="{{ false }}">
+      <div style="margin-top:26px">
+        <div style="font-family:var(--font-sans);font-size:14px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-primary);margin-bottom:10px">Field &amp; lab photos</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px">
+          <sc-for list="{{ modalPhotos }}" as="ph" hint-placeholder-count="3">
+            <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="{{ ph.id }}" placeholder="{{ ph.placeholder }}" shape="rounded" radius="16" style="height:150px" hint-size="100%,150px"></x-import>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ modalLink }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:26px;padding-top:22px">
+        <x-import component-from-global-scope="WURDesignSystem_fcf266.Button" from="" variant="primary" icon="{{ true }}" href="{{ modalLink }}" hint-size="auto,44px">View paper</x-import>
+        <span style="font-family:var(--font-sans);font-size:15px;color:var(--text-muted);min-width:0;max-width:100%;overflow-wrap:break-word;word-break:break-word">{{ modalDoi }}</span>
+      </div>
+    </sc-if>
+  </div>
+</div>
+</sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900},&quot;cvHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://gexiaojun1201.github.io/Xiaojun_Ge.github.io/cv/&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Content&quot;}}">
+const EDUCATION = [
+  {period:'2022 — present', title:'Researcher, forest & agricultural carbon sinks', org:'Guangxi Research Institute of Metrology & Test', link:'http://www.gxjl.cn/'},
+  {period:'2020 — 2022', title:'M.S. Environmental Science & Engineering', org:'South China Normal University', link:'https://www.scnu.edu.cn/'}
+];
+
+const ADVISORS = [
+  {name:'Dr. Xianli Xu', affiliation:'Institute of Subtropical Agriculture, Chinese Academy of Sciences', link:'https://www.researchgate.net/profile/Xianli-Xu'},
+  {name:'Dr. Zaijian Yuan', affiliation:'Institute of Eco-environmental and Soil Science, Guangdong Academy of Science', link:'https://www.researchgate.net/scientific-contributions/Zaijian-Yuan-2007380218'},
+  {name:'Dr. Jing Zhu', affiliation:'College of Environment and Resources, Guangxi Normal University', link:'https://www.researchgate.net/profile/Jing-Zhu-44'}
+];
+
+const THEME_PILL_COLORS = {
+  food: {bg:'#6B8F1F', fg:'#FFFFFF'},
+  water: {bg:'#2E6E8E', fg:'#FFFFFF'},
+  climate: {bg:'#C79A16', fg:'#153816'},
+  biobased: {bg:'#008A00', fg:'#FFFFFF'},
+  institutional: {bg:'#661118', fg:'#FFFFFF'}
+};
+
+const INTERESTS = [
+  {label:'Soil nutrient cycling & coupling', theme:'food'},
+  {label:'Solute transport & soil-water processes', theme:'water'},
+  {label:'Ecosystem carbon budget & uncertainty', theme:'climate'},
+  {label:'Soil erosion & tillage management', theme:'biobased'},
+  {label:'Environmental monitoring', theme:'institutional'}
+];
+
+const THEME_LABEL = {biobased:'Soil & tillage', water:'Water & nutrients', health:'Contaminants', climate:'Carbon & climate', food:'Agriculture', institutional:'Monitoring'};
+
+const PUBLICATIONS = [
+  {id:'pub-0', year:'2025', theme:'water', title:'Risk and driving factors of nitrogen and phosphorus runoff losses under extreme rainfall conditions: sludge application strategies in forest soils', venue:'CATENA', authors:'co-First author',
+   authorsFull:'Yang et al. — Xiaojun Ge, co-first author',
+   teaser:'Nitrogen and phosphorus losses via runoff, interflow, and sediment in sludge-amended eucalyptus forest soils.',
+   abstract:'Sewage sludge is increasingly applied to eucalyptus plantation soils as an organic amendment, but how the added nutrients behave under extreme rainfall is poorly constrained. This study used simulated extreme rainfall on sludge-amended forest soils to quantify nitrogen and phosphorus losses through three separate pathways — surface runoff, interflow, and eroded sediment — and to identify the conditions under which nutrient export becomes an ecological risk. Sludge application rate, rainfall regime, and particle-size-dependent enrichment of nutrients in sediment emerged as the dominant controls on nutrient transport, and the results are used to derive application strategies that keep losses within an acceptable range.',
+   points:[
+     'N and P losses partitioned across surface runoff, interflow, and sediment under extreme simulated rainfall.',
+     'Sludge application rate and rainfall regime control the magnitude of nutrient export.',
+     'Nutrients are enriched in the fine sediment fractions, making sediment a key loss pathway.',
+     'Application strategies proposed to limit ecological risk in eucalyptus plantation soils.'
+   ],
+   doi:'https://doi.org/10.1016/j.catena.2025.109318'},
+  {id:'pub-1', year:'2023', theme:'climate', title:'Temporal characteristics and influencing factors of agricultural net carbon sink in Guangxi from 1978 to 2021', venue:'Chinese Journal of Eco-Agriculture', authors:'First author',
+   authorsFull:'Xiaojun Ge (first author), et al.',
+   teaser:'A 43-year account of agricultural carbon emissions, sequestration, and net carbon sink in Guangxi.',
+   abstract:'Agriculture is both a source of greenhouse gas emissions and a carbon sink, and the balance between the two decides whether a regional agricultural system adds to or offsets climate pressure. This study built a 43-year account (1978–2021) of agricultural carbon emissions and crop carbon sequestration in Guangxi using emission factor and carbon sequestration parameter methods, then analysed the temporal characteristics of the resulting net carbon sink. Fertilizer input, rice cultivation, crop yield, and agricultural mechanization were identified as the dominant factors shaping the regional agricultural carbon budget.',
+   points:[
+     'Agricultural carbon emissions, sequestration, and net carbon sink reconstructed for 1978–2021.',
+     'Emission factor and carbon sequestration parameter methods applied at provincial scale.',
+     'Fertilizer input, rice cultivation, and mechanization dominate the emission side.',
+     'Crop yield growth is the main driver of the sequestration side.'
+   ],
+   doi:'https://doi.org/10.12357/cjea.20230523'},
+  {id:'pub-2', year:'2022', theme:'health', title:'Effects of biochar application on the loss characteristics of Cd from acidic soil under simulated rainfall conditions', venue:'Environmental Science and Pollution Research', authors:'Fourth author',
+   authorsFull:'Yuan et al. — Xiaojun Ge, fourth author',
+   teaser:'Biochar dose effects on cadmium availability and export from acidic red soil under simulated rainfall.',
+   abstract:'Cadmium in acidic red soil is mobile and readily exported during heavy rainfall, and biochar is widely proposed as an immobilizing amendment. This study applied simulated rainfall at 60 and 120 mm per hour to acidic soil amended with 0–7% biochar and tracked how Cd was partitioned between runoff and sediment. Biochar generally reduced Cd availability and total Cd loss, but the highest application rate combined with intense rainfall aggravated erosion and increased sediment-borne Cd export, indicating a dose beyond which the amendment becomes counterproductive.',
+   points:[
+     'Simulated rainfall at 60 and 120 mm per hour with biochar addition of 0–7%.',
+     'Biochar lowered Cd availability and both runoff- and sediment-borne Cd loss at moderate rates.',
+     'Excessive addition (7%) under intense rainfall aggravated erosion and Cd export.',
+     'An optimum application window exists for biochar remediation of acidic Cd-contaminated soil.'
+   ],
+   doi:'https://doi.org/10.1007/s11356-022-21623-x'},
+  {id:'pub-3', year:'2022', theme:'food', title:'Temporal and spatial variation characteristics and source analysis of agricultural non-point source pollution load in Guangdong during the past 20 years', venue:'Environmental Science', authors:'First author',
+   authorsFull:'Xiaojun Ge (first author), et al.',
+   teaser:'Two decades of agricultural non-point source pollution loads and their sources in Guangdong Province.',
+   abstract:'Agricultural non-point source pollution is the main diffuse pressure on water quality in rapidly developing coastal provinces. This study quantified COD, total nitrogen, and total phosphorus loads from agricultural sources across Guangdong Province from 1999 to 2019 and resolved their spatial and temporal variation and source structure. Livestock breeding, fertilizer application, and a rapidly expanding aquaculture sector were the dominant contributors shaping the province\u2019s pollution load over the two decades.',
+   points:[
+     'COD, TN, and TP loads from agricultural sources quantified for 1999–2019.',
+     'Spatial and temporal variation resolved across the province.',
+     'Livestock breeding and fertilizer application are the largest load contributors.',
+     'Aquaculture expansion emerges as a fast-growing source over the study period.'
+   ],
+   doi:'https://doi.org/10.13227/j.hjkx.202108071'}
+];
+
+const MANUSCRIPTS = [
+  {id:'ms-0', theme:'biobased', title:'Effects of deep vertical rotary tillage on sheet erosion processes during sugarcane growth in Latosolic Red Soil cultivation area', status:'Manuscript in preparation', authors:'First author',
+   authorsFull:'Xiaojun Ge (first author), et al.',
+   summary:'Field study of how deep vertical rotary tillage alters sheet erosion processes across the sugarcane growth cycle in Latosolic Red Soil.',
+   abstract:'Sugarcane fields on Latosolic Red Soil lose most of their soil through sheet erosion in the early growth stages, before the canopy closes. This study follows sheet erosion across a full sugarcane growth cycle under deep vertical rotary tillage and conventional tillage, relating runoff and soil loss to canopy development, surface roughness, and post-tillage soil structure.',
+   points:[
+     'Sheet erosion tracked across the whole sugarcane growth cycle rather than a single event.',
+     'Deep vertical rotary tillage compared against conventional tillage on the same soil type.',
+     'Erosion response linked to canopy cover, surface roughness, and soil structural change.'
+   ]},
+  {id:'ms-1', theme:'biobased', title:'Effect of deep vertical rotary tillage on aggregate stability and fragmentation mechanism of Latosolic Red Soil', status:'Submitted to Soil and Tillage Research', authors:'First author',
+   authorsFull:'Xiaojun Ge (first author), et al.',
+   summary:'Examines aggregate stability and fragmentation mechanisms in Latosolic Red Soil under deep vertical rotary tillage.',
+   abstract:'Aggregate stability determines how well Latosolic Red Soil resists raindrop impact and runoff shear. This study measures aggregate size distribution and stability in soil under deep vertical rotary tillage and identifies which fragmentation mechanism dominates after the plough pan is broken.',
+   points:[
+     'Aggregate size distribution and stability indices measured across tillage depths.',
+     'Fragmentation mechanisms separated to identify the dominant breakdown pathway.',
+     'Results link a common deep-tillage practice to soil structural resilience.'
+   ]},
+  {id:'ms-2', theme:'water', title:'Effect of multi-term antibiotic exposure on microbially mediated nitrogen reduction-oxidation process in sediment of surface-flow constructed wetland', status:'Manuscript in preparation', authors:'First author',
+   authorsFull:'Xiaojun Ge (first author), et al.',
+   summary:'Investigates how short- and long-term antibiotic exposure reshapes microbially mediated nitrogen reduction-oxidation in constructed wetland sediment.',
+   abstract:'Surface-flow constructed wetlands receive antibiotic residues along with the wastewater they treat, and those residues accumulate in the sediment where nitrogen removal actually happens. This study exposes wetland sediment to short-term and repeated antibiotic loading and combines nitrogen transformation rate measurements with microbial community and functional gene analysis to resolve how the reduction–oxidation processes respond.',
+   points:[
+     'Short-term and multi-term antibiotic exposure compared in the same sediment system.',
+     'Nitrogen transformation rates measured alongside microbial community composition.',
+     'Targets the nitrogen removal pathway that determines constructed wetland performance.'
+   ]},
+  {id:'ms-3', theme:'health', title:'Alleviating heavy metal migration risks by adding biochar during sludge amelioration of forest soil: evaluating differential loss across multiple media', status:'In revision at Journal of Hazardous Materials', authors:'Third author',
+   authorsFull:'Xiaojun Ge, third author',
+   summary:'Evaluates biochar as a mitigation measure for heavy metal migration during sludge amelioration of forest soil, across runoff, interflow, and sediment.',
+   abstract:'Sewage sludge improves the fertility of degraded forest soil but carries heavy metals with it. This study adds biochar during sludge amelioration and evaluates whether it reduces metal migration, comparing losses across surface runoff, interflow, and eroded sediment instead of assessing a single medium.',
+   points:[
+     'Heavy metal loss compared across three transport media rather than one.',
+     'Biochar tested as a mitigation measure inside a realistic sludge amendment scenario.',
+     'Supports safer sludge reuse in forest soil amelioration.'
+   ]}
+];
+
+const ONGOING = [
+  {id:'ong-0', theme:'water', period:'Ongoing', statusLabel:'Manuscript in preparation', title:'Antibiotic effects on nitrogen transformation in constructed wetland sediments',
+   focus:'How short- and long-term antibiotic exposure alters microbially mediated nitrogen transformation in surface-flow constructed wetland sediment.',
+   overview:'Surface-flow constructed wetlands are a low-cost polishing step for rural and aquaculture wastewater, but the same water carries antibiotic residues into the sediment where nitrogen removal actually takes place. This project exposes wetland sediment to single-dose and repeated antibiotic loading and tracks how the microbially mediated nitrogen reduction–oxidation processes respond over time, so that treatment performance can be interpreted alongside the contaminant load the wetland receives.',
+   role:[
+     'Designed the multi-term exposure experiment and built the sediment microcosm system.',
+     'Ran the nitrogen transformation rate measurements and sediment physicochemical analysis.',
+     'Processed amplicon sequencing and functional gene data in QIIME2 and R.',
+     'Writing the manuscript as first author.'
+   ],
+   outcomes:[
+     'Manuscript in preparation, first author.',
+     'Paired rate and microbial community dataset linking antibiotic loading to shifts in the nitrogen removal pathway.'
+   ]},
+  {id:'ong-1', theme:'biobased', period:'Ongoing', statusLabel:'Submitted to Soil and Tillage Research', title:'Deep vertical rotary tillage and soil aggregate stability in Latosolic Red Soil',
+   focus:'Aggregate stability and fragmentation mechanisms of Latosolic Red Soil under deep vertical rotary tillage.',
+   overview:'Latosolic Red Soil under long-term sugarcane cultivation develops a compacted plough pan that limits rooting depth and infiltration. Deep vertical rotary tillage breaks that layer, but it also reworks the soil structure that holds the surface together. This project measures how aggregate stability responds to the practice and which fragmentation mechanism dominates afterwards.',
+   role:[
+     'Set up the tillage treatment plots and the depth-resolved sampling scheme.',
+     'Measured aggregate size distribution, stability indices, and sesquioxide content.',
+     'Ran the mechanism analysis separating the contributions to aggregate breakdown.',
+     'Wrote and submitted the manuscript as first author.'
+   ],
+   outcomes:[
+     'Submitted to Soil and Tillage Research, first author.',
+     'Aggregate stability dataset for Latosolic Red Soil under deep vertical rotary tillage.'
+   ]},
+  {id:'ong-2', theme:'health', period:'Ongoing', statusLabel:'In revision at Journal of Hazardous Materials', title:'Biochar for heavy metal risk mitigation in forest soil remediation',
+   focus:'Biochar addition during sludge amelioration of forest soil, evaluating differential heavy metal loss across multiple media.',
+   overview:'Sewage sludge improves the fertility of degraded forest soil but brings heavy metals with it. This project adds biochar during sludge amelioration and evaluates whether it reduces metal migration, comparing losses across surface runoff, interflow, and eroded sediment so that the mitigation effect is judged on the whole transport system rather than one medium.',
+   role:[
+     'Ran the simulated rainfall experiments and the multi-medium sample collection.',
+     'Analysed heavy metal concentrations in runoff, interflow, and sediment.',
+     'Contributed the differential-loss analysis and the figures to the manuscript.'
+   ],
+   outcomes:[
+     'In revision at Journal of Hazardous Materials, third author.',
+     'Evidence on whether biochar addition lowers heavy metal risk during sludge reuse in forest soil.'
+   ]},
+  {id:'ong-3', theme:'food', period:'Ongoing', statusLabel:'Manuscript in preparation', title:'Tillage effects on sheet erosion in sugarcane cultivation systems',
+   focus:'Sheet erosion processes during sugarcane growth in Latosolic Red Soil cultivation areas under different tillage regimes.',
+   overview:'Sugarcane fields in Latosolic Red Soil areas lose most of their soil to sheet erosion in the early growth stages, before the canopy closes. This project follows sheet erosion across the full growth cycle under different tillage regimes to locate the window in which protection matters most and to test whether deep vertical rotary tillage widens or narrows it.',
+   role:[
+     'Installed the runoff plots and monitored rainfall, runoff, and sediment through the growth cycle.',
+     'Linked erosion rates to canopy cover, surface roughness, and post-tillage soil structure.',
+     'Leading the analysis and the manuscript as first author.'
+   ],
+   outcomes:[
+     'Manuscript in preparation, first author.',
+     'Growth-stage resolved sheet erosion dataset for the sugarcane cultivation area.'
+   ]}
+];
+
+const FINISHED = [
+  {id:'proj-0', theme:'water', period:'2024–2025', statusLabel:'Finished', title:'Nitrogen and Phosphorus Runoff from Forest Soils',
+   focus:'Nutrient loss pathways and ecological risk assessment in sludge-amended eucalyptus plantations.',
+   overview:'Sludge-amended eucalyptus plantation soils were put through extreme simulated rainfall to establish where nitrogen and phosphorus actually leave the slope. The project separated surface runoff, interflow, and sediment as transport pathways, measured how nutrients are enriched in different sediment particle sizes, and turned the results into sludge application strategies that keep ecological risk within an acceptable range.',
+   role:[
+     'Built the rainfall simulation setup and the runoff and interflow collection system.',
+     'Carried out nutrient analysis of water and sediment samples, including particle-size fractionation.',
+     'Performed the loss partitioning and ecological risk analysis.',
+     'Co-wrote the paper as co-first author.'
+   ],
+   outcomes:[
+     'Published in CATENA (2025), co-first author.',
+     'Quantified N and P transport across three pathways and identified particle-size dependent enrichment in sediment.',
+     'Derived sludge application strategies that limit nutrient export under extreme rainfall.'
+   ]},
+  {id:'proj-1', theme:'climate', period:'2023–2024', statusLabel:'Finished', title:'Agricultural Carbon Budget Assessment',
+   focus:'Long-term agricultural carbon emissions, sequestration, and net carbon sink dynamics in Guangxi Province.',
+   overview:'A provincial-scale carbon account for Guangxi agriculture covering 1978 to 2021. Emission factor methods were applied to agricultural inputs, rice cultivation, and machinery use, and carbon sequestration parameters to crop production, giving a 43-year time series of the net carbon sink and the factors that moved it.',
+   role:[
+     'Compiled the 43-year statistical dataset for inputs, crops, and machinery.',
+     'Built the emission and sequestration accounting model.',
+     'Ran the driver analysis on the net carbon sink time series.',
+     'First author of the resulting paper.'
+   ],
+   outcomes:[
+     'Published in Chinese Journal of Eco-Agriculture, first author.',
+     '43-year time series of agricultural carbon emissions, sequestration, and net carbon sink for Guangxi.',
+     'Fertilizer input, rice cultivation, crop yield, and mechanization identified as dominant drivers.'
+   ]},
+  {id:'proj-2', theme:'food', period:'2021–2022', statusLabel:'Finished', title:'Agricultural Non-Point Source Pollution',
+   focus:'Spatial-temporal patterns and source apportionment of agricultural pollution in Guangdong Province.',
+   overview:'Two decades of agricultural non-point source pollution in Guangdong Province, reconstructed as COD, total nitrogen, and total phosphorus loads by source category. The project resolved how those loads shifted between prefectures and between sources from 1999 to 2019, giving a provincial baseline for diffuse pollution control.',
+   role:[
+     'Assembled the 1999–2019 provincial and prefecture-level agricultural statistics.',
+     'Estimated pollutant loads by source category and mapped spatial-temporal patterns in ArcGIS.',
+     'Ran the source apportionment analysis.',
+     'First author of the resulting paper.'
+   ],
+   outcomes:[
+     'Published in Environmental Science, first author.',
+     '20-year load inventory for COD, TN, and TP by source category.',
+     'Livestock breeding and rapidly expanding aquaculture identified as the major contributors.'
+   ]},
+  {id:'proj-3', theme:'health', period:'2021–2022', statusLabel:'Finished', title:'Heavy Metal Migration and Biochar Remediation',
+   focus:'Cadmium loss characteristics and biochar immobilization effects under simulated rainfall.',
+   overview:'Cadmium export from acidic red soil was measured under simulated rainfall at two intensities, with biochar added at 0 to 7% to test immobilization. Both dissolved and sediment-bound Cd loss were tracked, so the project could identify the application rate beyond which biochar stops protecting the system and starts aggravating erosion.',
+   role:[
+     'Ran the simulated rainfall trials at two intensities and sampled runoff and sediment.',
+     'Measured Cd fractions and availability in soil, runoff, and sediment.',
+     'Contributed the loss-characteristic analysis and figures as fourth author.'
+   ],
+   outcomes:[
+     'Published in Environmental Science and Pollution Research (2022), fourth author.',
+     'Biochar reduced Cd availability and Cd loss at moderate application rates.',
+     'The highest rate (7%) under intense rainfall aggravated erosion and sediment-borne Cd export.'
+   ]}
+];
+
+const SKILL_GROUPS = [
+  {heading:'Field & laboratory', subs:[
+    {label:'Field campaigns', items:'Hydrological monitoring · water quality sampling · soil profile coring · greenhouse gas chamber measurement'},
+    {label:'Isotope & nutrient assays', items:'\u00B9\u2075N isotopic tracing (DNRA, anammox, denitrification) · nitrification and denitrification rate assays'},
+    {label:'Soil physicochemistry', items:'Enzyme activity · aggregate stability · sesquioxide quantification · C-N-P fractionation'},
+    {label:'Microbial & molecular', items:'16S rRNA amplicon sequencing · qPCR · functional gene annotation'}
+  ]},
+  {heading:'Instrumentation', subs:[
+    {label:'Nutrients & water chemistry', items:'Automated continuous flow analyzer · UV-Vis spectrophotometry'},
+    {label:'Trace organics', items:'HPLC-MS/MS'},
+    {label:'Gas & isotope', items:'CRDS (cavity ring-down spectroscopy)'}
+  ]},
+  {heading:'Software & data', subs:[
+    {label:'Statistics & modelling', items:'R · MATLAB · STATA'},
+    {label:'Geospatial', items:'ArcGIS'},
+    {label:'Bioinformatics', items:'QIIME2 (phylogeny, diversity, visualization) · Tax4Fun2 and PICRUSt2 (metabolic function prediction)'}
+  ]}
+];
+
+const VIEWS = ['home','publications','research','skills'];
+
+class Component extends DCLogic {
+  state = { view: 'home', modalId: null };
+
+  lock(on) { document.body.style.overflow = on ? 'hidden' : ''; }
+
+  componentDidMount() {
+    this.route = () => {
+      const h = (window.location.hash || '').replace('#','');
+      const known = h && !!this.findItem(h);
+      if (known) { this.setState({modalId: h}); this.lock(true); }
+      else if (VIEWS.indexOf(h) >= 0) { this.setState({view: h, modalId: null}); this.lock(false); }
+      else { this.setState({view: 'home', modalId: null}); this.lock(false); }
+    };
+    this.onKey = (e) => { if (e.key === 'Escape') this.close(); };
+    window.addEventListener('hashchange', this.route);
+    window.addEventListener('keydown', this.onKey);
+    this.route();
+  }
+  componentWillUnmount() {
+    window.removeEventListener('hashchange', this.route);
+    window.removeEventListener('keydown', this.onKey);
+    document.body.style.overflow = '';
+  }
+  close = () => {
+    if (!this.state.modalId) return;
+    this.setState({modalId: null});
+    this.lock(false);
+    try { history.replaceState(null, '', '#' + this.state.view); } catch (err) { window.location.hash = this.state.view; }
+  };
+
+  findItem(id) {
+    const all = PUBLICATIONS.concat(MANUSCRIPTS, ONGOING, FINISHED);
+    for (let i = 0; i < all.length; i++) if (all[i].id === id) return all[i];
+    return null;
+  }
+
+  sectionsFor(item) {
+    const out = [];
+    const push = (label, text, bullets) => out.push({
+      label: label,
+      text: text || '',
+      bullets: bullets || [],
+      hasText: !!text,
+      hasBullets: !!(bullets && bullets.length)
+    });
+    if (item.abstract) push('Abstract', item.abstract);
+    if (item.overview) push('Project overview', item.overview);
+    if (item.points) push('Key points', '', item.points);
+    if (item.role) push('What I did', '', item.role);
+    if (item.outcomes) push('Outcome', '', item.outcomes);
+    return out;
+  }
+
+  renderVals() {
+    const view = this.state.view;
+    const item = this.state.modalId ? this.findItem(this.state.modalId) : null;
+    const showEducation = true;
+    const deco = (arr) => arr.map(x => Object.assign({}, x, {hash: '#' + x.id}));
+    const pubs = deco(PUBLICATIONS).map(p => Object.assign({}, p, {
+      meta: (THEME_LABEL[p.theme] || '') + ' · ' + p.venue + ', ' + p.year + ' · ' + p.authors
+    }));
+    const ms = deco(MANUSCRIPTS).map(m => Object.assign({}, m, {
+      meta: m.status + ' · ' + m.authors
+    }));
+    const projMeta = (e) => Object.assign({}, e, {meta: e.period + ' · ' + e.statusLabel});
+    const ongoing = deco(ONGOING).map(projMeta);
+    const finished = deco(FINISHED).map(projMeta);
+    return {
+      navLinks: [
+        {label:'Home', href:'#home'},
+        {label:'Publications', href:'#publications'},
+        {label:'Research', href:'#research'},
+        {label:'Skills', href:'#skills'}
+      ],
+      isHome: view === 'home',
+      isPublications: view === 'publications',
+      isResearch: view === 'research',
+      isSkills: view === 'skills',
+      cvHref: this.props.cvHref ?? 'https://gexiaojun1201.github.io/Xiaojun_Ge.github.io/cv/',
+      showEducation: showEducation,
+      education: EDUCATION,
+      advisors: ADVISORS,
+      interests: INTERESTS,
+      interestsColored: INTERESTS.map(it => Object.assign({}, it, THEME_PILL_COLORS[it.theme] || {bg:'#153816', fg:'#FFFFFF'})),
+      publications: pubs,
+      homePublications: pubs.slice(0, 3),
+      manuscripts: ms,
+      ongoingProjects: ongoing,
+      finishedProjects: finished,
+      homeProjects: ongoing.slice(0, 1).concat(finished.slice(0, 2)),
+      skillGroups: SKILL_GROUPS.map(g => ({
+        heading: g.heading,
+        subs: g.subs.map(s => ({label: s.label, itemList: s.items.split(' \u00B7 ')}))
+      })),
+      footerColumns: [
+        {heading:'Contact', links:[{label:'isgexiaojun@gmail.com', href:'mailto:isgexiaojun@gmail.com'},{label:'Nanning, China'}]},
+        {heading:'Elsewhere', links:[{label:'ORCID', href:'https://orcid.org/0009-0002-9282-2804'}]},
+        {heading:'Affiliation', links:[{label:'Guangxi Research Institute of Metrology & Test', href:'http://www.gxjl.cn/'}]}
+      ],
+      modalOpen: !!item,
+      modalMeta: item ? (item.statusLabel ? item.period + ' · ' + item.statusLabel : (item.status || (item.venue + ', ' + item.year + ' · ' + item.authors))) : '',
+      modalTitle: item ? item.title : '',
+      modalAuthors: item ? (item.authorsFull || '') : '',
+      modalSections: item ? this.sectionsFor(item) : [],
+      modalHasPhotos: !!(item && item.statusLabel),
+      modalPhotos: item && item.statusLabel ? [
+        {id: 'photo-' + item.id + '-1', placeholder: 'Field site or sampling photo'},
+        {id: 'photo-' + item.id + '-2', placeholder: 'Laboratory or instrument photo'},
+        {id: 'photo-' + item.id + '-3', placeholder: 'Data, plot or team photo'}
+      ] : [],
+      modalLink: item ? (item.doi || '') : '',
+      modalDoi: item && item.doi ? 'DOI: ' + item.doi.replace('https://doi.org/', '') : '',
+      closeModal: this.close,
+      stop: (e) => e.stopPropagation()
+    };
+  }
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+:root{
+/* Brand foundation */
+--sand-bg:#F3ECD3;
+--ivory-card:#FBF6E5;
+--forest-text:#153816;
+--active-green:#008A00;
+--pine-green:#004D00;
+--navy:#002B47;
+--sand-border:#E9E1C4;
+/* Theme accents */
+--sprout-green:#97C600;
+--aqua-sky:#88C9E4;
+--rose-coral:#FFAAAE;
+--solar-gold:#EECF00;
+--harvest-orange:#F47C00;
+--burgundy:#661118;
+/* Semantic aliases */
+--bg-page:var(--sand-bg);
+--bg-surface:var(--ivory-card);
+--text-primary:var(--forest-text);
+--text-on-brand:#FFFFFF;
+--text-muted:#4B5E45;
+--color-primary:var(--active-green);
+--color-primary-hover:var(--pine-green);
+--color-anchor:var(--navy);
+--border-subtle:var(--sand-border);
+--link:var(--active-green);
+--link-hover:var(--pine-green);
+}

@@ -1,0 +1,260 @@
+{
+  "plugins": [
+    "react",
+    "import"
+  ],
+  "rules": {
+    "react/forbid-elements": [
+      "warn",
+      {
+        "forbid": []
+      }
+    ],
+    "no-restricted-imports": [
+      "warn",
+      {
+        "patterns": [
+          {
+            "group": [
+              "components/content/**",
+              "components/core/**",
+              "components/navigation/**",
+              "ui_kits/personal-academic-homepage/**"
+            ],
+            "message": "Import design-system components from 'index.js', not component internals."
+          }
+        ]
+      }
+    ],
+    "no-restricted-syntax": [
+      "warn",
+      {
+        "selector": "Literal[value=/#[0-9a-fA-F]{3,8}\\b/]",
+        "message": "Raw hex color — use a design-system color token via var()."
+      },
+      {
+        "selector": "Literal[value=/\\b\\d+px\\b/]",
+        "message": "Raw px value — use a design-system spacing token via var()."
+      },
+      {
+        "selector": "Literal[value=/font-family\\s*:\\s*(?!['\\\"]?(?:Commissioner))/i]",
+        "message": "Font not provided by the design system. Available: Commissioner."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Button'] > JSXAttribute > JSXIdentifier[name!=/^(?:variant|size|icon|disabled|href|onClick|children|key|ref|className|style|children)$/]",
+        "message": "<Button> doesn't accept that prop. Declared props: variant, size, icon, disabled, href, onClick, children."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Button'] > JSXAttribute[name.name='variant'] > Literal[value!=/^(?:primary|ghost)$/]",
+        "message": "<Button> variant must be one of 'primary' | 'ghost'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Button'] > JSXAttribute[name.name='size'] > Literal[value!=/^(?:sm|md|lg)$/]",
+        "message": "<Button> size must be one of 'sm' | 'md' | 'lg'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Card'] > JSXAttribute > JSXIdentifier[name!=/^(?:tag|theme|title|summary|meta|href|key|ref|className|style|children)$/]",
+        "message": "<Card> doesn't accept that prop. Declared props: tag, theme, title, summary, meta, href."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Card'] > JSXAttribute[name.name='theme'] > Literal[value!=/^(?:biobased|water|health|climate|food|institutional)$/]",
+        "message": "<Card> theme must be one of 'biobased' | 'water' | 'health' | 'climate' | 'food' | 'institutional'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='FooterColumn'] > JSXAttribute > JSXIdentifier[name!=/^(?:heading|links|key|ref|className|style|children)$/]",
+        "message": "<FooterColumn> doesn't accept that prop. Declared props: heading, links."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='NavLink'] > JSXAttribute > JSXIdentifier[name!=/^(?:label|href|key|ref|className|style|children)$/]",
+        "message": "<NavLink> doesn't accept that prop. Declared props: label, href."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Pill'] > JSXAttribute > JSXIdentifier[name!=/^(?:theme|children|key|ref|className|style|children)$/]",
+        "message": "<Pill> doesn't accept that prop. Declared props: theme, children."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Pill'] > JSXAttribute[name.name='theme'] > Literal[value!=/^(?:biobased|water|health|climate|food|institutional|neutral)$/]",
+        "message": "<Pill> theme must be one of 'biobased' | 'water' | 'health' | 'climate' | 'food' | 'institutional' | 'neutral'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='SectionHeading'] > JSXAttribute > JSXIdentifier[name!=/^(?:eyebrow|title|align|key|ref|className|style|children)$/]",
+        "message": "<SectionHeading> doesn't accept that prop. Declared props: eyebrow, title, align."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='SectionHeading'] > JSXAttribute[name.name='align'] > Literal[value!=/^(?:left|center)$/]",
+        "message": "<SectionHeading> align must be one of 'left' | 'center'."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/index.js"
+      ],
+      "rules": {
+        "no-restricted-imports": "off"
+      }
+    }
+  ],
+  "x-omelette": {
+    "components": {
+      "Button": {
+        "replaces": []
+      },
+      "Card": {
+        "replaces": []
+      },
+      "FooterColumn": {
+        "replaces": []
+      },
+      "NavLink": {
+        "replaces": []
+      },
+      "Pill": {
+        "replaces": []
+      },
+      "SectionHeading": {
+        "replaces": []
+      }
+    },
+    "tokens": [
+      "--active-green",
+      "--aqua-sky",
+      "--bg-page",
+      "--bg-surface",
+      "--border-subtle",
+      "--burgundy",
+      "--color-anchor",
+      "--color-primary",
+      "--color-primary-hover",
+      "--dur-hover",
+      "--dur-modal",
+      "--dur-page",
+      "--ease-standard",
+      "--font-sans",
+      "--font-serif",
+      "--forest-text",
+      "--fs-body",
+      "--fs-body-lg",
+      "--fs-h1",
+      "--fs-h2",
+      "--fs-h3",
+      "--fs-hero",
+      "--fs-meta",
+      "--fs-ui",
+      "--fw-h1",
+      "--fw-h2",
+      "--fw-h3",
+      "--fw-hero",
+      "--fw-meta",
+      "--fw-ui",
+      "--harvest-orange",
+      "--ivory-card",
+      "--lh-body",
+      "--lh-body-lg",
+      "--lh-h1",
+      "--lh-h2",
+      "--lh-h3",
+      "--lh-hero",
+      "--lh-meta",
+      "--lh-ui",
+      "--link",
+      "--link-hover",
+      "--navy",
+      "--pine-green",
+      "--radius-card",
+      "--radius-card-sm",
+      "--radius-pill",
+      "--rose-coral",
+      "--sand-bg",
+      "--sand-border",
+      "--shadow-card",
+      "--solar-gold",
+      "--space-1",
+      "--space-12",
+      "--space-16",
+      "--space-2",
+      "--space-24",
+      "--space-3",
+      "--space-30",
+      "--space-4",
+      "--space-6",
+      "--space-8",
+      "--sprout-green",
+      "--text-muted",
+      "--text-on-brand",
+      "--text-primary"
+    ],
+    "tokenKinds": {
+      "--sand-bg": "color",
+      "--ivory-card": "color",
+      "--forest-text": "font",
+      "--active-green": "color",
+      "--pine-green": "color",
+      "--navy": "color",
+      "--sand-border": "color",
+      "--sprout-green": "color",
+      "--aqua-sky": "color",
+      "--rose-coral": "color",
+      "--solar-gold": "color",
+      "--harvest-orange": "color",
+      "--burgundy": "color",
+      "--bg-page": "color",
+      "--bg-surface": "color",
+      "--text-primary": "font",
+      "--text-on-brand": "font",
+      "--text-muted": "font",
+      "--color-primary": "color",
+      "--color-primary-hover": "color",
+      "--color-anchor": "color",
+      "--border-subtle": "color",
+      "--link": "color",
+      "--link-hover": "color",
+      "--font-serif": "font",
+      "--font-sans": "font",
+      "--fs-hero": "other",
+      "--lh-hero": "other",
+      "--fw-hero": "other",
+      "--fs-h1": "other",
+      "--lh-h1": "other",
+      "--fw-h1": "other",
+      "--fs-h2": "other",
+      "--lh-h2": "other",
+      "--fw-h2": "other",
+      "--fs-h3": "other",
+      "--lh-h3": "other",
+      "--fw-h3": "other",
+      "--fs-body-lg": "other",
+      "--lh-body-lg": "other",
+      "--fs-body": "other",
+      "--lh-body": "other",
+      "--fs-ui": "other",
+      "--lh-ui": "other",
+      "--fw-ui": "other",
+      "--fs-meta": "other",
+      "--lh-meta": "other",
+      "--fw-meta": "other",
+      "--space-1": "spacing",
+      "--space-2": "spacing",
+      "--space-3": "spacing",
+      "--space-4": "spacing",
+      "--space-6": "spacing",
+      "--space-8": "spacing",
+      "--space-12": "spacing",
+      "--space-16": "spacing",
+      "--space-24": "spacing",
+      "--space-30": "spacing",
+      "--radius-pill": "radius",
+      "--radius-card": "radius",
+      "--radius-card-sm": "radius",
+      "--shadow-card": "shadow",
+      "--ease-standard": "other",
+      "--dur-hover": "other",
+      "--dur-modal": "other",
+      "--dur-page": "other"
+    },
+    "fontFamilies": [
+      "Commissioner"
+    ]
+  }
+}

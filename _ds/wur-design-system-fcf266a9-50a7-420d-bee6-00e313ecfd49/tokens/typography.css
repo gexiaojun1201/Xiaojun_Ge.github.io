@@ -1,0 +1,26 @@
+:root{
+--font-serif:'Times New Roman',Times,Georgia,serif;
+--font-sans:'Commissioner',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+--fs-hero:clamp(40px,6vw,72px); /* @kind other */
+--lh-hero:1.12; /* @kind other */
+--fw-hero:700; /* @kind other */
+--fs-h1:clamp(32px,4vw,48px); /* @kind other */
+--lh-h1:1.2; /* @kind other */
+--fw-h1:700; /* @kind other */
+--fs-h2:clamp(24px,3vw,32px); /* @kind other */
+--lh-h2:1.3; /* @kind other */
+--fw-h2:600; /* @kind other */
+--fs-h3:20px; /* @kind other */
+--lh-h3:1.4; /* @kind other */
+--fw-h3:600; /* @kind other */
+--fs-body-lg:19px; /* @kind other */
+--lh-body-lg:1.5; /* @kind other */
+--fs-body:16px; /* @kind other */
+--lh-body:1.6; /* @kind other */
+--fs-ui:15px; /* @kind other */
+--lh-ui:1.2; /* @kind other */
+--fw-ui:600; /* @kind other */
+--fs-meta:13px; /* @kind other */
+--lh-meta:1.4; /* @kind other */
+--fw-meta:500; /* @kind other */
+}
