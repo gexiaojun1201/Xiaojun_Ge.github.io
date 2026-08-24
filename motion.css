@@ -1,0 +1,304 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   WUR motion layer.
+
+   Ported from the pixel-level teardown of wur.nl/en (2026-08-24):
+     1. pill button   — spring(300, 30, mass 1) scale 1.02 + shadow, colour
+                        on a separate 250ms cubic-bezier(.87,0,.13,1) track
+     2. card hover    — scale on a layer OUTSIDE the card, 300ms ease,
+                        centre origin, z-index 2 → 3, no neighbour reflow
+     3. photo morph   — one SVG <image> under a mask whose path morphs on a
+                        spring(280, 60, mass 1)
+
+   The spring halves live in motion.js; this file is the CSS half.
+   Geometry only ever animates through `transform`, never width/height/
+   padding, so nothing on the page re-lays-out on hover.
+   ───────────────────────────────────────────────────────────────────────── */
+
+:root {
+  --wur-ease: cubic-bezier(.87, 0, .13, 1);
+}
+
+/* ── 1. Pill button ─────────────────────────────────────────────────────
+   Colour, background and border transition on their own 250ms track.
+   scale and box-shadow are driven imperatively by the spring in motion.js
+   and are deliberately absent from `transition` here — a CSS duration
+   would fight the integrator and kill the carry-over of velocity that
+   makes a fast in-and-out feel continuous. */
+
+.wur-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 43px;
+  border: 0;
+  border-radius: 9999px;
+  font-family: var(--font-sans);
+  text-decoration: none;
+  cursor: pointer;
+  transform-origin: center;
+  transition:
+    background-color 250ms var(--wur-ease),
+    color            250ms var(--wur-ease),
+    border-color     250ms var(--wur-ease);
+}
+
+.wur-pill:focus-visible {
+  outline: 2px dashed currentColor;
+  outline-offset: 4px;
+}
+
+/* Brand primary — the exact colour pair from the teardown. */
+.wur-pill--primary {
+  padding: 8px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #FFFFFF;
+  background: #008A00;
+}
+.wur-pill--primary:hover,
+.wur-pill--primary:focus-visible {
+  color: #F3ECD3;
+  background: #004D00;
+}
+
+/* Inverted — sits on the dark forest hero. Sizing is this site's own and
+   is left alone; only the motion and the easing come from the teardown. */
+.wur-pill--invert {
+  padding: 14px 28px;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #153816;
+  background: #FBF6E5;
+}
+.wur-pill--invert:hover,
+.wur-pill--invert:focus-visible {
+  background: #F3ECD3;
+}
+
+/* Ghost on dark. */
+.wur-pill--ghost {
+  padding: 13px 27px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #FBF6E5;
+  background: rgba(251, 246, 229, 0);
+  border: 1px solid rgba(251, 246, 229, .5);
+}
+.wur-pill--ghost:hover,
+.wur-pill--ghost:focus-visible {
+  background: rgba(251, 246, 229, .12);
+  border-color: #FBF6E5;
+}
+
+/* ── Text link with a trailing arrow ────────────────────────────────────
+   The 4px nudge from the WUR style guide, on the pill's colour easing. */
+
+.wur-arrowlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.wur-arrowlink > .wur-arrow {
+  display: inline-block;
+  transition: transform 250ms var(--wur-ease);
+}
+.wur-arrowlink:hover > .wur-arrow,
+.wur-arrowlink:focus-visible > .wur-arrow {
+  transform: translateX(4px);
+}
+.wur-arrowlink--back:hover > .wur-arrow,
+.wur-arrowlink--back:focus-visible > .wur-arrow {
+  transform: translateX(-4px);
+}
+
+/* ── 2. Card hover ──────────────────────────────────────────────────────
+   The teardown's finding is that the transform belongs on a layer OUTSIDE
+   the card, never on the card's own box and never on the image inside it:
+   everything the card contains then scales as one piece, and because it is
+   a transform the neighbouring cards never re-lay-out.
+
+   Amplitude, easing and origin are the measured ones: scale(1.05) over
+   300ms on the browser's default `ease`. These rows are full-bleed inside
+   a clamp(24px, 5vw, 64px) gutter, so the 2.5% each side has room to grow
+   into up to roughly a 2560px viewport; past that the gutter stops being
+   wide enough and the growth would reach the screen edge. */
+
+.wur-rowmotion {
+  position: relative;
+  z-index: 2;
+  transform-origin: center;
+  transition: transform 300ms ease;   /* the browser's default `ease` */
+}
+
+@media (min-width: 1024px) {
+  .wur-rowmotion:hover,
+  .wur-rowmotion:focus-within {
+    z-index: 3;
+    transform: scale(1.05);
+  }
+}
+
+/* ── 3. Project photos ─────────────────────────────────────────────────
+   Three tiles in one row inside the project modal. Each is an SVG <image>
+   under its own mask, so a photo reads as an organic shape rather than a
+   rectangle; hovering springs that outline to a different shape while the
+   tile itself takes the card treatment from §2 above — scale on a layer
+   outside the artwork, 300ms ease, centre origin, z-index lift. Clicking
+   opens the photo full size.
+
+   The 30% offset-follow from the source teardown belonged to its one-image
+   layout and has no counterpart here: with all three visible at once there
+   is nothing for a single canvas to track. */
+
+/* Flex rather than a fixed three-column grid: a project may attach two
+   photos or four, and the row should divide itself by however many are
+   actually there. The 160px basis is what decides when a long row wraps
+   instead of squeezing the tiles down to nothing. */
+.wur-shots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  /* room for the 5% growth so the outer tiles are never clipped */
+  padding-block: 12px;
+}
+
+.wur-shot {
+  position: relative;
+  z-index: 2;
+  flex: 1 1 160px;
+  min-width: 0;
+  transform-origin: center;
+  transition: transform 300ms ease;   /* the browser's default `ease` */
+}
+.wur-shot:hover,
+.wur-shot:focus-within {
+  z-index: 3;
+  transform: scale(1.05);
+}
+
+.wur-shot__btn {
+  display: block;
+  width: 100%;
+  aspect-ratio: 580 / 500;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+.wur-shot__btn:focus-visible {
+  outline: 2px dashed var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 16px;
+}
+.wur-shot__btn svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+/* Fixed 0.9 inset so the shape keeps clear of the canvas edge at every
+   point of the morph. */
+.wur-shot__btn path {
+  transform: scale(.9);
+  transform-origin: center;
+}
+
+.wur-shot__cap {
+  display: block;
+  margin-top: 2px;
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--text-muted);
+  text-wrap: pretty;
+}
+
+/* ── Full-size view ─────────────────────────────────────────────────────
+   The organic mask belongs to the thumbnail layer only. Opening a photo
+   drops it: full size is a plain rounded rectangle at the image-window
+   radius, so nothing is cropped away from what the reader came to see. */
+
+.wur-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 4vw, 48px);
+  background: rgba(12, 20, 12, .62);
+  /* motion.js switches the project modal's own blur off while this is up:
+     two backdrop-filters stacked render black on some GPUs. */
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: zoom-out;
+}
+.wur-lightbox__inner {
+  /* Same 780px content column as the project modal underneath, so the
+     enlarged photo lines up with the interface rather than floating at
+     some arbitrary size. */
+  width: min(780px, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.wur-lightbox img {
+  width: 100%;
+  max-height: 78vh;
+  object-fit: contain;
+  display: block;
+  border-radius: var(--radius-card);
+}
+/* Stand-in for a project with no photography attached yet — same rounded
+   rectangle a real photo gets, in the site's own light sand. Flat fill,
+   no gradient: the palette rules call for flat warm colour fields. */
+.wur-lightbox__ph {
+  /* 78vh * 16/9 caps the width so the height clause never has to fight
+     the aspect ratio and squash the box on a short viewport. */
+  width: min(100%, 138.6vh);
+  box-sizing: border-box;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  display: grid;
+  place-items: center;
+  background: var(--bg-page);
+}
+.wur-lightbox__ph > span {
+  font-family: var(--font-sans);
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+.wur-lightbox__cap {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: rgba(251, 246, 229, .86);
+}
+
+/* ── Reduced motion ─────────────────────────────────────────────────────
+   Colour and active-state feedback survive; the geometry does not. */
+
+@media (prefers-reduced-motion: reduce) {
+  .wur-pill { transition-duration: 1ms; }
+  .wur-rowmotion,
+  .wur-shot { transition: none; }
+  .wur-rowmotion:hover,
+  .wur-rowmotion:focus-within,
+  .wur-shot:hover,
+  .wur-shot:focus-within { transform: none; }
+  .wur-arrowlink > .wur-arrow { transition: none; }
+}

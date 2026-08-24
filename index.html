@@ -16,13 +16,17 @@
 <link rel="stylesheet" href="_ds/wur-design-system-fcf266a9-50a7-420d-bee6-00e313ecfd49/tokens/effects.css">
 <link rel="stylesheet" href="_ds/wur-design-system-fcf266a9-50a7-420d-bee6-00e313ecfd49/styles.css">
 <script src="_ds/wur-design-system-fcf266a9-50a7-420d-bee6-00e313ecfd49/_ds_bundle.js"></script>
+<link rel="stylesheet" href="motion.css">
 <style>
-  :root{--radius-pill:12px}
+  /* The 12px --radius-pill override is gone, so the navbar CTA and the
+     modal button are real pills again — 9999px, as measured. Card radius
+     stays on the token this site already used. */
   body{margin:0;background:var(--bg-page)}
   a{color:var(--link);text-decoration:none}
   a:hover{color:var(--link-hover)}
   p a{text-decoration:underline}
 </style>
+<script src="./motion.js"></script>
 </helmet>
 
 <div style="background:var(--bg-page);min-height:100vh">
@@ -44,9 +48,9 @@
         <p style="font-family: var(--font-sans); font-size: 20px; color: rgba(251,246,229,0.85); margin: 0 0 6px">Soil &amp; Environmental Science Researcher</p>
         <p style="font-family:var(--font-sans);font-size:15px;color:rgba(251,246,229,0.62);margin:0 0 22px">Guangxi Research Institute of Metrology &amp; Test · Nanning, China</p>
         <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:22px">
-          <a href="{{ cvHref }}" style="display: inline-flex; align-items: center; font-family: var(--font-sans); font-size: 20px; font-weight: 600; color: #153816; background: #FBF6E5; border-radius: 9999px; padding: 14px 28px; text-decoration: none; transition: background 180ms ease-out" style-hover="background:#F3ECD3">Download CV (PDF)</a>
-          <a href="mailto:isgexiaojun@gmail.com" style="display:inline-flex;align-items:center;font-family:var(--font-sans);font-size:16px;font-weight:600;color:#FBF6E5;border:1px solid rgba(251,246,229,0.5);border-radius:9999px;padding:13px 27px;text-decoration:none;transition:border-color 180ms ease-out" style-hover="border-color:#FBF6E5">Email me</a>
-          <a href="https://orcid.org/0009-0002-9282-2804" style="display:inline-flex;align-items:center;font-family:var(--font-sans);font-size:16px;font-weight:600;color:#FBF6E5;border:1px solid rgba(251,246,229,0.5);border-radius:9999px;padding:13px 27px;text-decoration:none;transition:border-color 180ms ease-out" style-hover="border-color:#FBF6E5">ORCID</a>
+          <a href="{{ cvHref }}" class="wur-pill wur-pill--invert">Download CV (PDF)</a>
+          <a href="mailto:isgexiaojun@gmail.com" class="wur-pill wur-pill--ghost">Email me</a>
+          <a href="https://orcid.org/0009-0002-9282-2804" class="wur-pill wur-pill--ghost">ORCID</a>
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:0.6em">
           <sc-for list="{{ interestsColored }}" as="it" hint-placeholder-count="5">
@@ -85,14 +89,16 @@
       <div style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:16px">Selected work</div>
       <h2 style="font-family:var(--font-serif);font-size:30px;font-weight:700;color:var(--pine-green);margin:0">Publications</h2>
     </div>
-    <a href="#publications" style="font-family:var(--font-sans);font-size:16px;font-weight:600">All publications →</a>
+    <a href="#publications" class="wur-arrowlink">All publications <span class="wur-arrow" aria-hidden="true">→</span></a>
   </div>
   <div style="display:flex;flex-direction:column;gap:14px">
     <sc-for list="{{ homePublications }}" as="p" hint-placeholder-count="3">
-      <a href="{{ p.hash }}" style="display:block;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:20px 24px;color:var(--text-primary);cursor:pointer;transition:border-color 150ms ease-out,transform 180ms cubic-bezier(0.87,0,0.13,1),box-shadow 180ms ease-out" style-hover="border-color:var(--color-primary);transform:scale(1.012);box-shadow:0 8px 20px rgba(21,56,22,0.10)">
-        <div style="font-family:var(--font-sans);font-size:15px;font-weight:600;color:var(--text-muted);margin-bottom:7px">{{ p.meta }}</div>
-        <div style="font-family:var(--font-serif);font-size:20px;font-weight:600;line-height:1.35">{{ p.title }}</div>
-      </a>
+      <div class="wur-rowmotion">
+        <a href="{{ p.hash }}" style="display:block;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:20px 24px;color:var(--text-primary);cursor:pointer">
+          <div style="font-family:var(--font-sans);font-size:15px;font-weight:600;color:var(--text-muted);margin-bottom:7px">{{ p.meta }}</div>
+          <div style="font-family:var(--font-serif);font-size:20px;font-weight:600;line-height:1.35">{{ p.title }}</div>
+        </a>
+      </div>
     </sc-for>
   </div>
 </section>
@@ -103,15 +109,17 @@
       <div style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:16px">In the field</div>
       <h2 style="font-family:var(--font-serif);font-size:30px;font-weight:700;color:var(--pine-green);margin:0">Research experience</h2>
     </div>
-    <a href="#research" style="font-family:var(--font-sans);font-size:16px;font-weight:600">All projects →</a>
+    <a href="#research" class="wur-arrowlink">All projects <span class="wur-arrow" aria-hidden="true">→</span></a>
   </div>
   <div style="display:flex;flex-direction:column;gap:14px">
     <sc-for list="{{ homeProjects }}" as="e" hint-placeholder-count="3">
-      <a href="{{ e.hash }}" style="display:block;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:20px 24px;color:var(--text-primary);cursor:pointer;transition:border-color 150ms ease-out,transform 180ms cubic-bezier(0.87,0,0.13,1),box-shadow 180ms ease-out" style-hover="border-color:var(--color-primary);transform:scale(1.012);box-shadow:0 8px 20px rgba(21,56,22,0.10)">
-        <div style="font-family:var(--font-sans);font-size:15px;font-weight:600;color:var(--text-muted);margin-bottom:7px">{{ e.meta }}</div>
-        <div style="font-family:var(--font-serif);font-size:20px;font-weight:600;line-height:1.35;margin-bottom:6px">{{ e.title }}</div>
-        <div style="font-family:var(--font-sans);font-size:16px;line-height:1.55;color:var(--text-muted);text-wrap:pretty">{{ e.focus }}</div>
-      </a>
+      <div class="wur-rowmotion">
+        <a href="{{ e.hash }}" style="display:block;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:20px 24px;color:var(--text-primary);cursor:pointer">
+          <div style="font-family:var(--font-sans);font-size:15px;font-weight:600;color:var(--text-muted);margin-bottom:7px">{{ e.meta }}</div>
+          <div style="font-family:var(--font-serif);font-size:20px;font-weight:600;line-height:1.35;margin-bottom:6px">{{ e.title }}</div>
+          <div style="font-family:var(--font-sans);font-size:16px;line-height:1.55;color:var(--text-muted);text-wrap:pretty">{{ e.focus }}</div>
+        </a>
+      </div>
     </sc-for>
   </div>
 </section>
@@ -137,7 +145,7 @@
 <sc-if value="{{ isPublications }}" hint-placeholder-val="{{ false }}">
 <div>
   <section style="padding:40px clamp(24px,5vw,64px) 26px">
-    <a href="#home" style="font-family:var(--font-sans);font-size:16px;font-weight:600">← Home</a>
+    <a href="#home" class="wur-arrowlink wur-arrowlink--back"><span class="wur-arrow" aria-hidden="true">←</span> Home</a>
     <h1 style="font-family:var(--font-serif);font-size:42px;font-weight:700;color:var(--pine-green);margin:16px 0 8px">Publications</h1>
     
   </section>
@@ -145,11 +153,13 @@
     <div style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:18px">Published</div>
     <div style="display:flex;flex-direction:column;gap:16px">
       <sc-for list="{{ publications }}" as="p" hint-placeholder-count="4">
-        <a href="{{ p.hash }}" style="display:block;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:24px 28px;color:var(--text-primary);cursor:pointer;transition:border-color 150ms ease-out,transform 180ms cubic-bezier(0.87,0,0.13,1),box-shadow 180ms ease-out" style-hover="border-color:var(--color-primary);transform:scale(1.012);box-shadow:0 8px 20px rgba(21,56,22,0.10)">
-          <div style="font-family: var(--font-sans); font-size: 16px; font-weight: 600; color: var(--text-muted); margin-bottom: 7px">{{ p.meta }}</div>
-          <div style="font-family: var(--font-serif); font-size: 25px; font-weight: 600; line-height: 1.35; margin-bottom: 7px">{{ p.title }}</div>
-          <div style="font-family: var(--font-sans); font-size: 18px; line-height: 1.55; color: var(--text-muted); text-wrap: pretty">{{ p.teaser }}</div>
-        </a>
+        <div class="wur-rowmotion">
+          <a href="{{ p.hash }}" style="display:block;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:24px 28px;color:var(--text-primary);cursor:pointer">
+            <div style="font-family: var(--font-sans); font-size: 16px; font-weight: 600; color: var(--text-muted); margin-bottom: 7px">{{ p.meta }}</div>
+            <div style="font-family: var(--font-serif); font-size: 25px; font-weight: 600; line-height: 1.35; margin-bottom: 7px">{{ p.title }}</div>
+            <div style="font-family: var(--font-sans); font-size: 18px; line-height: 1.55; color: var(--text-muted); text-wrap: pretty">{{ p.teaser }}</div>
+          </a>
+        </div>
       </sc-for>
     </div>
   </section>
@@ -157,10 +167,12 @@
     <div style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:18px">Manuscripts under review &amp; in preparation</div>
     <div style="display:flex;flex-direction:column;gap:16px">
       <sc-for list="{{ manuscripts }}" as="m" hint-placeholder-count="4">
-        <a href="{{ m.hash }}" style="display:block;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:24px 28px;color:var(--text-primary);cursor:pointer;transition:border-color 150ms ease-out,transform 180ms cubic-bezier(0.87,0,0.13,1),box-shadow 180ms ease-out" style-hover="border-color:var(--color-primary);transform:scale(1.012);box-shadow:0 8px 20px rgba(21,56,22,0.10)">
-          <div style="font-family: var(--font-sans); font-size: 16px; font-weight: 600; color: var(--text-muted); margin-bottom: 7px">{{ m.meta }}</div>
-          <div style="font-family: var(--font-serif); font-size: 25px; font-weight: 600; line-height: 1.35">{{ m.title }}</div>
-        </a>
+        <div class="wur-rowmotion">
+          <a href="{{ m.hash }}" style="display:block;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:24px 28px;color:var(--text-primary);cursor:pointer">
+            <div style="font-family: var(--font-sans); font-size: 16px; font-weight: 600; color: var(--text-muted); margin-bottom: 7px">{{ m.meta }}</div>
+            <div style="font-family: var(--font-serif); font-size: 25px; font-weight: 600; line-height: 1.35">{{ m.title }}</div>
+          </a>
+        </div>
       </sc-for>
     </div>
   </section>
@@ -170,7 +182,7 @@
 <sc-if value="{{ isResearch }}" hint-placeholder-val="{{ false }}">
 <div>
   <section style="padding:40px clamp(24px,5vw,64px) 26px">
-    <a href="#home" style="font-family:var(--font-sans);font-size:16px;font-weight:600">← Home</a>
+    <a href="#home" class="wur-arrowlink wur-arrowlink--back"><span class="wur-arrow" aria-hidden="true">←</span> Home</a>
     <h1 style="font-family:var(--font-serif);font-size:42px;font-weight:700;color:var(--pine-green);margin:16px 0 8px">Research experience</h1>
     
   </section>
@@ -179,11 +191,13 @@
     <div style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:18px">Ongoing</div>
     <div style="display:flex;flex-direction:column;gap:16px">
       <sc-for list="{{ ongoingProjects }}" as="e" hint-placeholder-count="4">
-        <a href="{{ e.hash }}" style="display:block;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:24px 28px;color:var(--text-primary);cursor:pointer;transition:border-color 150ms ease-out,transform 180ms cubic-bezier(0.87,0,0.13,1),box-shadow 180ms ease-out" style-hover="border-color:var(--color-primary);transform:scale(1.012);box-shadow:0 8px 20px rgba(21,56,22,0.10)">
-          <div style="font-family: var(--font-sans); font-size: 16px; font-weight: 600; color: var(--text-muted); margin-bottom: 7px">{{ e.meta }}</div>
-          <div style="font-family: var(--font-serif); font-size: 25px; font-weight: 600; line-height: 1.35; color: var(--text-primary); margin-bottom: 7px">{{ e.title }}</div>
-          <div style="font-family: var(--font-sans); font-size: 18px; line-height: 1.55; color: var(--text-muted); text-wrap: pretty">{{ e.focus }}</div>
-        </a>
+        <div class="wur-rowmotion">
+          <a href="{{ e.hash }}" style="display:block;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:24px 28px;color:var(--text-primary);cursor:pointer">
+            <div style="font-family: var(--font-sans); font-size: 16px; font-weight: 600; color: var(--text-muted); margin-bottom: 7px">{{ e.meta }}</div>
+            <div style="font-family: var(--font-serif); font-size: 25px; font-weight: 600; line-height: 1.35; color: var(--text-primary); margin-bottom: 7px">{{ e.title }}</div>
+            <div style="font-family: var(--font-sans); font-size: 18px; line-height: 1.55; color: var(--text-muted); text-wrap: pretty">{{ e.focus }}</div>
+          </a>
+        </div>
       </sc-for>
     </div>
   </section>
@@ -192,11 +206,13 @@
     <div style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:18px">Finished</div>
     <div style="display:flex;flex-direction:column;gap:16px">
       <sc-for list="{{ finishedProjects }}" as="e" hint-placeholder-count="4">
-        <a href="{{ e.hash }}" style="display:block;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:24px 28px;color:var(--text-primary);cursor:pointer;transition:border-color 150ms ease-out,transform 180ms cubic-bezier(0.87,0,0.13,1),box-shadow 180ms ease-out" style-hover="border-color:var(--color-primary);transform:scale(1.012);box-shadow:0 8px 20px rgba(21,56,22,0.10)">
-          <div style="font-family: var(--font-sans); font-size: 16px; font-weight: 600; color: var(--text-muted); margin-bottom: 7px">{{ e.meta }}</div>
-          <div style="font-family: var(--font-serif); font-size: 25px; font-weight: 600; line-height: 1.35; color: var(--text-primary); margin-bottom: 7px">{{ e.title }}</div>
-          <div style="font-family: var(--font-sans); font-size: 18px; line-height: 1.55; color: var(--text-muted); text-wrap: pretty">{{ e.focus }}</div>
-        </a>
+        <div class="wur-rowmotion">
+          <a href="{{ e.hash }}" style="display:block;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:24px 28px;color:var(--text-primary);cursor:pointer">
+            <div style="font-family: var(--font-sans); font-size: 16px; font-weight: 600; color: var(--text-muted); margin-bottom: 7px">{{ e.meta }}</div>
+            <div style="font-family: var(--font-serif); font-size: 25px; font-weight: 600; line-height: 1.35; color: var(--text-primary); margin-bottom: 7px">{{ e.title }}</div>
+            <div style="font-family: var(--font-sans); font-size: 18px; line-height: 1.55; color: var(--text-muted); text-wrap: pretty">{{ e.focus }}</div>
+          </a>
+        </div>
       </sc-for>
     </div>
   </section>
@@ -206,7 +222,7 @@
 <sc-if value="{{ isSkills }}" hint-placeholder-val="{{ false }}">
 <div>
   <section style="padding:40px clamp(24px,5vw,64px) 26px">
-    <a href="#home" style="font-family:var(--font-sans);font-size:16px;font-weight:600">← Home</a>
+    <a href="#home" class="wur-arrowlink wur-arrowlink--back"><span class="wur-arrow" aria-hidden="true">←</span> Home</a>
     <h1 style="font-family:var(--font-serif);font-size:42px;font-weight:700;color:var(--pine-green);margin:16px 0 8px">Skills</h1>
     <p style="font-family: var(--font-sans); font-size: 17px; color: var(--text-muted); margin: 0; display: none">Field and laboratory methods, analytical instrumentation, and statistical, geospatial and bioinformatic tools</p><p style="font-family: var(--font-sans); font-size: 17px; color: var(--text-muted); margin: 0; display: none">Field and laboratory methods, analytical instrumentation, and statistical, geospatial and bioinformatic tools</p>
   </section>
@@ -240,7 +256,7 @@
 <x-import component-from-global-scope="WURDesignSystem_fcf266.Footer" from="" brand="Xiaojun Ge" columns="{{ footerColumns }}" hint-size="100%,240px"></x-import>
 
 <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
-<div onClick="{{ closeModal }}" style="position:fixed;inset:0;background:rgba(20,25,20,0.45);backdrop-filter:blur(2.5px);-webkit-backdrop-filter:blur(2.5px);display:flex;align-items:center;justify-content:center;padding:clamp(16px,4vw,40px);z-index:100">
+<div onClick="{{ closeModal }}" class="wur-scrim" style="position:fixed;inset:0;background:rgba(20,25,20,0.45);backdrop-filter:blur(2.5px);-webkit-backdrop-filter:blur(2.5px);display:flex;align-items:center;justify-content:center;padding:clamp(16px,4vw,40px);z-index:100">
   <div onClick="{{ stop }}" style="background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:0 24px 60px rgba(21,56,22,0.25);max-width:780px;width:100%;max-height:84vh;overflow-y:auto;overflow-x:hidden;padding:clamp(24px,4vw,40px)">
     <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-bottom:14px">
       <div style="font-family:var(--font-sans);font-size:16px;font-weight:600;color:var(--text-muted)">{{ modalMeta }}</div>
@@ -270,16 +286,19 @@
     <sc-if value="{{ modalHasPhotos }}" hint-placeholder-val="{{ false }}">
       <div style="margin-top:26px">
         <div style="font-family:var(--font-sans);font-size:14px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-primary);margin-bottom:10px">Field &amp; lab photos</div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px">
+        <div class="wur-shots">
           <sc-for list="{{ modalPhotos }}" as="ph" hint-placeholder-count="3">
-            <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="{{ ph.id }}" placeholder="{{ ph.placeholder }}" shape="rounded" radius="16" style="height:150px" hint-size="100%,150px"></x-import>
+            <figure class="wur-shot" style="margin:0">
+              <button type="button" class="wur-shot__btn" data-photo="{{ ph.src }}" data-caption="{{ ph.label }}" data-shape="{{ ph.shape }}" aria-label="{{ ph.zoomLabel }}"></button>
+              <figcaption class="wur-shot__cap">{{ ph.label }}</figcaption>
+            </figure>
           </sc-for>
         </div>
       </div>
     </sc-if>
     <sc-if value="{{ modalLink }}" hint-placeholder-val="{{ false }}">
       <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:26px;padding-top:22px">
-        <x-import component-from-global-scope="WURDesignSystem_fcf266.Button" from="" variant="primary" icon="{{ true }}" href="{{ modalLink }}" hint-size="auto,44px">View paper</x-import>
+        <a href="{{ modalLink }}" target="_blank" rel="noopener" class="wur-pill wur-pill--primary">View paper <span aria-hidden="true">→</span></a>
         <span style="font-family:var(--font-sans);font-size:15px;color:var(--text-muted);min-width:0;max-width:100%;overflow-wrap:break-word;word-break:break-word">{{ modalDoi }}</span>
       </div>
     </sc-if>
@@ -538,6 +557,15 @@ const SKILL_GROUPS = [
 
 const VIEWS = ['home','publications','research','skills'];
 
+// Default picker rows for a project with no photography attached yet — the
+// same three slots the modal has always offered, now driving one morphing
+// mask instead of sitting in three rectangles.
+const PHOTO_SLOTS = [
+  {src:'', label:'Field site or sampling'},
+  {src:'', label:'Laboratory or instrument'},
+  {src:'', label:'Data, plot or team'}
+];
+
 class Component extends DCLogic {
   state = { view: 'home', modalId: null };
 
@@ -596,13 +624,16 @@ class Component extends DCLogic {
     const item = this.state.modalId ? this.findItem(this.state.modalId) : null;
     const showEducation = true;
     const deco = (arr) => arr.map(x => Object.assign({}, x, {hash: '#' + x.id}));
-    const pubs = deco(PUBLICATIONS).map(p => Object.assign({}, p, {
+    const art = (x) => Object.assign({}, x, {
+      themeLabel: THEME_LABEL[x.theme] || 'Research'
+    });
+    const pubs = deco(PUBLICATIONS).map(p => art(Object.assign({}, p, {
       meta: (THEME_LABEL[p.theme] || '') + ' · ' + p.venue + ', ' + p.year + ' · ' + p.authors
-    }));
+    })));
     const ms = deco(MANUSCRIPTS).map(m => Object.assign({}, m, {
       meta: m.status + ' · ' + m.authors
     }));
-    const projMeta = (e) => Object.assign({}, e, {meta: e.period + ' · ' + e.statusLabel});
+    const projMeta = (e) => art(Object.assign({}, e, {meta: e.period + ' · ' + e.statusLabel}));
     const ongoing = deco(ONGOING).map(projMeta);
     const finished = deco(FINISHED).map(projMeta);
     return {
@@ -643,11 +674,19 @@ class Component extends DCLogic {
       modalAuthors: item ? (item.authorsFull || '') : '',
       modalSections: item ? this.sectionsFor(item) : [],
       modalHasPhotos: !!(item && item.statusLabel),
-      modalPhotos: item && item.statusLabel ? [
-        {id: 'photo-' + item.id + '-1', placeholder: 'Field site or sampling photo'},
-        {id: 'photo-' + item.id + '-2', placeholder: 'Laboratory or instrument photo'},
-        {id: 'photo-' + item.id + '-3', placeholder: 'Data, plot or team photo'}
-      ] : [],
+      // Give a project a `photos:[{src, label}]` (or bare path strings) and
+      // those replace the empty slots — two, three or however many; the row
+      // divides itself by the count.
+      modalPhotos: !(item && item.statusLabel) ? [] :
+        (item.photos && item.photos.length ? item.photos : PHOTO_SLOTS).map((ph, i) => {
+          const label = (typeof ph === 'string' ? '' : ph.label) || PHOTO_SLOTS[i % PHOTO_SLOTS.length].label;
+          return {
+            src: typeof ph === 'string' ? ph : (ph.src || ''),
+            label: label,
+            zoomLabel: 'Open full size: ' + label,
+            shape: i
+          };
+        }),
       modalLink: item ? (item.doi || '') : '',
       modalDoi: item && item.doi ? 'DOI: ' + item.doi.replace('https://doi.org/', '') : '',
       closeModal: this.close,
