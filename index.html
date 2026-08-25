@@ -3,6 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+/* Page scale, set before anything paints so the page never renders at one
+   density and then jumps to another. The stepper in the bottom-right
+   writes the same key; this only restores it. Kept deliberately tiny and
+   dependency-free — it has to run ahead of the template runtime. */
+(function () {
+  var DEFAULT = 0.9, MIN = 0.7, MAX = 1.3, z = DEFAULT;
+  try {
+    var saved = parseFloat(window.localStorage.getItem('xg-page-zoom'));
+    if (saved >= MIN && saved <= MAX) z = saved;
+  } catch (err) {}
+  var root = document.documentElement;
+  root.style.setProperty('--page-zoom', String(z));
+  root.style.setProperty('--page-zoom-inv', String(Math.round((1 / z) * 10000) / 10000));
+})();
+</script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -46,14 +62,102 @@
       border-bottom:1px solid var(--border-subtle);padding-bottom:24px}
   }
   body{margin:0;background:var(--bg-page)}
+  /* ── page scale ───────────────────────────────────────────────────
+     The layout was tuned against a 90% browser zoom, so that density is
+     the default here and 100% browser zoom now shows what 90% used to.
+     `zoom` is the property that does this: it reflows the page at
+     size/zoom and paints the result scaled, exactly like browser zoom.
+     `transform:scale()` would shrink the painted result while the layout
+     kept its old size, which does not fit any more content on screen —
+     the whole point of the control. */
+  body{zoom:var(--page-zoom,.9)}
+  /* Viewport units are the one thing zoom does not touch: 100vh stays
+     the real viewport height and then gets painted at 0.9, landing short.
+     Dividing back out keeps these two honest. */
+  .wur-page{min-height:calc(100vh / var(--page-zoom,.9))}
+  .wur-modal{max-height:calc(84vh / var(--page-zoom,.9))}
+  /* The bar counter-scales so it stays one size whatever the page is at. */
+  .wur-zoombar{position:fixed;right:18px;bottom:18px;z-index:90;
+    zoom:var(--page-zoom-inv,1.1111);
+    display:flex;align-items:center;gap:2px;padding:4px;
+    font-family:var(--font-sans);
+    background:var(--bg-surface);border:1px solid var(--border-subtle);
+    border-radius:9999px;box-shadow:0 6px 22px rgba(21,56,22,.18)}
+  .wur-zoombar button{appearance:none;-webkit-appearance:none;
+    border:0;background:transparent;cursor:pointer;color:var(--forest-text);
+    font-family:inherit;border-radius:9999px;
+    transition:background 140ms ease-out,color 140ms ease-out}
+  .wur-zoombar button:hover{background:rgba(21,56,22,.09)}
+  .wur-zoombar button:active{background:rgba(21,56,22,.16)}
+  .wur-zoombar button:focus-visible{outline:2px solid var(--color-primary);outline-offset:1px}
+  .wur-zoombar__step{width:30px;height:30px;font-size:19px;line-height:1;font-weight:600}
+  .wur-zoombar__val{min-width:46px;text-align:center;font-size:14px;font-weight:600;
+    font-variant-numeric:tabular-nums;color:var(--text-muted);user-select:none}
+  .wur-zoombar__reset{height:30px;padding:0 12px;font-size:13px;font-weight:600;
+    margin-left:2px;border:1px solid var(--border-subtle) !important;color:var(--pine-green)}
+  @media (max-width: 760px){
+    .wur-zoombar{right:12px;bottom:12px}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .wur-zoombar button{transition:none}
+  }
   a{color:var(--link);text-decoration:none}
   a:hover{color:var(--link-hover)}
   p a{text-decoration:underline}
+  /* ── hero background video ────────────────────────────────────────
+     The #153816 fill stays on the hero box: it is what shows behind a
+     letterboxed frame and while the file is still on the wire. The
+     poster covers the same gap once the first bytes land.
+     `isolation:isolate` keeps the wash's z-index inside the hero. */
+  .wur-hero{position:relative;isolation:isolate;overflow:hidden}
+  .wur-hero__video{position:absolute;inset:0;z-index:0;width:100%;height:100%;
+    object-fit:cover;object-position:center 43%;
+    filter:saturate(.82) contrast(1.08) brightness(.82);
+    transform:scale(1.015);pointer-events:none;user-select:none}
+  /* Three passes: a soft highlight where the sky opens up, a horizontal
+     ramp that buries the left half so the name and buttons sit on near
+     solid green, and a vertical ramp that darkens the bottom edge into
+     the About card that overlaps it.
+     The ramp's stops are offsets from --pad-x, not percentages of the
+     box. The text column is a fixed width wherever it lands, so percent
+     stops slide out from under it as the hero narrows — measured at
+     1100px that dropped the affiliation line to 3.3:1. Anchoring to the
+     column keeps the same falloff on a wide screen and keeps covering
+     the text on a small one. */
+  .wur-hero__wash{position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:
+      radial-gradient(ellipse at 64% 38%,rgba(238,245,222,.13) 0,rgba(238,245,222,0) 27%),
+      linear-gradient(90deg,
+        rgba(7,32,17,.94) 0,
+        rgba(8,36,19,.86) calc(var(--pad-x) + 430px),
+        rgba(8,37,20,.72) calc(var(--pad-x) + 680px),
+        rgba(7,30,16,.20) calc(var(--pad-x) + 1050px),
+        rgba(7,28,15,.42) 100%),
+      linear-gradient(180deg,rgba(6,28,15,.08) 0%,rgba(6,28,15,.16) 55%,rgba(6,28,15,.58) 100%)}
+  .wur-hero::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+    box-shadow:inset 0 1px rgba(251,246,229,.10),inset 0 -76px 80px rgba(5,28,15,.22)}
+  /* Below the stacking breakpoint the hero turns tall and narrow, `cover`
+     crops to the bright sky, and the horizontal ramp above — which only
+     works on a wide box — leaves the right half washed out. Measured
+     contrast on the role and affiliation lines fell to 2.6:1 there, so
+     narrow screens get a flat vertical wash instead. */
+  @media (max-width: 760px){
+    .wur-hero__wash{background:linear-gradient(180deg,
+      rgba(7,32,17,.90) 0%,rgba(8,36,19,.84) 45%,
+      rgba(7,30,16,.80) 78%,rgba(6,28,15,.88) 100%)}
+  }
+  .wur-hero__content{position:relative;z-index:2;text-shadow:0 2px 24px rgba(3,22,12,.32)}
+  .wur-hero__content h1{text-shadow:0 3px 34px rgba(3,22,12,.45)}
+  .wur-hero__content img{box-shadow:0 22px 64px rgba(4,23,13,.30),inset 0 1px rgba(251,246,229,.18)}
+  /* Reduced motion is handled in JS, not here: the <video> stays in place
+     showing its poster, so the still frame goes through the same filter
+     as the footage and the wash lands on the same luminance. Swapping in
+     a CSS background image would skip the filter and read brighter. */
 </style>
 <script src="./motion.js"></script>
 </helmet>
 
-<div style="background:var(--bg-page);min-height:100vh">
+<div class="wur-page" style="background:var(--bg-page)">
 
 <x-import component-from-global-scope="WURDesignSystem_fcf266.Navbar" from="" brand="Xiaojun Ge" links="{{ navLinks }}" cta-label="Contact" hint-size="100%,72px"></x-import>
 
@@ -61,8 +165,10 @@
 <div>
 
 <div>
-  <div style="background: #153816; padding:calc(64px * var(--space-y)) var(--pad-x) calc(96px * var(--space-y))">
-    <div style="display:flex;align-items:center;gap:40px;flex-wrap:wrap">
+  <div class="wur-hero" style="background: #153816; padding:calc(64px * var(--space-y)) var(--pad-x) calc(96px * var(--space-y))">
+    <video class="wur-hero__video" src="./video/hero-loop.mp4" poster="./video/hero-loop-poster.jpg" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" preload="auto" aria-hidden="true" tabIndex="-1"></video>
+    <div class="wur-hero__wash" aria-hidden="true"></div>
+    <div class="wur-hero__content" style="display:flex;align-items:center;gap:40px;flex-wrap:wrap">
       <img src="https://gexiaojun1201.github.io/Xiaojun_Ge.github.io/images/profile.png" alt="Xiaojun Ge" style="width:150px;height:150px;border-radius:24px;object-fit:cover;border:1px solid rgba(251,246,229,0.3);flex-shrink:0;background:rgba(251,246,229,0.08)">
       <div style="flex:1 1 400px;min-width:280px">
         <span style="display: inline-flex; align-items: center; gap: 8px; background: rgba(251,246,229,0.12); color: #FBF6E5; font-family: var(--font-sans); font-size: 20px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; border-radius: 9999px; padding: 7px 15px; margin-bottom: 18px">
@@ -85,7 +191,10 @@
     </div>
   </div>
 
-  <div style="margin:-48px auto 0;padding:0 var(--pad-x) calc(72px * var(--space-y))">
+  <!-- The hero is a positioned element now, so it paints above static
+       siblings. This layer overlaps it by -48px and has to be lifted back
+       on top, or the video covers the card's top edge. -->
+  <div style="position:relative;z-index:1;margin:-48px auto 0;padding:0 var(--pad-x) calc(72px * var(--space-y))">
     <div class="wur-about" style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-card); box-shadow: 0 8px 24px rgba(21,56,22,0.10); padding: 40px 48px; display: grid; grid-template-columns: 1.5fr 1fr; gap: 48px; min-height: 401px">
       <div class="wur-about__main" style="border-right:1px solid var(--border-subtle);padding-right:48px">
         <h2 style="font-family: var(--font-serif); font-size: 38px; font-weight: 700; color: var(--pine-green); margin: 0 0 14px">About</h2>
@@ -281,7 +390,7 @@
 
 <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
 <div onClick="{{ closeModal }}" class="wur-scrim" style="position:fixed;inset:0;background:rgba(20,25,20,0.45);backdrop-filter:blur(2.5px);-webkit-backdrop-filter:blur(2.5px);display:flex;align-items:center;justify-content:center;padding:clamp(16px,4vw,40px);z-index:100">
-  <div onClick="{{ stop }}" style="background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:0 24px 60px rgba(21,56,22,0.25);max-width:780px;width:100%;max-height:84vh;overflow-y:auto;overflow-x:hidden;padding:clamp(24px,4vw,40px)">
+  <div onClick="{{ stop }}" class="wur-modal" style="background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:0 24px 60px rgba(21,56,22,0.25);max-width:780px;width:100%;overflow-y:auto;overflow-x:hidden;padding:clamp(24px,4vw,40px)">
     <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-bottom:14px">
       <div style="font-family:var(--font-sans);font-size:16px;font-weight:600;color:var(--text-muted)">{{ modalMeta }}</div>
       <div onClick="{{ closeModal }}" style="font-family:var(--font-sans);font-size:26px;line-height:1;color:var(--text-muted);cursor:pointer;padding:2px 6px;flex-shrink:0">×</div>
@@ -329,6 +438,14 @@
   </div>
 </div>
 </sc-if>
+
+<!-- Page scale. Sits outside every sc-if so it is on all four views. -->
+<div class="wur-zoombar" role="group" aria-label="Page scale">
+  <button type="button" class="wur-zoombar__step" onClick="{{ zoomOut }}" aria-label="Smaller">−</button>
+  <span class="wur-zoombar__val" aria-live="polite">{{ zoomLabel }}</span>
+  <button type="button" class="wur-zoombar__step" onClick="{{ zoomIn }}" aria-label="Larger">+</button>
+  <button type="button" class="wur-zoombar__reset" onClick="{{ zoomReset }}">Reset</button>
+</div>
 
 </div>
 
@@ -590,10 +707,76 @@ const PHOTO_SLOTS = [
   {src:'', label:'Data, plot or team'}
 ];
 
+/* Page scale. 0.9 is the default because the layout was measured at a 90%
+   browser zoom — the same constants live in the boot script in <head>,
+   which restores the saved value before first paint. */
+const ZOOM_KEY = 'xg-page-zoom';
+const ZOOM_DEFAULT = 0.9, ZOOM_MIN = 0.7, ZOOM_MAX = 1.3, ZOOM_STEP = 0.05;
+
+function readZoom() {
+  try {
+    const saved = parseFloat(window.localStorage.getItem(ZOOM_KEY));
+    if (saved >= ZOOM_MIN && saved <= ZOOM_MAX) return saved;
+  } catch (err) {}
+  return ZOOM_DEFAULT;
+}
+
+function applyZoom(z) {
+  const root = document.documentElement;
+  root.style.setProperty('--page-zoom', String(z));
+  root.style.setProperty('--page-zoom-inv', String(Math.round((1 / z) * 10000) / 10000));
+}
+
 class Component extends DCLogic {
-  state = { view: 'home', modalId: null };
+  state = { view: 'home', modalId: null, zoom: readZoom() };
 
   lock(on) { document.body.style.overflow = on ? 'hidden' : ''; }
+
+  /* Steps land on whole percents — 0.9 + 0.05 is 0.9500000000000001 in
+     binary floating point, and that would show up in the readout. */
+  setZoom = (z) => {
+    const next = Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, Math.round(z * 100) / 100));
+    if (next === this.state.zoom) return;
+    applyZoom(next);
+    try { window.localStorage.setItem(ZOOM_KEY, String(next)); } catch (err) {}
+    this.setState({zoom: next});
+  };
+  zoomIn = () => this.setZoom(this.state.zoom + ZOOM_STEP);
+  zoomOut = () => this.setZoom(this.state.zoom - ZOOM_STEP);
+  zoomReset = () => this.setZoom(ZOOM_DEFAULT);
+
+  /* Browsers refuse autoplay in more cases than the `autoplay` attribute
+     admits, and the template runtime can rebuild the <video> node on a
+     route change — so the play() call is re-issued from several angles
+     rather than once at load. Every path is a no-op when the video is
+     already running. */
+  startHeroVideo = (event) => {
+    const eventNode = event && event.currentTarget && event.currentTarget.tagName === 'VIDEO' ? event.currentTarget : event && event.target;
+    const eventVideo = eventNode && eventNode.tagName === 'VIDEO' ? eventNode : null;
+    const video = eventVideo || document.querySelector('.wur-hero__video');
+    if (!video) return;
+    /* Reduced motion holds the hero on the poster frame. The attribute has
+       to come off too — `autoplay` starts the file on its own, ahead of
+       any of this. */
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      video.autoplay = false;
+      video.removeAttribute('autoplay');
+      if (!video.paused) video.pause();
+      return;
+    }
+    video.autoplay = true;
+    video.defaultMuted = true;
+    video.muted = true;
+    video.playsInline = true;
+    try {
+      const playback = video.play();
+      if (playback && typeof playback.catch === 'function') playback.catch(() => {});
+    } catch (err) {}
+  };
+
+  onHeroVisibility = () => {
+    if (!document.hidden) this.startHeroVideo();
+  };
 
   componentDidMount() {
     this.route = () => {
@@ -604,13 +787,28 @@ class Component extends DCLogic {
       else { this.setState({view: 'home', modalId: null}); this.lock(false); }
     };
     this.onKey = (e) => { if (e.key === 'Escape') this.close(); };
+    applyZoom(this.state.zoom);
     window.addEventListener('hashchange', this.route);
     window.addEventListener('keydown', this.onKey);
+    document.addEventListener('loadeddata', this.startHeroVideo, true);
+    document.addEventListener('canplay', this.startHeroVideo, true);
+    document.addEventListener('visibilitychange', this.onHeroVisibility);
+    document.addEventListener('pointerdown', this.startHeroVideo, {once:true, passive:true});
+    document.addEventListener('keydown', this.startHeroVideo, {once:true});
     this.route();
+    this.heroVideoStartTimer = window.setTimeout(this.startHeroVideo, 0);
+    this.heroVideoRetryTimer = window.setTimeout(this.startHeroVideo, 1200);
   }
   componentWillUnmount() {
     window.removeEventListener('hashchange', this.route);
     window.removeEventListener('keydown', this.onKey);
+    document.removeEventListener('loadeddata', this.startHeroVideo, true);
+    document.removeEventListener('canplay', this.startHeroVideo, true);
+    document.removeEventListener('visibilitychange', this.onHeroVisibility);
+    document.removeEventListener('pointerdown', this.startHeroVideo);
+    document.removeEventListener('keydown', this.startHeroVideo);
+    window.clearTimeout(this.heroVideoStartTimer);
+    window.clearTimeout(this.heroVideoRetryTimer);
     document.body.style.overflow = '';
   }
   close = () => {
@@ -713,6 +911,10 @@ class Component extends DCLogic {
         }),
       modalLink: item ? (item.doi || '') : '',
       modalDoi: item && item.doi ? 'DOI: ' + item.doi.replace('https://doi.org/', '') : '',
+      zoomLabel: Math.round(this.state.zoom * 100) + '%',
+      zoomIn: this.zoomIn,
+      zoomOut: this.zoomOut,
+      zoomReset: this.zoomReset,
       closeModal: this.close,
       stop: (e) => e.stopPropagation()
     };
