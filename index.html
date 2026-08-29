@@ -198,7 +198,7 @@
     <div class="wur-about" style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-card); box-shadow: 0 8px 24px rgba(21,56,22,0.10); padding: 40px 48px; display: grid; grid-template-columns: 1.5fr 1fr; gap: 48px; min-height: 401px">
       <div class="wur-about__main" style="border-right:1px solid var(--border-subtle);padding-right:48px">
         <h2 style="font-family: var(--font-serif); font-size: 38px; font-weight: 700; color: var(--pine-green); margin: 0 0 14px">About</h2>
-        <p style="font-family: var(--font-sans); font-size: 22px; line-height: 1.7; color: var(--forest-text); margin: 0 0 12px; text-wrap: pretty; text-align: justify">I hold an M.S. in Environmental Science &amp; Engineering from <a href="https://www.scnu.edu.cn/" target="_blank" rel="noopener" style="color:var(--color-primary);text-decoration:underline;text-decoration-color:rgba(0,138,0,.45);text-underline-offset:3px">South China Normal University</a>, and I am currently a researcher at <a href="http://www.gxjl.cn/" target="_blank" rel="noopener" style="color:var(--color-primary);text-decoration:underline;text-decoration-color:rgba(0,138,0,.45);text-underline-offset:3px">Guangxi Research Institute of Metrology &amp; Test</a>, specializing in quantitative measurement and uncertainty analysis of forest and agricultural carbon sinks.</p>
+        <p style="font-family: var(--font-sans); font-size: 22px; line-height: 1.7; color: var(--forest-text); margin: 0 0 12px; text-wrap: pretty; text-align: justify">I hold an M.S. in Environmental Science &amp; Engineering from <a href="https://www.scnu.edu.cn/" target="_blank" rel="noopener" style="color:var(--color-primary);text-decoration:underline;text-decoration-color:rgba(0,138,0,.45);text-underline-offset:3px">South China Normal University</a>, and I am currently a researcher at <a href="http://www.gxjly.cn/" target="_blank" rel="noopener" style="color:var(--color-primary);text-decoration:underline;text-decoration-color:rgba(0,138,0,.45);text-underline-offset:3px">Guangxi Research Institute of Metrology &amp; Test</a>, specializing in quantitative measurement and uncertainty analysis of forest and agricultural carbon sinks.</p>
         <p style="font-family: var(--font-sans); font-size: 22px; line-height: 1.7; color: var(--text-muted); margin: 0; text-wrap: pretty; text-align: left">My expertise covers soil-ecosystem material cycling processes and their regulatory mechanisms: nutrient coupling, solute transport, carbon budget quantification, and optimized management.</p>
       </div>
       <div>
@@ -452,14 +452,14 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900},&quot;cvHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://gexiaojun1201.github.io/Xiaojun_Ge.github.io/cv/&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Content&quot;}}">
 const EDUCATION = [
-  {period:'2022 — present', title:'Researcher, forest & agricultural carbon sinks', org:'Guangxi Research Institute of Metrology & Test', link:'http://www.gxjl.cn/'},
+  {period:'2022 — present', title:'Researcher, forest & agricultural carbon sinks', org:'Guangxi Research Institute of Metrology & Test', link:'http://www.gxjly.cn/'},
   {period:'2020 — 2022', title:'M.S. Environmental Science & Engineering', org:'South China Normal University', link:'https://www.scnu.edu.cn/'}
 ];
 
 const ADVISORS = [
   {name:'Dr. Xianli Xu', affiliation:'Institute of Subtropical Agriculture, Chinese Academy of Sciences', link:'https://www.researchgate.net/profile/Xianli-Xu'},
-  {name:'Dr. Zaijian Yuan', affiliation:'Institute of Eco-environmental and Soil Science, Guangdong Academy of Science', link:'https://www.researchgate.net/scientific-contributions/Zaijian-Yuan-2007380218'},
-  {name:'Dr. Jing Zhu', affiliation:'College of Environment and Resources, Guangxi Normal University', link:'https://www.researchgate.net/profile/Jing-Zhu-44'}
+  {name:'Dr. Zaijian Yuan', affiliation:'Institute of Eco-environmental and Soil Science, Guangdong Academy of Science', link:'https://www.scopus.com/authid/detail.uri?authorId=13611832700'},
+  {name:'Dr. Jing Zhu', affiliation:'College of Environment and Resources, Guangxi Normal University', link:'https://orcid.org/0000-0001-7642-7623'}
 ];
 
 const THEME_PILL_COLORS = {
@@ -888,7 +888,7 @@ class Component extends DCLogic {
       footerColumns: [
         {heading:'Contact', links:[{label:'isgexiaojun@gmail.com', href:'mailto:isgexiaojun@gmail.com'},{label:'Nanning, China'}]},
         {heading:'Elsewhere', links:[{label:'ORCID', href:'https://orcid.org/0009-0002-9282-2804'}]},
-        {heading:'Affiliation', links:[{label:'Guangxi Research Institute of Metrology & Test', href:'http://www.gxjl.cn/'}]}
+        {heading:'Affiliation', links:[{label:'Guangxi Research Institute of Metrology & Test', href:'http://www.gxjly.cn/'}]}
       ],
       modalOpen: !!item,
       modalMeta: item ? (item.statusLabel ? item.period + ' · ' + item.statusLabel : (item.status || (item.venue + ', ' + item.year + ' · ' + item.authors))) : '',
