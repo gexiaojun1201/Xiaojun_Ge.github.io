@@ -206,7 +206,7 @@
         <div style="display:flex;flex-direction:column;gap:14px">
           <sc-for list="{{ advisors }}" as="a" hint-placeholder-count="3">
             <div style="font-family:var(--font-sans);font-size:16px;line-height:1.5">
-              <a href="{{ a.link }}" target="_blank" rel="noopener" style="font-weight: 600; color: var(--forest-text); font-size: 25px" style-hover="color:var(--color-primary)">{{ a.name }}</a>
+              <a href="{{ a.hash }}" style="font-weight: 600; color: var(--forest-text); font-size: 25px" style-hover="color:var(--color-primary)">{{ a.name }}</a>
               <div style="color: var(--text-muted); font-size: 20px; margin-top: 2px; text-wrap: pretty">{{ a.affiliation }}</div>
             </div>
           </sc-for>
@@ -431,8 +431,8 @@
     </sc-if>
     <sc-if value="{{ modalLink }}" hint-placeholder-val="{{ false }}">
       <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:26px;padding-top:22px">
-        <a href="{{ modalLink }}" target="_blank" rel="noopener" class="wur-pill wur-pill--primary">View paper <span aria-hidden="true">→</span></a>
-        <span style="font-family:var(--font-sans);font-size:15px;color:var(--text-muted);min-width:0;max-width:100%;overflow-wrap:break-word;word-break:break-word">{{ modalDoi }}</span>
+        <a href="{{ modalLink }}" target="_blank" rel="noopener" class="wur-pill wur-pill--primary">{{ modalLinkLabel }} <span aria-hidden="true">→</span></a>
+        <span style="font-family:var(--font-sans);font-size:15px;color:var(--text-muted);min-width:0;max-width:100%;overflow-wrap:break-word;word-break:break-word">{{ modalLinkNote }}</span>
       </div>
     </sc-if>
   </div>
@@ -456,11 +456,29 @@ const EDUCATION = [
   {period:'2020 — 2022', title:'M.S. Environmental Science & Engineering', org:'South China Normal University', link:'https://www.scnu.edu.cn/'}
 ];
 
+/* Advisors ride the same hash-routed modal as papers and projects, so each
+   one carries an `id`. Add a `note:'...'` to any of them and it shows up in
+   the modal as a Notes section. */
 const ADVISORS = [
-  {name:'Dr. Xianli Xu', affiliation:'Institute of Subtropical Agriculture, Chinese Academy of Sciences', link:'https://www.researchgate.net/profile/Xianli-Xu'},
-  {name:'Dr. Zaijian Yuan', affiliation:'Institute of Eco-environmental and Soil Science, Guangdong Academy of Science', link:'https://www.scopus.com/authid/detail.uri?authorId=13611832700'},
-  {name:'Dr. Jing Zhu', affiliation:'College of Environment and Resources, Guangxi Normal University', link:'https://orcid.org/0000-0001-7642-7623'}
+  {id:'advisor-xianli-xu', kind:'advisor', name:'Dr. Xianli Xu', affiliation:'Institute of Subtropical Agriculture, Chinese Academy of Sciences', link:'https://www.researchgate.net/profile/Xianli-Xu'},
+  {id:'advisor-zaijian-yuan', kind:'advisor', name:'Dr. Zaijian Yuan', affiliation:'Institute of Eco-environmental and Soil Science, Guangdong Academy of Science', link:'https://www.scopus.com/authid/detail.uri?authorId=13611832700'},
+  {id:'advisor-jing-zhu', kind:'advisor', name:'Dr. Jing Zhu', affiliation:'College of Environment and Resources, Guangxi Normal University', link:'https://orcid.org/0000-0001-7642-7623'}
 ];
+
+/* Naming the destination on the button — "Open ORCID record" rather than a
+   bare "Visit" — lets the visitor check the claim against the full URL
+   printed next to it before they leave the page. */
+const PROFILE_SITES = [
+  {match:'orcid.org', label:'ORCID record'},
+  {match:'scopus.com', label:'Scopus profile'},
+  {match:'researchgate.net', label:'ResearchGate profile'}
+];
+function profileLinkLabel(url) {
+  for (let i = 0; i < PROFILE_SITES.length; i++) {
+    if (url.indexOf(PROFILE_SITES[i].match) >= 0) return 'Open ' + PROFILE_SITES[i].label;
+  }
+  return 'Open official page';
+}
 
 const THEME_PILL_COLORS = {
   food: {bg:'#6B8F1F', fg:'#FFFFFF'},
@@ -819,7 +837,7 @@ class Component extends DCLogic {
   };
 
   findItem(id) {
-    const all = PUBLICATIONS.concat(MANUSCRIPTS, ONGOING, FINISHED);
+    const all = PUBLICATIONS.concat(MANUSCRIPTS, ONGOING, FINISHED, ADVISORS);
     for (let i = 0; i < all.length; i++) if (all[i].id === id) return all[i];
     return null;
   }
@@ -833,6 +851,8 @@ class Component extends DCLogic {
       hasText: !!text,
       hasBullets: !!(bullets && bullets.length)
     });
+    if (item.affiliation) push('Affiliation', item.affiliation);
+    if (item.note) push('Notes', item.note);
     if (item.abstract) push('Abstract', item.abstract);
     if (item.overview) push('Project overview', item.overview);
     if (item.points) push('Key points', '', item.points);
@@ -844,6 +864,8 @@ class Component extends DCLogic {
   renderVals() {
     const view = this.state.view;
     const item = this.state.modalId ? this.findItem(this.state.modalId) : null;
+    const isAdvisor = !!(item && item.kind === 'advisor');
+    const modalHref = item ? (item.doi || item.link || '') : '';
     const showEducation = true;
     const deco = (arr) => arr.map(x => Object.assign({}, x, {hash: '#' + x.id}));
     const art = (x) => Object.assign({}, x, {
@@ -872,7 +894,7 @@ class Component extends DCLogic {
       cvHref: this.props.cvHref ?? 'https://gexiaojun1201.github.io/Xiaojun_Ge.github.io/cv/',
       showEducation: showEducation,
       education: EDUCATION,
-      advisors: ADVISORS,
+      advisors: deco(ADVISORS),
       interests: INTERESTS,
       interestsColored: INTERESTS.map(it => Object.assign({}, it, THEME_PILL_COLORS[it.theme] || {bg:'#153816', fg:'#FFFFFF'})),
       publications: pubs,
@@ -891,8 +913,8 @@ class Component extends DCLogic {
         {heading:'Affiliation', links:[{label:'Guangxi Research Institute of Metrology & Test', href:'http://www.gxjly.cn/'}]}
       ],
       modalOpen: !!item,
-      modalMeta: item ? (item.statusLabel ? item.period + ' · ' + item.statusLabel : (item.status || (item.venue + ', ' + item.year + ' · ' + item.authors))) : '',
-      modalTitle: item ? item.title : '',
+      modalMeta: !item ? '' : (isAdvisor ? 'Advisor' : (item.statusLabel ? item.period + ' · ' + item.statusLabel : (item.status || (item.venue + ', ' + item.year + ' · ' + item.authors)))),
+      modalTitle: item ? (item.title || item.name) : '',
       modalAuthors: item ? (item.authorsFull || '') : '',
       modalSections: item ? this.sectionsFor(item) : [],
       modalHasPhotos: !!(item && item.statusLabel),
@@ -909,8 +931,11 @@ class Component extends DCLogic {
             shape: i
           };
         }),
-      modalLink: item ? (item.doi || '') : '',
-      modalDoi: item && item.doi ? 'DOI: ' + item.doi.replace('https://doi.org/', '') : '',
+      modalLink: modalHref,
+      modalLinkLabel: isAdvisor ? profileLinkLabel(modalHref) : 'View paper',
+      // The advisor case prints the whole URL, so "official page" is a claim
+      // the visitor can verify before clicking rather than take on trust.
+      modalLinkNote: item && item.doi ? 'DOI: ' + item.doi.replace('https://doi.org/', '') : (isAdvisor ? modalHref : ''),
       zoomLabel: Math.round(this.state.zoom * 100) + '%',
       zoomIn: this.zoomIn,
       zoomOut: this.zoomOut,
