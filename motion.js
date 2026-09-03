@@ -404,6 +404,77 @@
     });
   }
 
+  /* ── 4. Collapsible sections, narrow screens only ───────────────────
+     The wide layout shows every section at once; a phone that scrolls the
+     same page pays five screens for it. Below 760px each `.wur-fold` keeps
+     its heading and folds its body away until tapped.
+     The wiring is unconditional — the marker and the listener go on once,
+     whatever the width — and the width test lives in the handler, so a
+     rotation or a resized window needs no re-sweep. Above 760px the
+     stylesheet ignores the state attribute entirely, so the desktop page
+     renders exactly as it did before this existed. */
+  var narrow = window.matchMedia('(max-width: 760px)');
+  var folds = [];
+
+  function syncFoldA11y(entry) {
+    var fold = entry.fold, head = entry.head;
+    if (!fold.isConnected) return;
+    if (narrow.matches) {
+      head.setAttribute('role', 'button');
+      head.setAttribute('tabindex', '0');
+      head.setAttribute('aria-expanded', fold.hasAttribute('data-open') ? 'true' : 'false');
+    } else {
+      /* Off the phone the heading is a heading again, not a control. */
+      head.removeAttribute('role');
+      head.removeAttribute('tabindex');
+      head.removeAttribute('aria-expanded');
+    }
+  }
+
+  function setupFold(fold) {
+    var head = fold.querySelector('.wur-fold__head');
+    var body = fold.querySelector('.wur-fold__body');
+    if (!head || !body) return;
+
+    /* Drawn from borders rather than a glyph: it has to point the same way
+       in the serif headings and the sans section rows. */
+    var chevron = document.createElement('span');
+    chevron.className = 'wur-fold__chevron';
+    chevron.setAttribute('aria-hidden', 'true');
+    head.appendChild(chevron);
+
+    var entry = { fold: fold, head: head };
+    folds.push(entry);
+
+    function toggle() {
+      if (fold.hasAttribute('data-open')) fold.removeAttribute('data-open');
+      else fold.setAttribute('data-open', '');
+      syncFoldA11y(entry);
+    }
+
+    head.addEventListener('click', function (event) {
+      if (!narrow.matches) return;
+      /* "All publications →" sits inside this row and still navigates. */
+      if (event.target.closest && event.target.closest('a')) return;
+      toggle();
+    });
+
+    head.addEventListener('keydown', function (event) {
+      if (!narrow.matches) return;
+      if (event.key !== 'Enter' && event.key !== ' ' && event.key !== 'Spacebar') return;
+      if (event.target !== head) return;
+      event.preventDefault();
+      toggle();
+    });
+
+    syncFoldA11y(entry);
+  }
+
+  narrow.addEventListener('change', function () {
+    folds = folds.filter(function (entry) { return entry.fold.isConnected; });
+    folds.forEach(syncFoldA11y);
+  });
+
   function shotsSignature(root) {
     var tiles = root.querySelectorAll('.wur-shot__btn');
     var parts = [String(tiles.length)];
@@ -421,6 +492,11 @@
     for (var i = 0; i < pills.length; i++) {
       pills[i].setAttribute('data-wur-on', '');
       setupPill(pills[i]);
+    }
+    var newFolds = document.querySelectorAll('.wur-fold:not([data-wur-fold])');
+    for (var f = 0; f < newFolds.length; f++) {
+      newFolds[f].setAttribute('data-wur-fold', '');
+      setupFold(newFolds[f]);
     }
     /* A marker attribute is not enough here: when one modal replaces
        another the runtime keeps the same element and only swaps the slot

@@ -9,7 +9,10 @@
    writes the same key; this only restores it. Kept deliberately tiny and
    dependency-free — it has to run ahead of the template runtime. */
 (function () {
-  var DEFAULT = 0.9, MIN = 0.7, MAX = 1.3, z = DEFAULT;
+  /* 0.9 is a desktop density — it was measured against the 1290px column.
+     Phones get their own type scale in the stylesheet below, written at
+     the size it should paint, so narrow screens start at 1. */
+  var DEFAULT = window.innerWidth <= 760 ? 1 : 0.9, MIN = 0.7, MAX = 1.3, z = DEFAULT;
   try {
     var saved = parseFloat(window.localStorage.getItem('xg-page-zoom'));
     if (saved >= MIN && saved <= MAX) z = saved;
@@ -153,6 +156,146 @@
      showing its poster, so the still frame goes through the same filter
      as the footage and the wash lands on the same luminance. Swapping in
      a CSS background image would skip the filter and read brighter. */
+
+  /* The fold control exists in the markup at every width and is shown only
+     on the phone, so the wide layout keeps its headings exactly as they
+     were — no control, no state, no reserved space. */
+  .wur-fold__chevron{display:none}
+
+  /* ── phone scale ──────────────────────────────────────────────────
+     Every size above was measured against the 1290px column: 22px body
+     copy, 64px display type, 48px of card padding. Carried onto a 390px
+     phone the same words run 4257px — five screens, against 2.6 on a
+     laptop — and justified 22px text breaks to five words a line with
+     the gaps stretched to fill.
+     What follows is a type scale and a vertical rhythm for the phone.
+     No content is dropped and nothing here applies above 760px, so the
+     wide layout is exactly as it was. Sizes are written at the size they
+     should paint: the boot script starts narrow screens at zoom 1. */
+  @media (max-width: 760px){
+    :root{
+      --page-gutter:16px;  /* 24px of gutter is 12% of a 390px screen */
+      --space-y:.5;        /* section padding multiplier; .85 on desktop */
+    }
+
+    /* Hero — the portrait goes. Beside the text it squeezed the column to
+       278px and pushed every button and tag onto its own line; the name
+       and the role say the same thing in a quarter of the height. */
+    .wur-hero{padding-top:24px !important;padding-bottom:56px !important}
+    .wur-hero__content{gap:0 !important;align-items:flex-start !important}
+    .wur-hero__content img{display:none !important}
+    .wur-hero__text{flex:1 1 100% !important;min-width:0 !important}
+    .wur-hero__badge{font-size:11px !important;padding:5px 11px !important;
+      margin-bottom:10px !important;letter-spacing:.05em !important}
+    .wur-hero__content h1{font-size:34px !important;margin-bottom:4px !important}
+    .wur-hero__role{font-size:16px !important;margin-bottom:3px !important}
+    .wur-hero__where{font-size:13px !important;line-height:1.45 !important;margin-bottom:15px !important}
+    /* Three buttons, one row, one size. Sized by the grid rather than by
+       their labels, so "Download CV" no longer reads as a banner next to
+       two small ones. The pill is content-box, so its 43px min-height is
+       43px *plus* the padding — that floor, not the padding, is what kept
+       it tall. */
+    .wur-hero__actions{display:grid !important;grid-template-columns:repeat(3,1fr) !important;
+      gap:8px !important;margin-bottom:14px !important}
+    /* These are content-box, so a 100% width would put the padding outside
+       the track and run the last button off the screen. */
+    .wur-hero__actions .wur-pill{box-sizing:border-box !important;width:100% !important;
+      min-height:22px !important;font-size:12.5px !important;padding:9px 6px !important}
+    /* "(PDF)" is the half of the label that does not survive a third of a
+       390px screen. The link is the same file either way. */
+    .wur-pill__ext{display:none}
+
+    /* Interest tags: full-width capsules on one rail instead of five
+       ragged rows that broke wherever the label happened to end. */
+    .wur-hero__tags{display:grid !important;grid-template-columns:1fr !important;gap:5px !important}
+    .wur-tag{box-sizing:border-box !important;width:100% !important;font-size:11.5px !important;
+      padding:6px 14px !important;border-radius:9999px !important}
+
+    /* The About card is lifted 48px onto the hero. At this size that crop
+       reached the interest tags, so the overlap shrinks (the hero's own
+       56px of floor above keeps the tags clear). */
+    .wur-aboutwrap{margin-top:-22px !important}
+
+    /* About + Advisors card */
+    body .wur-about{padding:22px 18px !important;gap:18px !important;min-height:0 !important}
+    .wur-about h2{font-size:25px !important;margin-bottom:8px !important}
+    /* Justify needs long lines to hide its gaps. A 358px column is not
+       one, so ragged-right it is. */
+    .wur-about p{font-size:16px !important;line-height:1.6 !important;
+      text-align:left !important;margin-bottom:10px !important}
+    .wur-advisors a{font-size:18px !important}
+    .wur-advisors a + div{font-size:14px !important;line-height:1.45 !important}
+
+    /* Section headers */
+    .wur-page section h2{font-size:23px !important}
+    .wur-eyebrow{font-size:11px !important;margin-bottom:9px !important;padding:4px 9px !important}
+    /* Inner pages (Publications, Research, Skills) lead with a 42px title. */
+    .wur-page section h1{font-size:30px !important;margin-top:12px !important}
+
+    /* Publication / project / education cards */
+    .wur-rowmotion a{padding:14px 16px !important}
+    .wur-rowmotion a > div:nth-child(1){font-size:13px !important;margin-bottom:5px !important}
+    .wur-rowmotion a > div:nth-child(2){font-size:17px !important;margin-bottom:5px !important}
+    .wur-rowmotion a > div:nth-child(3){font-size:14.5px !important;line-height:1.5 !important}
+    .wur-edcard{padding:16px 18px !important}
+    .wur-edcard > div:nth-child(1){font-size:13px !important;margin-bottom:6px !important}
+    .wur-edcard > div:nth-child(2){font-size:17px !important}
+    .wur-edcard > div:nth-child(3){font-size:14.5px !important}
+
+    /* Skills — three cards of nested lists. Left on the desktop scale it
+       was the one page that got longer on a phone, not shorter. */
+    .wur-skillcard{padding:16px 18px !important}
+    .wur-skillcard h2{margin-bottom:12px !important}
+    .wur-skillcard > div{gap:13px !important}
+    .wur-skillcard > div > div{gap:6px !important}
+    .wur-skillcard > div > div > div:first-child{font-size:13px !important;letter-spacing:.06em !important}
+    .wur-skillcard > div > div > div:last-child{gap:4px !important}
+    .wur-skillcard > div > div > div:last-child span:last-child{
+      font-size:14.5px !important;line-height:1.45 !important}
+    .wur-skillcard > div > div > div:last-child span:first-child{margin-top:8px !important}
+
+    /* Navbar. The design system spaces four links and a pill for a wide
+       bar; at 390px they wrapped to three rows and ate 199px — a quarter
+       of the first screen — before a word of content. A smaller label and
+       a tighter gap put all five on one row under the brand. */
+    body nav{padding-top:10px !important;padding-bottom:10px !important;row-gap:6px !important}
+    body nav a{font-size:14px !important}
+    body nav > div:last-child{gap:12px !important}
+    body nav a:last-child{padding:0 16px !important}
+
+    /* Collapsible sections. Closed is the default, so the phone opens on a
+       list of what is here and each section costs one tap instead of
+       screens of scrolling. */
+    /* nowrap matters: the section rows already hold a block and a link, and
+       a wrapping row drops the chevron onto a line of its own. */
+    .wur-fold__head{display:flex !important;align-items:center;gap:12px !important;
+      flex-wrap:nowrap !important;cursor:pointer;-webkit-tap-highlight-color:transparent}
+    .wur-fold__head .wur-arrowlink{font-size:13px !important;flex:none}
+    .wur-fold__chevron{display:block;flex:none;margin-left:auto;
+      width:9px;height:9px;
+      border-right:2px solid currentColor;border-bottom:2px solid currentColor;
+      transform:translateY(-3px) rotate(45deg);opacity:.5;
+      transition:transform 180ms ease-out}
+    .wur-fold[data-open] .wur-fold__chevron{transform:translateY(2px) rotate(-135deg)}
+    .wur-fold:not([data-open]) .wur-fold__body{display:none !important}
+    /* A closed section is a row, not a block: the margin under the heading
+       was spacing for a body that is not there. */
+    .wur-fold:not([data-open]) .wur-fold__head{margin-bottom:0 !important}
+    .wur-fold:not([data-open]).wur-about__main{border-bottom:0 !important;padding-bottom:0 !important}
+
+    /* Touch targets. A 15px-tall nav link is a coin flip with a thumb;
+       44px is the size Apple and Google both publish. Padding does the
+       work, so nothing moves visually. */
+    body nav a, body footer a, .wur-arrowlink{
+      display:inline-flex !important;align-items:center;min-height:44px}
+
+    /* Footer opens on 48px of air and closes the page — trim both ends. */
+    body footer{padding-top:26px !important;padding-bottom:16px !important}
+
+    /* The page-scale stepper is a desktop affordance: phones pinch. Fixed
+       to the bottom-right it also sat on top of the About copy. */
+    .wur-zoombar{display:none !important}
+  }
 </style>
 <script src="./motion.js"></script>
 </helmet>
@@ -170,21 +313,21 @@
     <div class="wur-hero__wash" aria-hidden="true"></div>
     <div class="wur-hero__content" style="display:flex;align-items:center;gap:40px;flex-wrap:wrap">
       <img src="https://gexiaojun1201.github.io/Xiaojun_Ge.github.io/images/profile.png" alt="Xiaojun Ge" style="width:150px;height:150px;border-radius:24px;object-fit:cover;border:1px solid rgba(251,246,229,0.3);flex-shrink:0;background:rgba(251,246,229,0.08)">
-      <div style="flex:1 1 400px;min-width:280px">
-        <span style="display: inline-flex; align-items: center; gap: 8px; background: rgba(251,246,229,0.12); color: #FBF6E5; font-family: var(--font-sans); font-size: 20px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; border-radius: 9999px; padding: 7px 15px; margin-bottom: 18px">
+      <div class="wur-hero__text" style="flex:1 1 400px;min-width:280px">
+        <span class="wur-hero__badge" style="display: inline-flex; align-items: center; gap: 8px; background: rgba(251,246,229,0.12); color: #FBF6E5; font-family: var(--font-sans); font-size: 20px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; border-radius: 9999px; padding: 7px 15px; margin-bottom: 18px">
           <span style="width:7px;height:7px;border-radius:50%;background:#FBF6E5;flex-shrink:0"></span>Seeking PhD opportunities
         </span>
         <h1 style="font-family:var(--font-serif);font-size:64px;font-weight:400;line-height:1.05;color:#FBF6E5;margin:0 0 10px">Xiaojun Ge</h1>
-        <p style="font-family: var(--font-sans); font-size: 20px; color: rgba(251,246,229,0.85); margin: 0 0 6px">Soil &amp; Environmental Science Researcher</p>
-        <p style="font-family:var(--font-sans);font-size:15px;color:rgba(251,246,229,0.62);margin:0 0 22px">Guangxi Research Institute of Metrology &amp; Test · Nanning, China</p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:22px">
-          <a href="{{ cvHref }}" class="wur-pill wur-pill--invert">Download CV (PDF)</a>
+        <p class="wur-hero__role" style="font-family: var(--font-sans); font-size: 20px; color: rgba(251,246,229,0.85); margin: 0 0 6px">Soil &amp; Environmental Science Researcher</p>
+        <p class="wur-hero__where" style="font-family:var(--font-sans);font-size:15px;color:rgba(251,246,229,0.62);margin:0 0 22px">Guangxi Research Institute of Metrology &amp; Test · Nanning, China</p>
+        <div class="wur-hero__actions" style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:22px">
+          <a href="{{ cvHref }}" class="wur-pill wur-pill--invert"><span class="wur-pill__label">Download CV<span class="wur-pill__ext"> (PDF)</span></span></a>
           <a href="mailto:isgexiaojun@gmail.com" class="wur-pill wur-pill--ghost">Email me</a>
           <a href="https://orcid.org/0009-0002-9282-2804" class="wur-pill wur-pill--ghost">ORCID</a>
         </div>
-        <div style="display:flex;flex-wrap:wrap;gap:0.6em">
+        <div class="wur-hero__tags" style="display:flex;flex-wrap:wrap;gap:0.6em">
           <sc-for list="{{ interestsColored }}" as="it" hint-placeholder-count="5">
-            <span style="font-family: var(--font-sans); font-size: 16px; font-weight: 600; line-height: 1.2; border-radius: 12px; padding: 0.5em 1.05em; background: {{ it.bg }}; color: {{ it.fg }}">{{ it.label }}</span>
+            <span class="wur-tag" style="font-family: var(--font-sans); font-size: 16px; font-weight: 600; line-height: 1.2; border-radius: 12px; padding: 0.5em 1.05em; background: {{ it.bg }}; color: {{ it.fg }}">{{ it.label }}</span>
           </sc-for>
         </div>
       </div>
@@ -194,16 +337,18 @@
   <!-- The hero is a positioned element now, so it paints above static
        siblings. This layer overlaps it by -48px and has to be lifted back
        on top, or the video covers the card's top edge. -->
-  <div style="position:relative;z-index:1;margin:-48px auto 0;padding:0 var(--pad-x) calc(72px * var(--space-y))">
+  <div class="wur-aboutwrap" style="position:relative;z-index:1;margin:-48px auto 0;padding:0 var(--pad-x) calc(72px * var(--space-y))">
     <div class="wur-about" style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-card); box-shadow: 0 8px 24px rgba(21,56,22,0.10); padding: 40px 48px; display: grid; grid-template-columns: 1.5fr 1fr; gap: 48px; min-height: 401px">
-      <div class="wur-about__main" style="border-right:1px solid var(--border-subtle);padding-right:48px">
-        <h2 style="font-family: var(--font-serif); font-size: 38px; font-weight: 700; color: var(--pine-green); margin: 0 0 14px">About</h2>
+      <div class="wur-about__main wur-fold" style="border-right:1px solid var(--border-subtle);padding-right:48px">
+        <h2 class="wur-fold__head" style="font-family: var(--font-serif); font-size: 38px; font-weight: 700; color: var(--pine-green); margin: 0 0 14px">About</h2>
+        <div class="wur-fold__body">
         <p style="font-family: var(--font-sans); font-size: 22px; line-height: 1.7; color: var(--forest-text); margin: 0 0 12px; text-wrap: pretty; text-align: justify">I hold an M.S. in Environmental Science &amp; Engineering from <a href="https://www.scnu.edu.cn/" target="_blank" rel="noopener" style="color:var(--color-primary);text-decoration:underline;text-decoration-color:rgba(0,138,0,.45);text-underline-offset:3px">South China Normal University</a>, and I am currently a researcher at <a href="http://www.gxjly.cn/" target="_blank" rel="noopener" style="color:var(--color-primary);text-decoration:underline;text-decoration-color:rgba(0,138,0,.45);text-underline-offset:3px">Guangxi Research Institute of Metrology &amp; Test</a>, specializing in quantitative measurement and uncertainty analysis of forest and agricultural carbon sinks.</p>
         <p style="font-family: var(--font-sans); font-size: 22px; line-height: 1.7; color: var(--text-muted); margin: 0; text-wrap: pretty; text-align: left">My expertise covers soil-ecosystem material cycling processes and their regulatory mechanisms: nutrient coupling, solute transport, carbon budget quantification, and optimized management.</p>
+        </div>
       </div>
-      <div>
-        <h2 style="font-family: var(--font-serif); font-size: 38px; font-weight: 700; color: var(--pine-green); margin: 0 0 14px">Advisors</h2>
-        <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="wur-advisors wur-fold">
+        <h2 class="wur-fold__head" style="font-family: var(--font-serif); font-size: 38px; font-weight: 700; color: var(--pine-green); margin: 0 0 14px">Advisors</h2>
+        <div class="wur-fold__body" style="display:flex;flex-direction:column;gap:14px">
           <sc-for list="{{ advisors }}" as="a" hint-placeholder-count="3">
             <div style="font-family:var(--font-sans);font-size:16px;line-height:1.5">
               <a href="{{ a.link }}" target="_blank" rel="noopener" style="font-weight: 600; color: var(--forest-text); font-size: 25px" style-hover="color:var(--color-primary)">{{ a.name }}</a>
@@ -216,15 +361,15 @@
   </div>
 </div>
 
-<section style="padding:calc(36px * var(--space-y)) var(--pad-x) calc(48px * var(--space-y))">
-  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:20px">
+<section class="wur-fold" style="padding:calc(36px * var(--space-y)) var(--pad-x) calc(48px * var(--space-y))">
+  <div class="wur-fold__head" style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:20px">
     <div>
-      <div style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:16px">Selected work</div>
+      <div class="wur-eyebrow" style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:16px">Selected work</div>
       <h2 style="font-family:var(--font-serif);font-size:30px;font-weight:700;color:var(--pine-green);margin:0">Publications</h2>
     </div>
     <a href="#publications" class="wur-arrowlink">All publications <span class="wur-arrow" aria-hidden="true">→</span></a>
   </div>
-  <div style="display:flex;flex-direction:column;gap:14px">
+  <div class="wur-fold__body" style="display:flex;flex-direction:column;gap:14px">
     <sc-for list="{{ homePublications }}" as="p" hint-placeholder-count="3">
       <div class="wur-rowmotion">
         <a href="{{ p.hash }}" style="display:block;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:20px 24px;color:var(--text-primary);cursor:pointer">
@@ -236,15 +381,15 @@
   </div>
 </section>
 
-<section style="padding:calc(36px * var(--space-y)) var(--pad-x) calc(48px * var(--space-y))">
-  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:20px">
+<section class="wur-fold" style="padding:calc(36px * var(--space-y)) var(--pad-x) calc(48px * var(--space-y))">
+  <div class="wur-fold__head" style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:20px">
     <div>
-      <div style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:16px">In the field</div>
+      <div class="wur-eyebrow" style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:16px">In the field</div>
       <h2 style="font-family:var(--font-serif);font-size:30px;font-weight:700;color:var(--pine-green);margin:0">Research experience</h2>
     </div>
     <a href="#research" class="wur-arrowlink">All projects <span class="wur-arrow" aria-hidden="true">→</span></a>
   </div>
-  <div style="display:flex;flex-direction:column;gap:14px">
+  <div class="wur-fold__body" style="display:flex;flex-direction:column;gap:14px">
     <sc-for list="{{ homeProjects }}" as="e" hint-placeholder-count="3">
       <div class="wur-rowmotion">
         <a href="{{ e.hash }}" style="display:block;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:20px 24px;color:var(--text-primary);cursor:pointer">
@@ -258,12 +403,12 @@
 </section>
 
 <sc-if value="{{ showEducation }}" hint-placeholder-val="{{ false }}">
-<section style="padding:calc(32px * var(--space-y)) var(--pad-x) calc(36px * var(--space-y))">
-  <div style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:16px">Background</div>
-  <h2 style="font-family:var(--font-serif);font-size:30px;font-weight:700;color:var(--pine-green);margin:0 0 20px">Education &amp; appointments</h2>
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+<section class="wur-fold" style="padding:calc(32px * var(--space-y)) var(--pad-x) calc(36px * var(--space-y))">
+  <div class="wur-eyebrow" style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:16px">Background</div>
+  <h2 class="wur-fold__head" style="font-family:var(--font-serif);font-size:30px;font-weight:700;color:var(--pine-green);margin:0 0 20px">Education &amp; appointments</h2>
+  <div class="wur-fold__body" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
     <sc-for list="{{ education }}" as="ed" hint-placeholder-count="2">
-      <div style="background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:22px 24px">
+      <div class="wur-edcard" style="background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:22px 24px">
         <div style="font-family: var(--font-sans); font-size: 15px; font-weight: 600; letter-spacing: 0.03em; color: var(--text-muted); margin-bottom: 10px">{{ ed.period }}</div>
         <div style="font-family:var(--font-serif);font-size:20px;font-weight:600;line-height:1.35;color:var(--forest-text);margin-bottom:6px">{{ ed.title }}</div>
         <div style="font-family:var(--font-sans);font-size:16px;line-height:1.5;color:var(--text-muted)"><a href="{{ ed.link }}" target="_blank" rel="noopener">{{ ed.org }}</a></div>
@@ -283,7 +428,7 @@
     
   </section>
   <section style="padding:0 var(--pad-x) calc(44px * var(--space-y))">
-    <div style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:18px">Published</div>
+    <div class="wur-eyebrow" style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:18px">Published</div>
     <div style="display:flex;flex-direction:column;gap:16px">
       <sc-for list="{{ publications }}" as="p" hint-placeholder-count="4">
         <div class="wur-rowmotion">
@@ -297,7 +442,7 @@
     </div>
   </section>
   <section style="padding:calc(32px * var(--space-y)) var(--pad-x) calc(72px * var(--space-y))">
-    <div style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:18px">Manuscripts under review &amp; in preparation</div>
+    <div class="wur-eyebrow" style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:18px">Manuscripts under review &amp; in preparation</div>
     <div style="display:flex;flex-direction:column;gap:16px">
       <sc-for list="{{ manuscripts }}" as="m" hint-placeholder-count="4">
         <div class="wur-rowmotion">
@@ -321,7 +466,7 @@
   </section>
 
   <section style="padding:0 var(--pad-x) calc(44px * var(--space-y))">
-    <div style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:18px">Ongoing</div>
+    <div class="wur-eyebrow" style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:18px">Ongoing</div>
     <div style="display:flex;flex-direction:column;gap:16px">
       <sc-for list="{{ ongoingProjects }}" as="e" hint-placeholder-count="4">
         <div class="wur-rowmotion">
@@ -336,7 +481,7 @@
   </section>
 
   <section style="padding:calc(32px * var(--space-y)) var(--pad-x) calc(72px * var(--space-y))">
-    <div style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:18px">Finished</div>
+    <div class="wur-eyebrow" style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:18px">Finished</div>
     <div style="display:flex;flex-direction:column;gap:16px">
       <sc-for list="{{ finishedProjects }}" as="e" hint-placeholder-count="4">
         <div class="wur-rowmotion">
@@ -362,7 +507,7 @@
   <section style="padding:0 var(--pad-x) calc(72px * var(--space-y))">
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;align-items:start">
       <sc-for list="{{ skillGroups }}" as="g" hint-placeholder-count="3">
-        <div style="background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:26px 28px">
+        <div class="wur-skillcard" style="background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:26px 28px">
           <h2 style="font-family: var(--font-serif); font-size: 25px; font-weight: 700; color: var(--pine-green); margin: 0 0 18px">{{ g.heading }}</h2>
           <div style="display:flex;flex-direction:column;gap:18px">
             <sc-for list="{{ g.subs }}" as="s" hint-placeholder-count="4">
@@ -711,14 +856,17 @@ const PHOTO_SLOTS = [
    browser zoom — the same constants live in the boot script in <head>,
    which restores the saved value before first paint. */
 const ZOOM_KEY = 'xg-page-zoom';
-const ZOOM_DEFAULT = 0.9, ZOOM_MIN = 0.7, ZOOM_MAX = 1.3, ZOOM_STEP = 0.05;
+const ZOOM_MIN = 0.7, ZOOM_MAX = 1.3, ZOOM_STEP = 0.05;
+/* Same rule as the boot script in <head>: phones start at 1, desktop at
+   0.9. Read at call time, not once, so a rotation lands on the right one. */
+const zoomDefault = () => (window.innerWidth <= 760 ? 1 : 0.9);
 
 function readZoom() {
   try {
     const saved = parseFloat(window.localStorage.getItem(ZOOM_KEY));
     if (saved >= ZOOM_MIN && saved <= ZOOM_MAX) return saved;
   } catch (err) {}
-  return ZOOM_DEFAULT;
+  return zoomDefault();
 }
 
 function applyZoom(z) {
@@ -743,7 +891,7 @@ class Component extends DCLogic {
   };
   zoomIn = () => this.setZoom(this.state.zoom + ZOOM_STEP);
   zoomOut = () => this.setZoom(this.state.zoom - ZOOM_STEP);
-  zoomReset = () => this.setZoom(ZOOM_DEFAULT);
+  zoomReset = () => this.setZoom(zoomDefault());
 
   /* Browsers refuse autoplay in more cases than the `autoplay` attribute
      admits, and the template runtime can rebuild the <video> node on a
