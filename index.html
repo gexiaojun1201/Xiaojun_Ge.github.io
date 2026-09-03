@@ -280,6 +280,20 @@
     .wur-fold__head{display:flex !important;align-items:center;gap:12px !important;
       flex-wrap:nowrap !important;cursor:pointer;-webkit-tap-highlight-color:transparent}
     .wur-fold__head .wur-arrowlink{font-size:13px !important;flex:none}
+    /* The two section rows hold a heading block, a link and the chevron in
+       a space-between row, so the link landed wherever its heading
+       happened to end — "Publications" and "Research experience" are
+       different lengths, so the two links sat at different x. Letting the
+       heading block take the slack packs the link against the chevron and
+       lines the links up down the page. */
+    .wur-fold__head > div:first-child{flex:1 1 auto;min-width:0}
+    /* The row bottom-aligns its items, and the link carries a 44px tap box
+       that its text sits in the middle of — so the chevron, which is only
+       as tall as itself, settled a line lower than the link beside it.
+       Lifting it by half that box puts the two on one line. Rows without a
+       link have nothing to line up with and keep the shared position; a
+       browser without :has() just keeps today's placement. */
+    .wur-fold__head:has(.wur-arrowlink) .wur-fold__chevron{margin-bottom:14px}
     .wur-fold__chevron{display:block;flex:none;margin-left:auto;
       width:9px;height:9px;
       border-right:2px solid currentColor;border-bottom:2px solid currentColor;
