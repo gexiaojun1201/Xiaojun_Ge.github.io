@@ -205,11 +205,18 @@
        390px screen. The link is the same file either way. */
     .wur-pill__ext{display:none}
 
-    /* Interest tags: full-width capsules on one rail instead of five
-       ragged rows that broke wherever the label happened to end. */
-    .wur-hero__tags{display:grid !important;grid-template-columns:1fr !important;gap:5px !important}
-    .wur-tag{box-sizing:border-box !important;width:100% !important;font-size:11.5px !important;
-      padding:6px 14px !important;border-radius:9999px !important}
+    /* Interest tags: two columns of equal capsules. One full-width column
+       read as five banners across the hero; sized to their own text they
+       came out ragged and still would not pair up, since the longest
+       label is 38 characters and two of them never fit a 390px row.
+       Two columns is 177px a cell, so the long labels take a second line
+       and an odd last one takes the whole row rather than sitting alone. */
+    .wur-hero__tags{display:grid !important;grid-template-columns:1fr 1fr !important;gap:5px !important}
+    .wur-tag{box-sizing:border-box !important;width:100% !important;
+      display:flex !important;align-items:center !important;
+      font-size:11px !important;line-height:1.3 !important;
+      padding:7px 12px !important;border-radius:12px !important}
+    .wur-tag:last-child:nth-child(odd){grid-column:1 / -1 !important}
 
     /* The About card is lifted 48px onto the hero. At this size that crop
        reached the interest tags, so the overlap shrinks (the hero's own
