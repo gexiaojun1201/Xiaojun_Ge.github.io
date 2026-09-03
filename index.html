@@ -205,18 +205,20 @@
        390px screen. The link is the same file either way. */
     .wur-pill__ext{display:none}
 
-    /* Interest tags: two columns of equal capsules. One full-width column
-       read as five banners across the hero; sized to their own text they
-       came out ragged and still would not pair up, since the longest
-       label is 38 characters and two of them never fit a 390px row.
-       Two columns is 177px a cell, so the long labels take a second line
-       and an odd last one takes the whole row rather than sitting alone. */
-    .wur-hero__tags{display:grid !important;grid-template-columns:1fr 1fr !important;gap:5px !important}
-    .wur-tag{box-sizing:border-box !important;width:100% !important;
-      display:flex !important;align-items:center !important;
-      font-size:11px !important;line-height:1.3 !important;
-      padding:7px 12px !important;border-radius:12px !important}
-    .wur-tag:last-child:nth-child(odd){grid-column:1 / -1 !important}
+    /* Interest tags. Five saturated blocks stacked across the hero is what
+       made this area heavy, and two columns only added a ragged second
+       line — the longest label is 38 characters, so no two of them ever
+       share a 390px row.
+       Each colour is kept as a 3px rule down the left edge instead of a
+       filled capsule: the fill drops to a single faint wash, every label
+       gets a full line, and the five read as one aligned list. The colour
+       still comes from the same token the filled version uses. */
+    .wur-hero__tags{display:grid !important;grid-template-columns:1fr !important;gap:3px !important}
+    .wur-tag{display:block !important;
+      background:rgba(251,246,229,.07) !important;color:#FBF6E5 !important;
+      border-left:3px solid var(--tag-bg) !important;border-radius:0 4px 4px 0 !important;
+      font-size:11px !important;font-weight:500 !important;line-height:1.4 !important;
+      padding:5px 10px !important}
 
     /* The About card is lifted 48px onto the hero. At this size that crop
        reached the interest tags, so the overlap shrinks (the hero's own
@@ -334,7 +336,7 @@
         </div>
         <div class="wur-hero__tags" style="display:flex;flex-wrap:wrap;gap:0.6em">
           <sc-for list="{{ interestsColored }}" as="it" hint-placeholder-count="5">
-            <span class="wur-tag" style="font-family: var(--font-sans); font-size: 16px; font-weight: 600; line-height: 1.2; border-radius: 12px; padding: 0.5em 1.05em; background: {{ it.bg }}; color: {{ it.fg }}">{{ it.label }}</span>
+            <span class="wur-tag" style="--tag-bg: {{ it.bg }}; --tag-fg: {{ it.fg }}; font-family: var(--font-sans); font-size: 16px; font-weight: 600; line-height: 1.2; border-radius: 12px; padding: 0.5em 1.05em; background: {{ it.bg }}; color: {{ it.fg }}">{{ it.label }}</span>
           </sc-for>
         </div>
       </div>
