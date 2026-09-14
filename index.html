@@ -173,7 +173,7 @@
     position:relative;display:block;
     background:var(--bg-surface);border:1px solid var(--border-subtle);
     border-radius:var(--radius-card);box-shadow:var(--shadow-card);
-    padding:24px 76px 20px 30px;color:var(--text-primary);cursor:pointer}
+    padding:24px 76px 24px 30px;color:var(--text-primary);cursor:pointer}
   .xg-card__arrow{
     position:absolute;right:30px;top:50%;
     font-size:30px;line-height:1;color:var(--pine-green);
@@ -197,25 +197,33 @@
   .xg-card__teaser{
     font-family:var(--font-sans);font-size:17px;line-height:1.55;
     color:var(--text-muted);text-wrap:pretty}
-  .xg-card__rule{border-top:1px solid var(--border-subtle);margin-top:20px}
   /* "All publications" / "All projects" — a pill that takes the card's
      scale on hover and darkens from the mid green to the deep one. */
   .xg-morepill{
-    padding:12px 26px;font-size:16px;font-weight:600;line-height:1.2;
-    color:#FBF6E5;background:#38801F;
-    transition:background-color 250ms var(--wur-ease),transform 300ms ease}
+    box-sizing:border-box;min-height:0;
+    padding:8px 24px;font-size:16px;font-weight:600;line-height:1.2;
+    color:#FFFFFF;background:#008A00;
+    transition:background-color 250ms var(--wur-ease),
+               color 250ms var(--wur-ease),transform 300ms ease}
   .xg-morepill:hover,.xg-morepill:focus-visible{
-    color:#FBF6E5;background:#1B4412;transform:scale(1.05)}
+    color:#F2EBD3;background:#004D00;transform:scale(1.05)}
   .xg-morepill .wur-arrow{font-size:19px;line-height:1}
+  /* The eyebrow sits above the row now: the heading and the pill are the
+     only two things in it, so centring the row centres them on each other. */
+  .wur-fold__head > h2{flex:1 1 auto;min-width:0}
+
+  /* ── Portrait ────────────────────────────────────────
+     The same pebble the project photos are cut to, as a static clip —
+     no morph, the hero is not a hover surface. */
+  .xg-portrait{clip-path:url(#xg-blob)}
   /* The home page keeps its lighter hierarchy — same card, one step down. */
-  .xg-card--sm{padding:20px 62px 16px 24px}
+  .xg-card--sm{padding:20px 62px 20px 24px}
   .xg-card--sm .xg-card__arrow{right:24px;font-size:25px}
   .xg-card--sm .xg-card__top{margin-bottom:12px}
   .xg-card--sm .xg-pill{font-size:12px;padding:5px 12px;min-width:158px}
   .xg-card--sm .xg-card__meta{font-size:15px}
   .xg-card--sm .xg-card__title{font-size:21px}
   .xg-card--sm .xg-card__teaser{font-size:16px}
-  .xg-card--sm .xg-card__rule{margin-top:16px}
 
   /* ── Advisors ────────────────────────────────────────
      Name and arrow on one row, affiliation under it, a rule under each. */
@@ -311,7 +319,7 @@
     .wur-page section h1{font-size:30px !important;margin-top:12px !important}
 
     /* Publication / project / education cards */
-    .xg-card, .xg-card--sm{padding:14px 38px 12px 16px !important}
+    .xg-card, .xg-card--sm{padding:14px 38px 14px 16px !important}
     .xg-card__arrow{right:13px !important;font-size:21px !important}
     .xg-card__top{gap:7px 9px !important;margin-bottom:9px !important}
     .xg-pill{font-size:10.5px !important;letter-spacing:.06em !important;
@@ -319,7 +327,6 @@
     .xg-card__meta{font-size:13px !important}
     .xg-card__title{font-size:17px !important;margin-bottom:5px !important}
     .xg-card__teaser{font-size:14.5px !important;line-height:1.5 !important}
-    .xg-card__rule{margin-top:12px !important}
     .xg-advisor{padding-bottom:10px !important}
     .xg-advisor__arrow{font-size:16px !important}
     .wur-edcard{padding:16px 18px !important}
@@ -365,13 +372,6 @@
        heading block take the slack packs the link against the chevron and
        lines the links up down the page. */
     .wur-fold__head > div:first-child{flex:1 1 auto;min-width:0}
-    /* The row bottom-aligns its items, and the link carries a 44px tap box
-       that its text sits in the middle of — so the chevron, which is only
-       as tall as itself, settled a line lower than the link beside it.
-       Lifting it by half that box puts the two on one line. Rows without a
-       link have nothing to line up with and keep the shared position; a
-       browser without :has() just keeps today's placement. */
-    .wur-fold__head:has(.wur-arrowlink) .wur-fold__chevron{margin-bottom:14px}
     .wur-fold__chevron{display:block;flex:none;margin-left:auto;
       width:9px;height:9px;
       border-right:2px solid currentColor;border-bottom:2px solid currentColor;
@@ -413,7 +413,8 @@
     <video class="wur-hero__video" src="./video/hero-loop.mp4" poster="./video/hero-loop-poster.jpg" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" preload="auto" aria-hidden="true" tabIndex="-1"></video>
     <div class="wur-hero__wash" aria-hidden="true"></div>
     <div class="wur-hero__content" style="display:flex;align-items:center;gap:40px;flex-wrap:wrap">
-      <img src="https://gexiaojun1201.github.io/Xiaojun_Ge.github.io/images/profile.png" alt="Xiaojun Ge" style="width:150px;height:150px;border-radius:24px;object-fit:cover;border:1px solid rgba(251,246,229,0.3);flex-shrink:0;background:rgba(251,246,229,0.08)">
+      <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute"><defs><clipPath id="xg-blob" clipPathUnits="objectBoundingBox"><path d="M0.9988 0.448C1.0157 0.6396 0.8563 0.8498 0.693 0.9288C0.5375 1.0039 0.4358 1.0296 0.2704 0.9566C0.095 0.8792 -0.0088 0.646 0.0006 0.4683C0.0095 0.299 0.0355 0.17 0.1889 0.0674C0.3469 -0.0383 0.6228 -0.0123 0.7709 0.0943C0.9161 0.1988 0.9824 0.2619 0.9988 0.448Z"></path></clipPath></defs></svg>
+      <img class="xg-portrait" src="https://gexiaojun1201.github.io/Xiaojun_Ge.github.io/images/profile.png" alt="Xiaojun Ge" style="width:210px;height:210px;object-fit:cover;flex-shrink:0;background:rgba(251,246,229,0.08)">
       <div class="wur-hero__text" style="flex:1 1 400px;min-width:280px">
         <span class="wur-hero__badge" style="display: inline-flex; align-items: center; gap: 8px; background: rgba(251,246,229,0.12); color: #FBF6E5; font-family: var(--font-sans); font-size: 20px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; border-radius: 9999px; padding: 7px 15px; margin-bottom: 18px">
           <span style="width:7px;height:7px;border-radius:50%;background:#FBF6E5;flex-shrink:0"></span>Seeking PhD opportunities
@@ -463,11 +464,9 @@
 </div>
 
 <section class="wur-fold" style="padding:calc(36px * var(--space-y)) var(--pad-x) calc(48px * var(--space-y))">
-  <div class="wur-fold__head" style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:20px">
-    <div>
-      <div class="wur-eyebrow" style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:16px">Selected work</div>
-      <h2 style="font-family:var(--font-serif);font-size:30px;font-weight:700;color:var(--pine-green);margin:0">Publications</h2>
-    </div>
+  <div class="wur-eyebrow" style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:16px">Selected work</div>
+  <div class="wur-fold__head" style="display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:20px">
+    <h2 style="font-family:var(--font-serif);font-size:30px;font-weight:700;color:var(--pine-green);margin:0">Publications</h2>
     <a href="#publications" class="wur-pill wur-arrowlink xg-morepill">All publications <span class="wur-arrow" aria-hidden="true">→</span></a>
   </div>
   <div class="wur-fold__body" style="display:flex;flex-direction:column;gap:14px">
@@ -478,7 +477,6 @@
           <div class="xg-card__top"><span class="xg-pill">{{ p.badgeRole }}</span><span class="xg-card__meta">{{ p.metaTail }}</span></div>
           <div class="xg-card__title">{{ p.title }}</div>
           <div class="xg-card__teaser">{{ p.blurb }}</div>
-          <div class="xg-card__rule"></div>
         </a>
       </div>
     </sc-for>
@@ -486,11 +484,9 @@
 </section>
 
 <section class="wur-fold" style="padding:calc(36px * var(--space-y)) var(--pad-x) calc(48px * var(--space-y))">
-  <div class="wur-fold__head" style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:20px">
-    <div>
-      <div class="wur-eyebrow" style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:16px">In the field</div>
-      <h2 style="font-family:var(--font-serif);font-size:30px;font-weight:700;color:var(--pine-green);margin:0">Research experience</h2>
-    </div>
+  <div class="wur-eyebrow" style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:16px">In the field</div>
+  <div class="wur-fold__head" style="display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:20px">
+    <h2 style="font-family:var(--font-serif);font-size:30px;font-weight:700;color:var(--pine-green);margin:0">Research experience</h2>
     <a href="#research" class="wur-pill wur-arrowlink xg-morepill">All projects <span class="wur-arrow" aria-hidden="true">→</span></a>
   </div>
   <div class="wur-fold__body" style="display:flex;flex-direction:column;gap:14px">
@@ -501,7 +497,6 @@
           <div class="xg-card__top"><span class="xg-pill">{{ e.badgeRole }}</span><span class="xg-card__meta">{{ e.metaTail }}</span></div>
           <div class="xg-card__title">{{ e.title }}</div>
           <div class="xg-card__teaser">{{ e.blurb }}</div>
-          <div class="xg-card__rule"></div>
         </a>
       </div>
     </sc-for>
@@ -543,7 +538,6 @@
             <div class="xg-card__top"><span class="xg-pill">{{ p.badgeRole }}</span><span class="xg-card__meta">{{ p.metaTail }}</span></div>
             <div class="xg-card__title">{{ p.title }}</div>
             <div class="xg-card__teaser">{{ p.blurb }}</div>
-            <div class="xg-card__rule"></div>
           </a>
         </div>
       </sc-for>
@@ -559,7 +553,6 @@
             <div class="xg-card__top"><span class="xg-pill">{{ m.badgeRole }}</span><span class="xg-card__meta">{{ m.metaTail }}</span></div>
             <div class="xg-card__title">{{ m.title }}</div>
             <div class="xg-card__teaser">{{ m.blurb }}</div>
-            <div class="xg-card__rule"></div>
           </a>
         </div>
       </sc-for>
@@ -586,7 +579,6 @@
             <div class="xg-card__top"><span class="xg-pill">{{ e.badgeRole }}</span><span class="xg-card__meta">{{ e.metaTail }}</span></div>
             <div class="xg-card__title">{{ e.title }}</div>
             <div class="xg-card__teaser">{{ e.blurb }}</div>
-            <div class="xg-card__rule"></div>
           </a>
         </div>
       </sc-for>
@@ -603,7 +595,6 @@
             <div class="xg-card__top"><span class="xg-pill">{{ e.badgeRole }}</span><span class="xg-card__meta">{{ e.metaTail }}</span></div>
             <div class="xg-card__title">{{ e.title }}</div>
             <div class="xg-card__teaser">{{ e.blurb }}</div>
-            <div class="xg-card__rule"></div>
           </a>
         </div>
       </sc-for>
