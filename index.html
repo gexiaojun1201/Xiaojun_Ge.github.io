@@ -162,6 +162,83 @@
      were — no control, no state, no reserved space. */
   .wur-fold__chevron{display:none}
 
+  /* ── Detail cards ────────────────────────────────────
+     Publications, manuscripts and projects all share one card. The top
+     row is two capsules and a tail: blue carries the author position
+     (the contributor, on a project), sand carries the year (the run of
+     the project), and the tail is the journal (the status). Then the
+     serif title, the teaser, and a hairline that closes the card. The
+     arrow sits on the right edge, centred on the card. */
+  .xg-card{
+    position:relative;display:block;
+    background:var(--bg-surface);border:1px solid var(--border-subtle);
+    border-radius:var(--radius-card);box-shadow:var(--shadow-card);
+    padding:24px 76px 24px 30px;color:var(--text-primary);cursor:pointer}
+  .xg-card__arrow{
+    position:absolute;right:30px;top:50%;
+    font-size:30px;line-height:1;color:var(--pine-green);
+    transform:translateY(-50%);
+    transition:transform 250ms var(--wur-ease)}
+  .wur-rowmotion:hover .xg-card__arrow,
+  .xg-card:focus-visible .xg-card__arrow{transform:translateY(-50%) translateX(5px)}
+  .xg-card__top{display:flex;align-items:center;flex-wrap:wrap;gap:9px 14px;margin-bottom:15px}
+  /* Every capsule is as wide as the longest author position on the page,
+     so the year beside it starts on the same x down the whole list. */
+  .xg-pill{
+    font-family:var(--font-sans);font-size:13px;font-weight:700;
+    letter-spacing:.08em;text-transform:uppercase;
+    border-radius:9999px;padding:6px 14px;white-space:nowrap;
+    display:inline-block;box-sizing:border-box;min-width:172px;text-align:center;
+    background:#E0D6B8;color:#3D3323}
+  .xg-card__meta{font-family:var(--font-sans);font-size:16px;font-weight:600;color:var(--text-muted)}
+  .xg-card__title{
+    font-family:var(--font-serif);font-size:25px;font-weight:700;line-height:1.3;
+    color:var(--pine-green);margin-bottom:9px;text-wrap:pretty}
+  .xg-card__teaser{
+    font-family:var(--font-sans);font-size:17px;line-height:1.55;
+    color:var(--text-muted);text-wrap:pretty}
+  /* "All publications" / "All projects" — a pill that takes the card's
+     scale on hover and darkens from the mid green to the deep one. */
+  .xg-morepill{
+    box-sizing:border-box;min-height:0;
+    padding:8px 24px;font-size:16px;font-weight:600;line-height:1.2;
+    color:#FFFFFF;background:#008A00;
+    transition:background-color 250ms var(--wur-ease),
+               color 250ms var(--wur-ease),transform 300ms ease}
+  .xg-morepill:hover,.xg-morepill:focus-visible{
+    color:#F2EBD3;background:#004D00;transform:scale(1.05)}
+  .xg-morepill .wur-arrow{font-size:19px;line-height:1}
+  /* The eyebrow sits above the row now: the heading and the pill are the
+     only two things in it, so centring the row centres them on each other. */
+  .wur-fold__head > h2{flex:1 1 auto;min-width:0}
+
+  /* ── Portrait ────────────────────────────────────────
+     The same pebble the project photos are cut to, as a static clip —
+     no morph, the hero is not a hover surface. */
+  .xg-portrait{clip-path:url(#xg-blob)}
+  /* The home page keeps its lighter hierarchy — same card, one step down. */
+  .xg-card--sm{padding:20px 62px 20px 24px}
+  .xg-card--sm .xg-card__arrow{right:24px;font-size:25px}
+  .xg-card--sm .xg-card__top{margin-bottom:12px}
+  .xg-card--sm .xg-pill{font-size:12px;padding:5px 12px;min-width:158px}
+  .xg-card--sm .xg-card__meta{font-size:15px}
+  .xg-card--sm .xg-card__title{font-size:21px}
+  .xg-card--sm .xg-card__teaser{font-size:16px}
+
+  /* ── Advisors ────────────────────────────────────────
+     Name and arrow on one row, affiliation under it, a rule under each. */
+  .xg-advisor{padding-bottom:13px;border-bottom:1px solid var(--border-subtle)}
+  .xg-advisor__link{
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+    font-family:var(--font-sans);font-size:25px;font-weight:600;
+    color:var(--forest-text);text-decoration:none}
+  .xg-advisor__link:hover{color:var(--color-primary)}
+  .xg-advisor__arrow{flex:none;transition:transform 250ms var(--wur-ease)}
+  .xg-advisor__link:hover .xg-advisor__arrow{transform:translateX(4px)}
+  .xg-advisor__aff{
+    font-family:var(--font-sans);font-size:20px;line-height:1.5;
+    color:var(--text-muted);margin-top:2px;text-wrap:pretty}
+
   /* ── phone scale ──────────────────────────────────────────────────
      Every size above was measured against the 1290px column: 22px body
      copy, 64px display type, 48px of card padding. Carried onto a 390px
@@ -232,8 +309,8 @@
        one, so ragged-right it is. */
     .wur-about p{font-size:16px !important;line-height:1.6 !important;
       text-align:left !important;margin-bottom:10px !important}
-    .wur-advisors a{font-size:18px !important}
-    .wur-advisors a + div{font-size:14px !important;line-height:1.45 !important}
+    .wur-advisors .xg-advisor__link{font-size:18px !important}
+    .wur-advisors .xg-advisor__aff{font-size:14px !important;line-height:1.45 !important}
 
     /* Section headers */
     .wur-page section h2{font-size:23px !important}
@@ -242,10 +319,16 @@
     .wur-page section h1{font-size:30px !important;margin-top:12px !important}
 
     /* Publication / project / education cards */
-    .wur-rowmotion a{padding:14px 16px !important}
-    .wur-rowmotion a > div:nth-child(1){font-size:13px !important;margin-bottom:5px !important}
-    .wur-rowmotion a > div:nth-child(2){font-size:17px !important;margin-bottom:5px !important}
-    .wur-rowmotion a > div:nth-child(3){font-size:14.5px !important;line-height:1.5 !important}
+    .xg-card, .xg-card--sm{padding:14px 38px 14px 16px !important}
+    .xg-card__arrow{right:13px !important;font-size:21px !important}
+    .xg-card__top{gap:7px 9px !important;margin-bottom:9px !important}
+    .xg-pill{font-size:10.5px !important;letter-spacing:.06em !important;
+      padding:4px 10px !important;min-width:134px !important}
+    .xg-card__meta{font-size:13px !important}
+    .xg-card__title{font-size:17px !important;margin-bottom:5px !important}
+    .xg-card__teaser{font-size:14.5px !important;line-height:1.5 !important}
+    .xg-advisor{padding-bottom:10px !important}
+    .xg-advisor__arrow{font-size:16px !important}
     .wur-edcard{padding:16px 18px !important}
     .wur-edcard > div:nth-child(1){font-size:13px !important;margin-bottom:6px !important}
     .wur-edcard > div:nth-child(2){font-size:17px !important}
@@ -280,6 +363,8 @@
     .wur-fold__head{display:flex !important;align-items:center;gap:12px !important;
       flex-wrap:nowrap !important;cursor:pointer;-webkit-tap-highlight-color:transparent}
     .wur-fold__head .wur-arrowlink{font-size:13px !important;flex:none}
+    .xg-morepill{padding:9px 16px !important;min-height:0 !important}
+    .xg-morepill .wur-arrow{font-size:15px}
     /* The two section rows hold a heading block, a link and the chevron in
        a space-between row, so the link landed wherever its heading
        happened to end — "Publications" and "Research experience" are
@@ -287,13 +372,6 @@
        heading block take the slack packs the link against the chevron and
        lines the links up down the page. */
     .wur-fold__head > div:first-child{flex:1 1 auto;min-width:0}
-    /* The row bottom-aligns its items, and the link carries a 44px tap box
-       that its text sits in the middle of — so the chevron, which is only
-       as tall as itself, settled a line lower than the link beside it.
-       Lifting it by half that box puts the two on one line. Rows without a
-       link have nothing to line up with and keep the shared position; a
-       browser without :has() just keeps today's placement. */
-    .wur-fold__head:has(.wur-arrowlink) .wur-fold__chevron{margin-bottom:14px}
     .wur-fold__chevron{display:block;flex:none;margin-left:auto;
       width:9px;height:9px;
       border-right:2px solid currentColor;border-bottom:2px solid currentColor;
@@ -335,7 +413,8 @@
     <video class="wur-hero__video" src="./video/hero-loop.mp4" poster="./video/hero-loop-poster.jpg" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" preload="auto" aria-hidden="true" tabIndex="-1"></video>
     <div class="wur-hero__wash" aria-hidden="true"></div>
     <div class="wur-hero__content" style="display:flex;align-items:center;gap:40px;flex-wrap:wrap">
-      <img src="https://gexiaojun1201.github.io/Xiaojun_Ge.github.io/images/profile.png" alt="Xiaojun Ge" style="width:150px;height:150px;border-radius:24px;object-fit:cover;border:1px solid rgba(251,246,229,0.3);flex-shrink:0;background:rgba(251,246,229,0.08)">
+      <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute"><defs><clipPath id="xg-blob" clipPathUnits="objectBoundingBox"><path d="M0.9988 0.448C1.0157 0.6396 0.8563 0.8498 0.693 0.9288C0.5375 1.0039 0.4358 1.0296 0.2704 0.9566C0.095 0.8792 -0.0088 0.646 0.0006 0.4683C0.0095 0.299 0.0355 0.17 0.1889 0.0674C0.3469 -0.0383 0.6228 -0.0123 0.7709 0.0943C0.9161 0.1988 0.9824 0.2619 0.9988 0.448Z"></path></clipPath></defs></svg>
+      <img class="xg-portrait" src="https://gexiaojun1201.github.io/Xiaojun_Ge.github.io/images/profile.png" alt="Xiaojun Ge" style="width:210px;height:210px;object-fit:cover;flex-shrink:0;background:rgba(251,246,229,0.08)">
       <div class="wur-hero__text" style="flex:1 1 400px;min-width:280px">
         <span class="wur-hero__badge" style="display: inline-flex; align-items: center; gap: 8px; background: rgba(251,246,229,0.12); color: #FBF6E5; font-family: var(--font-sans); font-size: 20px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; border-radius: 9999px; padding: 7px 15px; margin-bottom: 18px">
           <span style="width:7px;height:7px;border-radius:50%;background:#FBF6E5;flex-shrink:0"></span>Seeking PhD opportunities
@@ -373,9 +452,9 @@
         <h2 class="wur-fold__head" style="font-family: var(--font-serif); font-size: 38px; font-weight: 700; color: var(--pine-green); margin: 0 0 14px">Advisors</h2>
         <div class="wur-fold__body" style="display:flex;flex-direction:column;gap:14px">
           <sc-for list="{{ advisors }}" as="a" hint-placeholder-count="3">
-            <div style="font-family:var(--font-sans);font-size:16px;line-height:1.5">
-              <a href="{{ a.link }}" target="_blank" rel="noopener" style="font-weight: 600; color: var(--forest-text); font-size: 25px" style-hover="color:var(--color-primary)">{{ a.name }}</a>
-              <div style="color: var(--text-muted); font-size: 20px; margin-top: 2px; text-wrap: pretty">{{ a.affiliation }}</div>
+            <div class="xg-advisor">
+              <a href="{{ a.link }}" target="_blank" rel="noopener" class="xg-advisor__link"><span>{{ a.name }}</span><span class="xg-advisor__arrow" aria-hidden="true">→</span></a>
+              <div class="xg-advisor__aff">{{ a.affiliation }}</div>
             </div>
           </sc-for>
         </div>
@@ -385,19 +464,19 @@
 </div>
 
 <section class="wur-fold" style="padding:calc(36px * var(--space-y)) var(--pad-x) calc(48px * var(--space-y))">
-  <div class="wur-fold__head" style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:20px">
-    <div>
-      <div class="wur-eyebrow" style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:16px">Selected work</div>
-      <h2 style="font-family:var(--font-serif);font-size:30px;font-weight:700;color:var(--pine-green);margin:0">Publications</h2>
-    </div>
-    <a href="#publications" class="wur-arrowlink">All publications <span class="wur-arrow" aria-hidden="true">→</span></a>
+  <div class="wur-eyebrow" style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:16px">Selected work</div>
+  <div class="wur-fold__head" style="display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:20px">
+    <h2 style="font-family:var(--font-serif);font-size:30px;font-weight:700;color:var(--pine-green);margin:0">Publications</h2>
+    <a href="#publications" class="wur-pill wur-arrowlink xg-morepill">All publications <span class="wur-arrow" aria-hidden="true">→</span></a>
   </div>
   <div class="wur-fold__body" style="display:flex;flex-direction:column;gap:14px">
     <sc-for list="{{ homePublications }}" as="p" hint-placeholder-count="3">
       <div class="wur-rowmotion">
-        <a href="{{ p.hash }}" style="display:block;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:20px 24px;color:var(--text-primary);cursor:pointer">
-          <div style="font-family:var(--font-sans);font-size:15px;font-weight:600;color:var(--text-muted);margin-bottom:7px">{{ p.meta }}</div>
-          <div style="font-family:var(--font-serif);font-size:20px;font-weight:600;line-height:1.35">{{ p.title }}</div>
+        <a href="{{ p.hash }}" class="xg-card xg-card--sm">
+          <span class="xg-card__arrow" aria-hidden="true">→</span>
+          <div class="xg-card__top"><span class="xg-pill">{{ p.badgeRole }}</span><span class="xg-card__meta">{{ p.metaTail }}</span></div>
+          <div class="xg-card__title">{{ p.title }}</div>
+          <div class="xg-card__teaser">{{ p.blurb }}</div>
         </a>
       </div>
     </sc-for>
@@ -405,20 +484,19 @@
 </section>
 
 <section class="wur-fold" style="padding:calc(36px * var(--space-y)) var(--pad-x) calc(48px * var(--space-y))">
-  <div class="wur-fold__head" style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:20px">
-    <div>
-      <div class="wur-eyebrow" style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:16px">In the field</div>
-      <h2 style="font-family:var(--font-serif);font-size:30px;font-weight:700;color:var(--pine-green);margin:0">Research experience</h2>
-    </div>
-    <a href="#research" class="wur-arrowlink">All projects <span class="wur-arrow" aria-hidden="true">→</span></a>
+  <div class="wur-eyebrow" style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:16px">In the field</div>
+  <div class="wur-fold__head" style="display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:20px">
+    <h2 style="font-family:var(--font-serif);font-size:30px;font-weight:700;color:var(--pine-green);margin:0">Research experience</h2>
+    <a href="#research" class="wur-pill wur-arrowlink xg-morepill">All projects <span class="wur-arrow" aria-hidden="true">→</span></a>
   </div>
   <div class="wur-fold__body" style="display:flex;flex-direction:column;gap:14px">
     <sc-for list="{{ homeProjects }}" as="e" hint-placeholder-count="3">
       <div class="wur-rowmotion">
-        <a href="{{ e.hash }}" style="display:block;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:20px 24px;color:var(--text-primary);cursor:pointer">
-          <div style="font-family:var(--font-sans);font-size:15px;font-weight:600;color:var(--text-muted);margin-bottom:7px">{{ e.meta }}</div>
-          <div style="font-family:var(--font-serif);font-size:20px;font-weight:600;line-height:1.35;margin-bottom:6px">{{ e.title }}</div>
-          <div style="font-family:var(--font-sans);font-size:16px;line-height:1.55;color:var(--text-muted);text-wrap:pretty">{{ e.focus }}</div>
+        <a href="{{ e.hash }}" class="xg-card xg-card--sm">
+          <span class="xg-card__arrow" aria-hidden="true">→</span>
+          <div class="xg-card__top"><span class="xg-pill">{{ e.badgeRole }}</span><span class="xg-card__meta">{{ e.metaTail }}</span></div>
+          <div class="xg-card__title">{{ e.title }}</div>
+          <div class="xg-card__teaser">{{ e.blurb }}</div>
         </a>
       </div>
     </sc-for>
@@ -455,10 +533,11 @@
     <div style="display:flex;flex-direction:column;gap:16px">
       <sc-for list="{{ publications }}" as="p" hint-placeholder-count="4">
         <div class="wur-rowmotion">
-          <a href="{{ p.hash }}" style="display:block;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:24px 28px;color:var(--text-primary);cursor:pointer">
-            <div style="font-family: var(--font-sans); font-size: 16px; font-weight: 600; color: var(--text-muted); margin-bottom: 7px">{{ p.meta }}</div>
-            <div style="font-family: var(--font-serif); font-size: 25px; font-weight: 600; line-height: 1.35; margin-bottom: 7px">{{ p.title }}</div>
-            <div style="font-family: var(--font-sans); font-size: 18px; line-height: 1.55; color: var(--text-muted); text-wrap: pretty">{{ p.teaser }}</div>
+          <a href="{{ p.hash }}" class="xg-card">
+            <span class="xg-card__arrow" aria-hidden="true">→</span>
+            <div class="xg-card__top"><span class="xg-pill">{{ p.badgeRole }}</span><span class="xg-card__meta">{{ p.metaTail }}</span></div>
+            <div class="xg-card__title">{{ p.title }}</div>
+            <div class="xg-card__teaser">{{ p.blurb }}</div>
           </a>
         </div>
       </sc-for>
@@ -469,9 +548,11 @@
     <div style="display:flex;flex-direction:column;gap:16px">
       <sc-for list="{{ manuscripts }}" as="m" hint-placeholder-count="4">
         <div class="wur-rowmotion">
-          <a href="{{ m.hash }}" style="display:block;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:24px 28px;color:var(--text-primary);cursor:pointer">
-            <div style="font-family: var(--font-sans); font-size: 16px; font-weight: 600; color: var(--text-muted); margin-bottom: 7px">{{ m.meta }}</div>
-            <div style="font-family: var(--font-serif); font-size: 25px; font-weight: 600; line-height: 1.35">{{ m.title }}</div>
+          <a href="{{ m.hash }}" class="xg-card">
+            <span class="xg-card__arrow" aria-hidden="true">→</span>
+            <div class="xg-card__top"><span class="xg-pill">{{ m.badgeRole }}</span><span class="xg-card__meta">{{ m.metaTail }}</span></div>
+            <div class="xg-card__title">{{ m.title }}</div>
+            <div class="xg-card__teaser">{{ m.blurb }}</div>
           </a>
         </div>
       </sc-for>
@@ -493,10 +574,11 @@
     <div style="display:flex;flex-direction:column;gap:16px">
       <sc-for list="{{ ongoingProjects }}" as="e" hint-placeholder-count="4">
         <div class="wur-rowmotion">
-          <a href="{{ e.hash }}" style="display:block;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:24px 28px;color:var(--text-primary);cursor:pointer">
-            <div style="font-family: var(--font-sans); font-size: 16px; font-weight: 600; color: var(--text-muted); margin-bottom: 7px">{{ e.meta }}</div>
-            <div style="font-family: var(--font-serif); font-size: 25px; font-weight: 600; line-height: 1.35; color: var(--text-primary); margin-bottom: 7px">{{ e.title }}</div>
-            <div style="font-family: var(--font-sans); font-size: 18px; line-height: 1.55; color: var(--text-muted); text-wrap: pretty">{{ e.focus }}</div>
+          <a href="{{ e.hash }}" class="xg-card">
+            <span class="xg-card__arrow" aria-hidden="true">→</span>
+            <div class="xg-card__top"><span class="xg-pill">{{ e.badgeRole }}</span><span class="xg-card__meta">{{ e.metaTail }}</span></div>
+            <div class="xg-card__title">{{ e.title }}</div>
+            <div class="xg-card__teaser">{{ e.blurb }}</div>
           </a>
         </div>
       </sc-for>
@@ -508,10 +590,11 @@
     <div style="display:flex;flex-direction:column;gap:16px">
       <sc-for list="{{ finishedProjects }}" as="e" hint-placeholder-count="4">
         <div class="wur-rowmotion">
-          <a href="{{ e.hash }}" style="display:block;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:24px 28px;color:var(--text-primary);cursor:pointer">
-            <div style="font-family: var(--font-sans); font-size: 16px; font-weight: 600; color: var(--text-muted); margin-bottom: 7px">{{ e.meta }}</div>
-            <div style="font-family: var(--font-serif); font-size: 25px; font-weight: 600; line-height: 1.35; color: var(--text-primary); margin-bottom: 7px">{{ e.title }}</div>
-            <div style="font-family: var(--font-sans); font-size: 18px; line-height: 1.55; color: var(--text-muted); text-wrap: pretty">{{ e.focus }}</div>
+          <a href="{{ e.hash }}" class="xg-card">
+            <span class="xg-card__arrow" aria-hidden="true">→</span>
+            <div class="xg-card__top"><span class="xg-pill">{{ e.badgeRole }}</span><span class="xg-card__meta">{{ e.metaTail }}</span></div>
+            <div class="xg-card__title">{{ e.title }}</div>
+            <div class="xg-card__teaser">{{ e.blurb }}</div>
           </a>
         </div>
       </sc-for>
@@ -646,8 +729,6 @@ const INTERESTS = [
   {label:'Environmental monitoring', theme:'institutional'}
 ];
 
-const THEME_LABEL = {biobased:'Soil & tillage', water:'Water & nutrients', health:'Contaminants', climate:'Carbon & climate', food:'Agriculture', institutional:'Monitoring'};
-
 const PUBLICATIONS = [
   {id:'pub-0', year:'2025', theme:'water', title:'Risk and driving factors of nitrogen and phosphorus runoff losses under extreme rainfall conditions: sludge application strategies in forest soils', venue:'CATENA', authors:'co-First author',
    authorsFull:'Yang et al. — Xiaojun Ge, co-first author',
@@ -696,7 +777,7 @@ const PUBLICATIONS = [
 ];
 
 const MANUSCRIPTS = [
-  {id:'ms-0', theme:'biobased', title:'Effects of deep vertical rotary tillage on sheet erosion processes during sugarcane growth in Latosolic Red Soil cultivation area', status:'Manuscript in preparation', authors:'First author',
+  {id:'ms-0', theme:'biobased', title:'Effects of deep vertical rotary tillage on sheet erosion processes during sugarcane growth in Latosolic Red Soil cultivation area', status:'Manuscript in preparation', statusShort:'In preparation', venue:'', authors:'First author',
    authorsFull:'Xiaojun Ge (first author), et al.',
    summary:'Field study of how deep vertical rotary tillage alters sheet erosion processes across the sugarcane growth cycle in Latosolic Red Soil.',
    abstract:'Sugarcane fields on Latosolic Red Soil lose most of their soil through sheet erosion in the early growth stages, before the canopy closes. This study follows sheet erosion across a full sugarcane growth cycle under deep vertical rotary tillage and conventional tillage, relating runoff and soil loss to canopy development, surface roughness, and post-tillage soil structure.',
@@ -705,7 +786,7 @@ const MANUSCRIPTS = [
      'Deep vertical rotary tillage compared against conventional tillage on the same soil type.',
      'Erosion response linked to canopy cover, surface roughness, and soil structural change.'
    ]},
-  {id:'ms-1', theme:'biobased', title:'Effect of deep vertical rotary tillage on aggregate stability and fragmentation mechanism of Latosolic Red Soil', status:'Submitted to Soil and Tillage Research', authors:'First author',
+  {id:'ms-1', theme:'biobased', title:'Effect of deep vertical rotary tillage on aggregate stability and fragmentation mechanism of Latosolic Red Soil', status:'Submitted to Soil and Tillage Research', statusShort:'Submitted', venue:'Soil and Tillage Research', authors:'First author',
    authorsFull:'Xiaojun Ge (first author), et al.',
    summary:'Examines aggregate stability and fragmentation mechanisms in Latosolic Red Soil under deep vertical rotary tillage.',
    abstract:'Aggregate stability determines how well Latosolic Red Soil resists raindrop impact and runoff shear. This study measures aggregate size distribution and stability in soil under deep vertical rotary tillage and identifies which fragmentation mechanism dominates after the plough pan is broken.',
@@ -714,7 +795,7 @@ const MANUSCRIPTS = [
      'Fragmentation mechanisms separated to identify the dominant breakdown pathway.',
      'Results link a common deep-tillage practice to soil structural resilience.'
    ]},
-  {id:'ms-2', theme:'water', title:'Effect of multi-term antibiotic exposure on microbially mediated nitrogen reduction-oxidation process in sediment of surface-flow constructed wetland', status:'Manuscript in preparation', authors:'First author',
+  {id:'ms-2', theme:'water', title:'Effect of multi-term antibiotic exposure on microbially mediated nitrogen reduction-oxidation process in sediment of surface-flow constructed wetland', status:'Manuscript in preparation', statusShort:'In preparation', venue:'', authors:'First author',
    authorsFull:'Xiaojun Ge (first author), et al.',
    summary:'Investigates how short- and long-term antibiotic exposure reshapes microbially mediated nitrogen reduction-oxidation in constructed wetland sediment.',
    abstract:'Surface-flow constructed wetlands receive antibiotic residues along with the wastewater they treat, and those residues accumulate in the sediment where nitrogen removal actually happens. This study exposes wetland sediment to short-term and repeated antibiotic loading and combines nitrogen transformation rate measurements with microbial community and functional gene analysis to resolve how the reduction–oxidation processes respond.',
@@ -723,7 +804,7 @@ const MANUSCRIPTS = [
      'Nitrogen transformation rates measured alongside microbial community composition.',
      'Targets the nitrogen removal pathway that determines constructed wetland performance.'
    ]},
-  {id:'ms-3', theme:'health', title:'Alleviating heavy metal migration risks by adding biochar during sludge amelioration of forest soil: evaluating differential loss across multiple media', status:'In revision at Journal of Hazardous Materials', authors:'Third author',
+  {id:'ms-3', theme:'health', title:'Alleviating heavy metal migration risks by adding biochar during sludge amelioration of forest soil: evaluating differential loss across multiple media', status:'In revision at Journal of Hazardous Materials', statusShort:'In revision', venue:'Journal of Hazardous Materials', authors:'Third author',
    authorsFull:'Xiaojun Ge, third author',
    summary:'Evaluates biochar as a mitigation measure for heavy metal migration during sludge amelioration of forest soil, across runoff, interflow, and sediment.',
    abstract:'Sewage sludge improves the fertility of degraded forest soil but carries heavy metals with it. This study adds biochar during sludge amelioration and evaluates whether it reduces metal migration, comparing losses across surface runoff, interflow, and eroded sediment instead of assessing a single medium.',
@@ -735,7 +816,7 @@ const MANUSCRIPTS = [
 ];
 
 const ONGOING = [
-  {id:'ong-0', theme:'water', period:'Ongoing', statusLabel:'Manuscript in preparation', title:'Antibiotic effects on nitrogen transformation in constructed wetland sediments',
+  {id:'ong-0', theme:'water', contributor:'First author', period:'Ongoing', statusLabel:'Manuscript in preparation', title:'Antibiotic effects on nitrogen transformation in constructed wetland sediments',
    focus:'How short- and long-term antibiotic exposure alters microbially mediated nitrogen transformation in surface-flow constructed wetland sediment.',
    overview:'Surface-flow constructed wetlands are a low-cost polishing step for rural and aquaculture wastewater, but the same water carries antibiotic residues into the sediment where nitrogen removal actually takes place. This project exposes wetland sediment to single-dose and repeated antibiotic loading and tracks how the microbially mediated nitrogen reduction–oxidation processes respond over time, so that treatment performance can be interpreted alongside the contaminant load the wetland receives.',
    role:[
@@ -748,7 +829,7 @@ const ONGOING = [
      'Manuscript in preparation, first author.',
      'Paired rate and microbial community dataset linking antibiotic loading to shifts in the nitrogen removal pathway.'
    ]},
-  {id:'ong-1', theme:'biobased', period:'Ongoing', statusLabel:'Submitted to Soil and Tillage Research', title:'Deep vertical rotary tillage and soil aggregate stability in Latosolic Red Soil',
+  {id:'ong-1', theme:'biobased', contributor:'First author', period:'Ongoing', statusLabel:'Submitted to Soil and Tillage Research', title:'Deep vertical rotary tillage and soil aggregate stability in Latosolic Red Soil',
    focus:'Aggregate stability and fragmentation mechanisms of Latosolic Red Soil under deep vertical rotary tillage.',
    overview:'Latosolic Red Soil under long-term sugarcane cultivation develops a compacted plough pan that limits rooting depth and infiltration. Deep vertical rotary tillage breaks that layer, but it also reworks the soil structure that holds the surface together. This project measures how aggregate stability responds to the practice and which fragmentation mechanism dominates afterwards.',
    role:[
@@ -761,7 +842,7 @@ const ONGOING = [
      'Submitted to Soil and Tillage Research, first author.',
      'Aggregate stability dataset for Latosolic Red Soil under deep vertical rotary tillage.'
    ]},
-  {id:'ong-2', theme:'health', period:'Ongoing', statusLabel:'In revision at Journal of Hazardous Materials', title:'Biochar for heavy metal risk mitigation in forest soil remediation',
+  {id:'ong-2', theme:'health', contributor:'Third author', period:'Ongoing', statusLabel:'In revision at Journal of Hazardous Materials', title:'Biochar for heavy metal risk mitigation in forest soil remediation',
    focus:'Biochar addition during sludge amelioration of forest soil, evaluating differential heavy metal loss across multiple media.',
    overview:'Sewage sludge improves the fertility of degraded forest soil but brings heavy metals with it. This project adds biochar during sludge amelioration and evaluates whether it reduces metal migration, comparing losses across surface runoff, interflow, and eroded sediment so that the mitigation effect is judged on the whole transport system rather than one medium.',
    role:[
@@ -773,7 +854,7 @@ const ONGOING = [
      'In revision at Journal of Hazardous Materials, third author.',
      'Evidence on whether biochar addition lowers heavy metal risk during sludge reuse in forest soil.'
    ]},
-  {id:'ong-3', theme:'food', period:'Ongoing', statusLabel:'Manuscript in preparation', title:'Tillage effects on sheet erosion in sugarcane cultivation systems',
+  {id:'ong-3', theme:'food', contributor:'First author', period:'Ongoing', statusLabel:'Manuscript in preparation', title:'Tillage effects on sheet erosion in sugarcane cultivation systems',
    focus:'Sheet erosion processes during sugarcane growth in Latosolic Red Soil cultivation areas under different tillage regimes.',
    overview:'Sugarcane fields in Latosolic Red Soil areas lose most of their soil to sheet erosion in the early growth stages, before the canopy closes. This project follows sheet erosion across the full growth cycle under different tillage regimes to locate the window in which protection matters most and to test whether deep vertical rotary tillage widens or narrows it.',
    role:[
@@ -788,7 +869,7 @@ const ONGOING = [
 ];
 
 const FINISHED = [
-  {id:'proj-0', theme:'water', period:'2024–2025', statusLabel:'Finished', title:'Nitrogen and Phosphorus Runoff from Forest Soils',
+  {id:'proj-0', theme:'water', contributor:'Co-first author', period:'2024–2025', statusLabel:'Finished', title:'Nitrogen and Phosphorus Runoff from Forest Soils',
    focus:'Nutrient loss pathways and ecological risk assessment in sludge-amended eucalyptus plantations.',
    overview:'Sludge-amended eucalyptus plantation soils were put through extreme simulated rainfall to establish where nitrogen and phosphorus actually leave the slope. The project separated surface runoff, interflow, and sediment as transport pathways, measured how nutrients are enriched in different sediment particle sizes, and turned the results into sludge application strategies that keep ecological risk within an acceptable range.',
    role:[
@@ -802,7 +883,7 @@ const FINISHED = [
      'Quantified N and P transport across three pathways and identified particle-size dependent enrichment in sediment.',
      'Derived sludge application strategies that limit nutrient export under extreme rainfall.'
    ]},
-  {id:'proj-1', theme:'climate', period:'2023–2024', statusLabel:'Finished', title:'Agricultural Carbon Budget Assessment',
+  {id:'proj-1', theme:'climate', contributor:'First author', period:'2023–2024', statusLabel:'Finished', title:'Agricultural Carbon Budget Assessment',
    focus:'Long-term agricultural carbon emissions, sequestration, and net carbon sink dynamics in Guangxi Province.',
    overview:'A provincial-scale carbon account for Guangxi agriculture covering 1978 to 2021. Emission factor methods were applied to agricultural inputs, rice cultivation, and machinery use, and carbon sequestration parameters to crop production, giving a 43-year time series of the net carbon sink and the factors that moved it.',
    role:[
@@ -816,7 +897,7 @@ const FINISHED = [
      '43-year time series of agricultural carbon emissions, sequestration, and net carbon sink for Guangxi.',
      'Fertilizer input, rice cultivation, crop yield, and mechanization identified as dominant drivers.'
    ]},
-  {id:'proj-2', theme:'food', period:'2021–2022', statusLabel:'Finished', title:'Agricultural Non-Point Source Pollution',
+  {id:'proj-2', theme:'food', contributor:'First author', period:'2021–2022', statusLabel:'Finished', title:'Agricultural Non-Point Source Pollution',
    focus:'Spatial-temporal patterns and source apportionment of agricultural pollution in Guangdong Province.',
    overview:'Two decades of agricultural non-point source pollution in Guangdong Province, reconstructed as COD, total nitrogen, and total phosphorus loads by source category. The project resolved how those loads shifted between prefectures and between sources from 1999 to 2019, giving a provincial baseline for diffuse pollution control.',
    role:[
@@ -830,7 +911,7 @@ const FINISHED = [
      '20-year load inventory for COD, TN, and TP by source category.',
      'Livestock breeding and rapidly expanding aquaculture identified as the major contributors.'
    ]},
-  {id:'proj-3', theme:'health', period:'2021–2022', statusLabel:'Finished', title:'Heavy Metal Migration and Biochar Remediation',
+  {id:'proj-3', theme:'health', contributor:'Fourth author', period:'2021–2022', statusLabel:'Finished', title:'Heavy Metal Migration and Biochar Remediation',
    focus:'Cadmium loss characteristics and biochar immobilization effects under simulated rainfall.',
    overview:'Cadmium export from acidic red soil was measured under simulated rainfall at two intensities, with biochar added at 0 to 7% to test immobilization. Both dissolved and sediment-bound Cd loss were tracked, so the project could identify the application rate beyond which biochar stops protecting the system and starts aggravating erosion.',
    role:[
@@ -1017,16 +1098,17 @@ class Component extends DCLogic {
     const item = this.state.modalId ? this.findItem(this.state.modalId) : null;
     const showEducation = true;
     const deco = (arr) => arr.map(x => Object.assign({}, x, {hash: '#' + x.id}));
-    const art = (x) => Object.assign({}, x, {
-      themeLabel: THEME_LABEL[x.theme] || 'Research'
-    });
-    const pubs = deco(PUBLICATIONS).map(p => art(Object.assign({}, p, {
-      meta: (THEME_LABEL[p.theme] || '') + ' · ' + p.venue + ', ' + p.year + ' · ' + p.authors
-    })));
-    const ms = deco(MANUSCRIPTS).map(m => Object.assign({}, m, {
-      meta: m.status + ' · ' + m.authors
+    // Every card reads the same two slots: the capsule, then a plain tail.
+    const tail = (a, b) => [a, b].filter(Boolean).join(' \u00B7 ');
+    const pubs = deco(PUBLICATIONS).map(p => Object.assign({}, p, {
+      badgeRole: p.authors, metaTail: tail(p.year, p.venue), blurb: p.teaser
     }));
-    const projMeta = (e) => art(Object.assign({}, e, {meta: e.period + ' · ' + e.statusLabel}));
+    const ms = deco(MANUSCRIPTS).map(m => Object.assign({}, m, {
+      badgeRole: m.authors, metaTail: tail(m.statusShort, m.venue), blurb: m.summary
+    }));
+    const projMeta = (e) => Object.assign({}, e, {
+      badgeRole: e.contributor, metaTail: tail(e.period, e.statusLabel), blurb: e.focus
+    });
     const ongoing = deco(ONGOING).map(projMeta);
     const finished = deco(FINISHED).map(projMeta);
     return {
