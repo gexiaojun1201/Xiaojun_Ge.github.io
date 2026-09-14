@@ -216,6 +216,19 @@
      only two things in it, so centring the row centres them on each other. */
   .wur-fold__head > h2{flex:1 1 auto;min-width:0}
 
+  /* The author line under a modal title is the one line on the page that
+     says where I sit on the paper, and set as muted body copy it read as
+     a caption. A capsule the width of the words lifts it out of the prose
+     without competing with the serif title above — the blue is the one
+     colour on the page that is neither the greens of the chrome nor the
+     sand of the card capsules, so it is not mistaken for either. */
+  .xg-authorpill{
+    display:inline-block;box-sizing:border-box;max-width:100%;
+    font-family:var(--font-sans);font-size:16px;font-weight:600;line-height:1.45;
+    color:#153816;background:#B3D2F6;
+    border-radius:9999px;padding:6px 15px;margin:0 0 22px;
+    text-wrap:pretty}
+
   /* ── Portrait ────────────────────────────────────────
      The same pebble the project photos are cut to, as a static clip —
      no morph, the hero is not a hover surface. */
@@ -336,6 +349,8 @@
     .xg-card__teaser{font-size:14.5px !important;line-height:1.5 !important}
     .xg-advisor{padding-bottom:10px !important}
     .xg-advisor__arrow{font-size:16px !important}
+    .xg-authorpill{font-size:14px !important;padding:5px 12px !important;
+      margin-bottom:16px !important}
     .wur-edcard{padding:16px 18px !important}
     .wur-edcard > div:nth-child(1){font-size:13px !important;margin-bottom:6px !important}
     .wur-edcard > div:nth-child(2){font-size:17px !important}
@@ -692,7 +707,7 @@
     </div>
     <h2 style="font-family:var(--font-serif);font-size:28px;line-height:1.25;font-weight:700;color:var(--pine-green);margin:0 0 12px">{{ modalTitle }}</h2>
     <sc-if value="{{ modalAuthors }}" hint-placeholder-val="{{ false }}">
-      <p style="font-family:var(--font-sans);font-size:16px;line-height:1.5;color:var(--text-muted);margin:0 0 22px">{{ modalAuthors }}</p>
+      <p class="xg-authorpill">{{ modalAuthors }}</p>
     </sc-if>
     <div style="display:flex;flex-direction:column;gap:22px">
       <sc-for list="{{ modalSections }}" as="s" hint-placeholder-count="3">
