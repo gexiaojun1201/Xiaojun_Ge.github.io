@@ -161,6 +161,10 @@
      on the phone, so the wide layout keeps its headings exactly as they
      were — no control, no state, no reserved space. */
   .wur-fold__chevron{display:none}
+  /* Same for the labelled toggle: it replaces the bare chevron on the two
+     home sections that also carry a "see everything" link, and exists only
+     below 760px. */
+  .wur-fold__btn{display:none}
 
   /* ── Detail cards ────────────────────────────────────
      Publications, manuscripts and projects all share one card. The top
@@ -211,6 +215,19 @@
   /* The eyebrow sits above the row now: the heading and the pill are the
      only two things in it, so centring the row centres them on each other. */
   .wur-fold__head > h2{flex:1 1 auto;min-width:0}
+
+  /* The author line under a modal title is the one line on the page that
+     says where I sit on the paper, and set as muted body copy it read as
+     a caption. A capsule the width of the words lifts it out of the prose
+     without competing with the serif title above — the blue is the one
+     colour on the page that is neither the greens of the chrome nor the
+     sand of the card capsules, so it is not mistaken for either. */
+  .xg-authorpill{
+    display:inline-block;box-sizing:border-box;max-width:100%;
+    font-family:var(--font-sans);font-size:16px;font-weight:600;line-height:1.45;
+    color:#153816;background:#B3D2F6;
+    border-radius:9999px;padding:6px 15px;margin:0 0 22px;
+    text-wrap:pretty}
 
   /* ── Portrait ────────────────────────────────────────
      The same pebble the project photos are cut to, as a static clip —
@@ -318,9 +335,12 @@
     /* Inner pages (Publications, Research, Skills) lead with a 42px title. */
     .wur-page section h1{font-size:30px !important;margin-top:12px !important}
 
-    /* Publication / project / education cards */
-    .xg-card, .xg-card--sm{padding:14px 38px 14px 16px !important}
-    .xg-card__arrow{right:13px !important;font-size:21px !important}
+    /* Publication / project / education cards. The right-hand arrow goes:
+       it was drawn for a pointer, where it slides on hover to say the row
+       opens. A tap has no hover, the whole card is already the target, and
+       the 38px of right padding it reserved is 10% of a 390px column. */
+    .xg-card, .xg-card--sm{padding:14px 16px !important}
+    .xg-card__arrow{display:none !important}
     .xg-card__top{gap:7px 9px !important;margin-bottom:9px !important}
     .xg-pill{font-size:10.5px !important;letter-spacing:.06em !important;
       padding:4px 10px !important;min-width:134px !important}
@@ -329,6 +349,8 @@
     .xg-card__teaser{font-size:14.5px !important;line-height:1.5 !important}
     .xg-advisor{padding-bottom:10px !important}
     .xg-advisor__arrow{font-size:16px !important}
+    .xg-authorpill{font-size:14px !important;padding:5px 12px !important;
+      margin-bottom:16px !important}
     .wur-edcard{padding:16px 18px !important}
     .wur-edcard > div:nth-child(1){font-size:13px !important;margin-bottom:6px !important}
     .wur-edcard > div:nth-child(2){font-size:17px !important}
@@ -365,6 +387,43 @@
     .wur-fold__head .wur-arrowlink{font-size:13px !important;flex:none}
     .xg-morepill{padding:9px 16px !important;min-height:0 !important}
     .xg-morepill .wur-arrow{font-size:15px}
+
+    /* The two home sections carry both controls — open the three cards in
+       place, or leave for the full list — and a 9px chevron against a
+       filled link pill read as one button with a speck next to it. Both
+       become pills on their own row under the heading, splitting the width:
+       sand opens here (chevron down), green goes to the page (arrow right).
+       Same pair of shapes, so the direction of the glyph is what separates
+       them. */
+    .wur-fold--pill .wur-fold__head{flex-wrap:wrap !important;gap:12px 8px !important}
+    .wur-fold--pill .wur-fold__head > h2{flex:0 0 100% !important;order:0}
+    /* The toggle is appended after the link in the DOM — the markup order is
+       the one the wide layout needs — so the row is ordered here: stay on
+       this page first, leave second. */
+    .wur-fold--pill .wur-fold__btn{
+      order:1;
+      display:inline-flex !important;align-items:center;justify-content:center;gap:8px;
+      flex:1 1 0;min-width:0;box-sizing:border-box;
+      font-family:var(--font-sans);font-size:15.4px !important;font-weight:600;line-height:1.2;
+      border-radius:9999px;padding:10px 16px;
+      background:#DFD7B8;color:#3D3323;
+      -webkit-tap-highlight-color:transparent}
+    /* Inside the pill the chevron sits beside the word, not pushed to the
+       far edge the way it is on the bare section rows. */
+    .wur-fold--pill .wur-fold__btn .wur-fold__chevron{
+      width:10px;height:10px;
+      margin-left:0;opacity:.8;transform:translateY(-2px) rotate(45deg)}
+    .wur-fold--pill[data-open] .wur-fold__btn .wur-fold__chevron{
+      transform:translateY(2px) rotate(-135deg)}
+    /* White on the deep green, the way every other filled pill on the page
+       is set: the sand pill carries the brown, the green one carries the
+       contrast. */
+    .wur-fold--pill .wur-fold__head .wur-arrowlink{
+      order:2;
+      flex:1 1 0 !important;min-width:0;justify-content:center;
+      font-size:15.4px !important;padding:10px 16px !important;
+      color:#FFFFFF !important;background:#008A00 !important}
+    .wur-fold--pill .wur-fold__head .wur-arrowlink .wur-arrow{font-size:17.6px}
     /* The two section rows hold a heading block, a link and the chevron in
        a space-between row, so the link landed wherever its heading
        happened to end — "Publications" and "Research experience" are
@@ -463,7 +522,7 @@
   </div>
 </div>
 
-<section class="wur-fold" style="padding:calc(36px * var(--space-y)) var(--pad-x) calc(48px * var(--space-y))">
+<section class="wur-fold wur-fold--pill" style="padding:calc(36px * var(--space-y)) var(--pad-x) calc(48px * var(--space-y))">
   <div class="wur-eyebrow" style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:16px">Selected work</div>
   <div class="wur-fold__head" style="display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:20px">
     <h2 style="font-family:var(--font-serif);font-size:30px;font-weight:700;color:var(--pine-green);margin:0">Publications</h2>
@@ -483,7 +542,7 @@
   </div>
 </section>
 
-<section class="wur-fold" style="padding:calc(36px * var(--space-y)) var(--pad-x) calc(48px * var(--space-y))">
+<section class="wur-fold wur-fold--pill" style="padding:calc(36px * var(--space-y)) var(--pad-x) calc(48px * var(--space-y))">
   <div class="wur-eyebrow" style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:16px">In the field</div>
   <div class="wur-fold__head" style="display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:20px">
     <h2 style="font-family:var(--font-serif);font-size:30px;font-weight:700;color:var(--pine-green);margin:0">Research experience</h2>
@@ -648,7 +707,7 @@
     </div>
     <h2 style="font-family:var(--font-serif);font-size:28px;line-height:1.25;font-weight:700;color:var(--pine-green);margin:0 0 12px">{{ modalTitle }}</h2>
     <sc-if value="{{ modalAuthors }}" hint-placeholder-val="{{ false }}">
-      <p style="font-family:var(--font-sans);font-size:16px;line-height:1.5;color:var(--text-muted);margin:0 0 22px">{{ modalAuthors }}</p>
+      <p class="xg-authorpill">{{ modalAuthors }}</p>
     </sc-if>
     <div style="display:flex;flex-direction:column;gap:22px">
       <sc-for list="{{ modalSections }}" as="s" hint-placeholder-count="3">

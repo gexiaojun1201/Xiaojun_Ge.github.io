@@ -417,12 +417,16 @@
   var folds = [];
 
   function syncFoldA11y(entry) {
-    var fold = entry.fold, head = entry.head;
+    var fold = entry.fold, head = entry.head, open = fold.hasAttribute('data-open');
     if (!fold.isConnected) return;
+    /* "Preview" reads as the opposite of the link beside it — a look at
+       what is here, against the whole list — where "All"/"More" would have
+       read as two ways to say the same thing. */
+    if (entry.label) entry.label.textContent = open ? 'Close' : 'Preview';
     if (narrow.matches) {
       head.setAttribute('role', 'button');
       head.setAttribute('tabindex', '0');
-      head.setAttribute('aria-expanded', fold.hasAttribute('data-open') ? 'true' : 'false');
+      head.setAttribute('aria-expanded', open ? 'true' : 'false');
     } else {
       /* Off the phone the heading is a heading again, not a control. */
       head.removeAttribute('role');
@@ -441,9 +445,22 @@
     var chevron = document.createElement('span');
     chevron.className = 'wur-fold__chevron';
     chevron.setAttribute('aria-hidden', 'true');
-    head.appendChild(chevron);
 
     var entry = { fold: fold, head: head };
+    /* Sections that also hold a link to the full page get the chevron
+       wrapped in a labelled pill, so the two controls carry the same
+       weight and the words say which one stays on this page. */
+    if (fold.classList.contains('wur-fold--pill')) {
+      var btn = document.createElement('span');
+      btn.className = 'wur-fold__btn';
+      var label = document.createElement('span');
+      btn.appendChild(label);
+      btn.appendChild(chevron);
+      head.appendChild(btn);
+      entry.label = label;
+    } else {
+      head.appendChild(chevron);
+    }
     folds.push(entry);
 
     function toggle() {
