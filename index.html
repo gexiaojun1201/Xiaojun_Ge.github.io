@@ -348,7 +348,10 @@
     .xg-card__title{font-size:17px !important;margin-bottom:5px !important}
     .xg-card__teaser{font-size:14.5px !important;line-height:1.5 !important}
     .xg-advisor{padding-bottom:10px !important}
-    .xg-advisor__arrow{font-size:16px !important}
+    /* Same reasoning as the card arrow: it slides on hover to say the row
+       goes somewhere, and a tap has no hover. The name is the link and it
+       runs the width of the row, so the glyph only crowded it. */
+    .xg-advisor__arrow{display:none !important}
     .xg-authorpill{font-size:14px !important;padding:5px 12px !important;
       margin-bottom:16px !important}
     .wur-edcard{padding:16px 18px !important}
