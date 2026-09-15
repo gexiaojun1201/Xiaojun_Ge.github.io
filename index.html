@@ -51,8 +51,15 @@
     --pad-x: max(var(--page-gutter), calc((100% - var(--page-max)) / 2));
     /* The house arrow, drawn once here and painted through a mask so the
        card buttons and the advisor rows all take the same glyph and each
-       one tints it with its own `color`. */
-    --xg-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M17.801 12.486a.674.674 0 0 0 0-.956l-3.845-3.824a.68.68 0 0 0-1.113.737.7.7 0 0 0 .152.22l2.685 2.67h-9a.68.68 0 0 0-.68.675.674.674 0 0 0 .68.676h9l-2.685 2.67a.674.674 0 0 0 .483 1.146.68.68 0 0 0 .478-.19z'/%3E%3C/svg%3E");
+       one tints it with its own `color`.
+       It carries width/height rather than a viewBox on purpose: the
+       template runtime rewrites camelCased attribute names wherever it
+       finds them, this string included, and `viewBox` came back out as
+       `sc-camel-view-box`. Without a viewBox the glyph had no intrinsic
+       ratio, so the mask stretched to the box and drew the arrow at its
+       raw user units — up in the top-left corner of the disc. 24x24 is
+       the same canvas the path was drawn for. */
+    --xg-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M17.801 12.486a.674.674 0 0 0 0-.956l-3.845-3.824a.68.68 0 0 0-1.113.737.7.7 0 0 0 .152.22l2.685 2.67h-9a.68.68 0 0 0-.68.675.674.674 0 0 0 .68.676h9l-2.685 2.67a.674.674 0 0 0 .483 1.146.68.68 0 0 0 .478-.19z'/%3E%3C/svg%3E");
   }
   /* Every arrow on the page is this span: a box the size you give it,
      filled with `color` through the glyph above. */
@@ -192,28 +199,40 @@
     position:relative;display:block;
     background:var(--bg-surface);border:1px solid var(--border-subtle);
     border-radius:var(--radius-card);box-shadow:var(--shadow-card);
-    padding:24px 90px 24px 30px;color:var(--text-primary);cursor:pointer}
+    padding:24px 84px 24px 30px;color:var(--text-primary);cursor:pointer}
   /* The arrow is a button now, and it sits on the card's bottom padding
      edge rather than halfway down: the last line of the teaser is the
      row it belongs to, and centred on a three-line card it floated
      against the title instead.
      The disc itself never moves or changes colour — the glyph inside it
-     does. It rests 2px left of centre, close enough to centred that the
-     offset only registers once it travels, and slides 5px right on
+     does. It rests a hair left of centre, close enough to centred that
+     the offset only registers once it travels, and slides right on
      hover: the arrow walks through the door rather than the door
-     sliding sideways. 3px right of centre still leaves 7px of disc
-     ahead of the tip, so it never crowds the edge. */
+     sliding sideways.
+     One diameter serves every card on every page — the home rows used
+     to draw a 40px disc and the inner pages a 46px one, which read as
+     two different buttons. Everything inside it is a share of that one
+     number rather than a px of its own, so the glyph is the same
+     fraction of the disc and the slide the same fraction of its width
+     at any diameter and any page zoom.
+     `will-change` is doing real work here, not cargo cult. Card heights
+     under the page's `zoom: .9` are fractional, so every disc landed on
+     a different sub-pixel row and the browser re-antialiased the circle
+     and the glyph against a different grid each time — eight discs, and
+     eight slightly different drawings of the same button. On its own
+     layer the disc is rasterised once, so they are all the same
+     drawing, placed a fraction of a pixel apart. */
   .xg-card__arrow{
     position:absolute;right:30px;bottom:24px;
-    width:46px;height:46px;border-radius:50%;
-    display:flex;align-items:center;justify-content:center;
-    background:#004D01;color:#FBF6E5}
+    width:40px;height:40px;border-radius:50%;
+    background:#004D01;color:#FBF6E5;will-change:transform}
   .xg-card__arrow::before{
-    width:26px;height:26px;transform:translateX(-2px);
+    -webkit-mask-size:57%;mask-size:57%;
+    transform:translateX(-2.5%);          /* 1px of the 40px disc */
     transition:transform 250ms var(--wur-ease)}
   .wur-rowmotion:hover .xg-card__arrow::before,
   .xg-card:hover .xg-card__arrow::before,
-  .xg-card:focus-visible .xg-card__arrow::before{transform:translateX(3px)}
+  .xg-card:focus-visible .xg-card__arrow::before{transform:translateX(5%)}
   .xg-card__top{display:flex;align-items:center;flex-wrap:wrap;gap:9px 14px;margin-bottom:15px}
   /* Every capsule is as wide as the longest author position on the page,
      so the year beside it starts on the same x down the whole list. */
@@ -264,8 +283,7 @@
   .xg-portrait{clip-path:url(#xg-blob)}
   /* The home page keeps its lighter hierarchy — same card, one step down. */
   .xg-card--sm{padding:20px 78px 20px 24px}
-  .xg-card--sm .xg-card__arrow{right:24px;bottom:20px;width:40px;height:40px}
-  .xg-card--sm .xg-card__arrow::before{width:23px;height:23px}
+  .xg-card--sm .xg-card__arrow{right:24px;bottom:20px}
   .xg-card--sm .xg-card__top{margin-bottom:12px}
   .xg-card--sm .xg-pill{font-size:12px;padding:5px 12px;min-width:158px}
   .xg-card--sm .xg-card__meta{font-size:15px}
