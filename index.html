@@ -196,20 +196,24 @@
   /* The arrow is a button now, and it sits on the card's bottom padding
      edge rather than halfway down: the last line of the teaser is the
      row it belongs to, and centred on a three-line card it floated
-     against the title instead. Light green at rest, the deep green on
-     hover — the same pair the "All publications" pill uses. */
+     against the title instead.
+     The disc itself never moves or changes colour — the glyph inside it
+     does. It rests 2px left of centre, close enough to centred that the
+     offset only registers once it travels, and slides 5px right on
+     hover: the arrow walks through the door rather than the door
+     sliding sideways. 3px right of centre still leaves 7px of disc
+     ahead of the tip, so it never crowds the edge. */
   .xg-card__arrow{
     position:absolute;right:30px;bottom:24px;
     width:46px;height:46px;border-radius:50%;
     display:flex;align-items:center;justify-content:center;
-    background:var(--active-green);color:#FFFFFF;
-    transition:background-color 250ms var(--wur-ease),
-               transform 250ms var(--wur-ease)}
-  .xg-card__arrow::before{width:26px;height:26px}
-  .wur-rowmotion:hover .xg-card__arrow,
-  .xg-card:hover .xg-card__arrow,
-  .xg-card:focus-visible .xg-card__arrow{
-    background:var(--forest-text);transform:translateX(4px)}
+    background:#004D01;color:#FBF6E5}
+  .xg-card__arrow::before{
+    width:26px;height:26px;transform:translateX(-2px);
+    transition:transform 250ms var(--wur-ease)}
+  .wur-rowmotion:hover .xg-card__arrow::before,
+  .xg-card:hover .xg-card__arrow::before,
+  .xg-card:focus-visible .xg-card__arrow::before{transform:translateX(3px)}
   .xg-card__top{display:flex;align-items:center;flex-wrap:wrap;gap:9px 14px;margin-bottom:15px}
   /* Every capsule is as wide as the longest author position on the page,
      so the year beside it starts on the same x down the whole list. */
@@ -288,7 +292,7 @@
     transition:color 220ms var(--wur-ease)}
   .xg-advisor:hover .xg-advisor__link{color:var(--color-primary)}
   .xg-advisor__arrow{
-    flex:none;width:34px;height:34px;margin-right:-4px;color:var(--pine-green);
+    flex:none;width:34px;height:34px;margin-right:-4px;color:#004D01;
     transition:transform 250ms var(--wur-ease),color 220ms var(--wur-ease)}
   .xg-advisor:hover .xg-advisor__arrow{
     transform:translateX(4px);color:var(--color-primary)}
