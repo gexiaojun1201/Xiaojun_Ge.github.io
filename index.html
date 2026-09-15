@@ -421,22 +421,26 @@
        multiple of --pill-fit, which the script trims just far enough for
        the pair to fit before either of them has to break or stack.
        Sand never grows past its own word, so all the slack lands on the
-       green one. */
-    .wur-fold--pill .wur-fold__head{--pill-fit:1}
+       green one.
+       One value for the whole page, not one per row: "All publications"
+       is the longer label, so a per-row fit left it a step smaller than
+       "All projects" right below it, and two sizes of the same control on
+       one screen read as a mistake. Every row takes the tightest row's
+       fit. */
     .wur-fold--pill .wur-fold__btn{
       order:1;
       display:inline-flex !important;align-items:center;justify-content:center;
-      gap:calc(7px * var(--pill-fit));
+      gap:calc(7px * var(--pill-fit,1));
       flex:0 1 auto;white-space:nowrap;box-sizing:border-box;
       font-family:var(--font-sans);font-weight:600;line-height:1.2;
-      font-size:calc(15.4px * var(--pill-fit)) !important;
-      border-radius:9999px;padding:calc(10px * var(--pill-fit)) calc(14px * var(--pill-fit));
+      font-size:calc(15.4px * var(--pill-fit,1)) !important;
+      border-radius:9999px;padding:calc(10px * var(--pill-fit,1)) calc(14px * var(--pill-fit,1));
       background:#DFD7B8;color:#3D3323;
       -webkit-tap-highlight-color:transparent}
     /* Inside the pill the chevron sits beside the word, not pushed to the
        far edge the way it is on the bare section rows. */
     .wur-fold--pill .wur-fold__btn .wur-fold__chevron{
-      width:calc(10px * var(--pill-fit));height:calc(10px * var(--pill-fit));
+      width:calc(10px * var(--pill-fit,1));height:calc(10px * var(--pill-fit,1));
       margin-left:0;opacity:.8;transform:translateY(-2px) rotate(45deg)}
     .wur-fold--pill[data-open] .wur-fold__btn .wur-fold__chevron{
       transform:translateY(2px) rotate(-135deg)}
@@ -446,11 +450,11 @@
     .wur-fold--pill .wur-fold__head .wur-arrowlink{
       order:2;
       flex:1 1 auto !important;white-space:nowrap;justify-content:center;
-      font-size:calc(15.4px * var(--pill-fit)) !important;
-      padding:calc(10px * var(--pill-fit)) calc(14px * var(--pill-fit)) !important;
+      font-size:calc(15.4px * var(--pill-fit,1)) !important;
+      padding:calc(10px * var(--pill-fit,1)) calc(14px * var(--pill-fit,1)) !important;
       color:#FFFFFF !important;background:#008A00 !important}
     .wur-fold--pill .wur-fold__head .wur-arrowlink .wur-arrow{
-      font-size:calc(17.6px * var(--pill-fit))}
+      font-size:calc(17.6px * var(--pill-fit,1))}
     /* The two section rows hold a heading block, a link and the chevron in
        a space-between row, so the link landed wherever its heading
        happened to end — "Publications" and "Research experience" are

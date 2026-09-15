@@ -420,33 +420,42 @@
      what set their width. A reader whose browser or system is set to
      larger text — an in-app font slider, Android's accessibility scale —
      gets wider labels in the same column, and the pair no longer fits.
-     Rather than break a label or drop one pill under the other, the row
-     is measured and trimmed just far enough to hold both: every size in
+     Rather than break a label or drop one pill under the other, the rows
+     are measured and trimmed just far enough to hold both: every size in
      the pill is a multiple of --pill-fit.
+     The variable is set once for the page, at the tightest row's value.
+     Per-row it left "All publications" a step smaller than "All projects"
+     below it, and two sizes of the same control on one screen read as a
+     mistake.
      Measured with the longer of the two labels ("Preview", never the
      shorter "Close") so opening a section does not resize the row. */
-  function fitPillRow(entry) {
-    var head = entry.head, btn = entry.btn, link = entry.link;
-    if (!btn || !link || !head.isConnected) return;
-    if (!narrow.matches) { head.style.removeProperty('--pill-fit'); return; }
+  function fitPillRows() {
+    var rows = folds.filter(function (e) { return e.btn && e.link && e.head.isConnected; });
+    if (!rows.length) return;
+    var root = document.documentElement;
+    if (!narrow.matches) { root.style.removeProperty('--pill-fit'); return; }
 
-    var word = entry.label ? entry.label.textContent : '';
-    if (entry.label) entry.label.textContent = 'Preview';
-    head.style.setProperty('--pill-fit', '1');
-    /* Intrinsic widths: without this the two report whatever the row gave
-       them, which is a full row each once they have wrapped. */
-    btn.style.flex = link.style.flex = 'none';
-    var need = btn.offsetWidth + link.offsetWidth +
-               parseFloat(getComputedStyle(head).columnGap || 0);
-    var room = head.clientWidth;
-    btn.style.flex = link.style.flex = '';
-    if (entry.label) entry.label.textContent = word;
+    root.style.setProperty('--pill-fit', '1');
+    var words = rows.map(function (e) { return e.label ? e.label.textContent : ''; });
+    rows.forEach(function (e) { if (e.label) e.label.textContent = 'Preview'; });
 
-    /* Padding and type both scale with the variable, so the width does
-       too: one pass lands within a pixel. The floor is the point where
-       shrinking the pair costs more than letting it stack. */
-    var fit = need > room ? Math.max(0.78, (room - 2) / need) : 1;
-    head.style.setProperty('--pill-fit', String(fit));
+    var fit = 1;
+    rows.forEach(function (e) {
+      /* Intrinsic widths: without this the two report whatever the row
+         gave them, which is a full row each once they have wrapped. */
+      e.btn.style.flex = e.link.style.flex = 'none';
+      var need = e.btn.offsetWidth + e.link.offsetWidth +
+                 parseFloat(getComputedStyle(e.head).columnGap || 0);
+      var room = e.head.clientWidth;
+      e.btn.style.flex = e.link.style.flex = '';
+      /* Padding and type both scale with the variable, so the width does
+         too: one pass lands within a pixel. The floor is the point where
+         shrinking the pair costs more than letting it stack. */
+      if (need > room) fit = Math.min(fit, (room - 2) / need);
+    });
+
+    rows.forEach(function (e, i) { if (e.label) e.label.textContent = words[i]; });
+    root.style.setProperty('--pill-fit', String(Math.max(0.78, fit)));
   }
 
   function syncFoldA11y(entry) {
@@ -520,13 +529,13 @@
     });
 
     syncFoldA11y(entry);
-    fitPillRow(entry);
+    fitPillRows();
   }
 
   function refreshFolds() {
     folds = folds.filter(function (entry) { return entry.fold.isConnected; });
     folds.forEach(syncFoldA11y);
-    folds.forEach(fitPillRow);
+    fitPillRows();
   }
 
   narrow.addEventListener('change', refreshFolds);
