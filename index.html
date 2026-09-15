@@ -421,11 +421,10 @@
     .xg-card__title{font-size:17px !important;margin-bottom:5px !important}
     .xg-card__teaser{font-size:14.5px !important;line-height:1.5 !important}
     .xg-advisor{padding:8px 12px 10px !important;margin:0 -12px !important}
-    /* The advisor glyph is bare rather than on a disc, so it scales
-       with the name beside it — 18px here, against 25px on the wide
-       layout. */
-    .xg-advisor__arrow{width:26px !important;height:26px !important;
-      margin-right:-3px !important}
+    /* Same reasoning as the card disc: it slides on hover to say the row
+       goes somewhere, and a tap has no hover. The whole row is the link
+       here, so the glyph only crowded the name. */
+    .xg-advisor__arrow{display:none !important}
     .xg-authorpill{font-size:14px !important;padding:5px 12px !important;
       margin-bottom:16px !important}
     .wur-edcard{padding:16px 18px !important}
