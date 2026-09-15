@@ -73,6 +73,11 @@
      `transform:scale()` would shrink the painted result while the layout
      kept its old size, which does not fit any more content on screen —
      the whole point of the control. */
+  /* Android Chrome and the in-app WebViews inflate text in a narrow
+     column on their own ("font boosting"), which pushes labels that were
+     measured to fit onto a second line. The page already has a type scale
+     for the phone — this keeps the browser from adding a second one. */
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
   body{zoom:var(--page-zoom,.9)}
   /* Viewport units are the one thing zoom does not touch: 100vh stays
      the real viewport height and then gets painted at 0.9, landing short.
@@ -289,12 +294,17 @@
        two small ones. The pill is content-box, so its 43px min-height is
        43px *plus* the padding — that floor, not the padding, is what kept
        it tall. */
-    .wur-hero__actions{display:grid !important;grid-template-columns:repeat(3,1fr) !important;
+    /* Three fixed tracks fit the three labels at the size they are set
+       here, and nothing else: a reader on a larger text setting, or a
+       narrower phone, got "Download CV" broken across two lines inside its
+       own button. A wrapping row sized by the labels holds them on one
+       line each and drops a button to the next row when the three no
+       longer fit — a whole button moves, never half a phrase. */
+    .wur-hero__actions{display:flex !important;flex-wrap:wrap !important;
       gap:8px !important;margin-bottom:14px !important}
-    /* These are content-box, so a 100% width would put the padding outside
-       the track and run the last button off the screen. */
-    .wur-hero__actions .wur-pill{box-sizing:border-box !important;width:100% !important;
-      min-height:22px !important;font-size:12.5px !important;padding:9px 6px !important}
+    .wur-hero__actions .wur-pill{box-sizing:border-box !important;
+      flex:1 1 auto;width:auto !important;white-space:nowrap;
+      min-height:22px !important;font-size:12.5px !important;padding:9px 12px !important}
     /* "(PDF)" is the half of the label that does not survive a third of a
        390px screen. The link is the same file either way. */
     .wur-pill__ext{display:none}
@@ -376,7 +386,7 @@
        of the first screen — before a word of content. A smaller label and
        a tighter gap put all five on one row under the brand. */
     body nav{padding-top:10px !important;padding-bottom:10px !important;row-gap:6px !important}
-    body nav a{font-size:14px !important}
+    body nav a{font-size:14px !important;white-space:nowrap}
     body nav > div:last-child{gap:12px !important}
     body nav a:last-child{padding:0 16px !important}
 
@@ -403,18 +413,34 @@
     /* The toggle is appended after the link in the DOM — the markup order is
        the one the wide layout needs — so the row is ordered here: stay on
        this page first, leave second. */
+    /* The pair belongs on one row: one opens the cards here, the other
+       leaves for the list, and reading them side by side is what says they
+       are two ways out of the same section. Their labels are what set
+       their width, though, and a reader on a larger text setting gets
+       wider labels in the same 358px. Every size below is therefore a
+       multiple of --pill-fit, which the script trims just far enough for
+       the pair to fit before either of them has to break or stack.
+       Sand never grows past its own word, so all the slack lands on the
+       green one.
+       One value for the whole page, not one per row: "All publications"
+       is the longer label, so a per-row fit left it a step smaller than
+       "All projects" right below it, and two sizes of the same control on
+       one screen read as a mistake. Every row takes the tightest row's
+       fit. */
     .wur-fold--pill .wur-fold__btn{
       order:1;
-      display:inline-flex !important;align-items:center;justify-content:center;gap:8px;
-      flex:1 1 0;min-width:0;box-sizing:border-box;
-      font-family:var(--font-sans);font-size:15.4px !important;font-weight:600;line-height:1.2;
-      border-radius:9999px;padding:10px 16px;
+      display:inline-flex !important;align-items:center;justify-content:center;
+      gap:calc(7px * var(--pill-fit,1));
+      flex:0 1 auto;white-space:nowrap;box-sizing:border-box;
+      font-family:var(--font-sans);font-weight:600;line-height:1.2;
+      font-size:calc(15.4px * var(--pill-fit,1)) !important;
+      border-radius:9999px;padding:calc(10px * var(--pill-fit,1)) calc(14px * var(--pill-fit,1));
       background:#DFD7B8;color:#3D3323;
       -webkit-tap-highlight-color:transparent}
     /* Inside the pill the chevron sits beside the word, not pushed to the
        far edge the way it is on the bare section rows. */
     .wur-fold--pill .wur-fold__btn .wur-fold__chevron{
-      width:10px;height:10px;
+      width:calc(10px * var(--pill-fit,1));height:calc(10px * var(--pill-fit,1));
       margin-left:0;opacity:.8;transform:translateY(-2px) rotate(45deg)}
     .wur-fold--pill[data-open] .wur-fold__btn .wur-fold__chevron{
       transform:translateY(2px) rotate(-135deg)}
@@ -423,10 +449,12 @@
        contrast. */
     .wur-fold--pill .wur-fold__head .wur-arrowlink{
       order:2;
-      flex:1 1 0 !important;min-width:0;justify-content:center;
-      font-size:15.4px !important;padding:10px 16px !important;
+      flex:1 1 auto !important;white-space:nowrap;justify-content:center;
+      font-size:calc(15.4px * var(--pill-fit,1)) !important;
+      padding:calc(10px * var(--pill-fit,1)) calc(14px * var(--pill-fit,1)) !important;
       color:#FFFFFF !important;background:#008A00 !important}
-    .wur-fold--pill .wur-fold__head .wur-arrowlink .wur-arrow{font-size:17.6px}
+    .wur-fold--pill .wur-fold__head .wur-arrowlink .wur-arrow{
+      font-size:calc(17.6px * var(--pill-fit,1))}
     /* The two section rows hold a heading block, a link and the chevron in
        a space-between row, so the link landed wherever its heading
        happened to end — "Publications" and "Research experience" are
