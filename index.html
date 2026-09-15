@@ -49,7 +49,17 @@
     --page-gutter: 24px;  /* hard minimum side gutter */
     --space-y: .85;       /* vertical rhythm multiplier */
     --pad-x: max(var(--page-gutter), calc((100% - var(--page-max)) / 2));
+    /* The house arrow, drawn once here and painted through a mask so the
+       card buttons and the advisor rows all take the same glyph and each
+       one tints it with its own `color`. */
+    --xg-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M17.801 12.486a.674.674 0 0 0 0-.956l-3.845-3.824a.68.68 0 0 0-1.113.737.7.7 0 0 0 .152.22l2.685 2.67h-9a.68.68 0 0 0-.68.675.674.674 0 0 0 .68.676h9l-2.685 2.67a.674.674 0 0 0 .483 1.146.68.68 0 0 0 .478-.19z'/%3E%3C/svg%3E");
   }
+  /* Every arrow on the page is this span: a box the size you give it,
+     filled with `color` through the glyph above. */
+  .xg-arrow-ico::before{
+    content:"";display:block;width:100%;height:100%;background:currentColor;
+    -webkit-mask:var(--xg-arrow) center/contain no-repeat;
+            mask:var(--xg-arrow) center/contain no-repeat}
   /* Navbar and Footer ship from the design system with a hard-coded 32px
      side padding — pull them onto the same column as everything else. */
   body nav, body footer{
@@ -182,14 +192,24 @@
     position:relative;display:block;
     background:var(--bg-surface);border:1px solid var(--border-subtle);
     border-radius:var(--radius-card);box-shadow:var(--shadow-card);
-    padding:24px 76px 24px 30px;color:var(--text-primary);cursor:pointer}
+    padding:24px 90px 24px 30px;color:var(--text-primary);cursor:pointer}
+  /* The arrow is a button now, and it sits on the card's bottom padding
+     edge rather than halfway down: the last line of the teaser is the
+     row it belongs to, and centred on a three-line card it floated
+     against the title instead. Light green at rest, the deep green on
+     hover — the same pair the "All publications" pill uses. */
   .xg-card__arrow{
-    position:absolute;right:30px;top:50%;
-    font-size:30px;line-height:1;color:var(--pine-green);
-    transform:translateY(-50%);
-    transition:transform 250ms var(--wur-ease)}
+    position:absolute;right:30px;bottom:24px;
+    width:46px;height:46px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--active-green);color:#FFFFFF;
+    transition:background-color 250ms var(--wur-ease),
+               transform 250ms var(--wur-ease)}
+  .xg-card__arrow::before{width:26px;height:26px}
   .wur-rowmotion:hover .xg-card__arrow,
-  .xg-card:focus-visible .xg-card__arrow{transform:translateY(-50%) translateX(5px)}
+  .xg-card:hover .xg-card__arrow,
+  .xg-card:focus-visible .xg-card__arrow{
+    background:var(--forest-text);transform:translateX(4px)}
   .xg-card__top{display:flex;align-items:center;flex-wrap:wrap;gap:9px 14px;margin-bottom:15px}
   /* Every capsule is as wide as the longest author position on the page,
      so the year beside it starts on the same x down the whole list. */
@@ -239,8 +259,9 @@
      no morph, the hero is not a hover surface. */
   .xg-portrait{clip-path:url(#xg-blob)}
   /* The home page keeps its lighter hierarchy — same card, one step down. */
-  .xg-card--sm{padding:20px 62px 20px 24px}
-  .xg-card--sm .xg-card__arrow{right:24px;font-size:25px}
+  .xg-card--sm{padding:20px 78px 20px 24px}
+  .xg-card--sm .xg-card__arrow{right:24px;bottom:20px;width:40px;height:40px}
+  .xg-card--sm .xg-card__arrow::before{width:23px;height:23px}
   .xg-card--sm .xg-card__top{margin-bottom:12px}
   .xg-card--sm .xg-pill{font-size:12px;padding:5px 12px;min-width:158px}
   .xg-card--sm .xg-card__meta{font-size:15px}
@@ -248,18 +269,37 @@
   .xg-card--sm .xg-card__teaser{font-size:16px}
 
   /* ── Advisors ────────────────────────────────────────
-     Name and arrow on one row, affiliation under it, a rule under each. */
-  .xg-advisor{padding-bottom:13px;border-bottom:1px solid var(--border-subtle)}
+     Name and arrow on one row, affiliation under it, a rule under each.
+     The link used to be the name alone, so the affiliation — the taller
+     half of the row — was dead space. The anchor now wraps the whole
+     block: anywhere in the row opens it, and the row lights up as one.
+     The negative margin is what keeps the text on the same x as the
+     heading while the hover surface still has padding to show. */
+  .xg-advisor{
+    display:block;text-decoration:none;color:var(--forest-text);
+    padding:11px 14px 13px;margin:0 -14px;border-radius:12px;
+    border-bottom:1px solid var(--border-subtle);cursor:pointer;
+    transition:background-color 220ms var(--wur-ease)}
+  .xg-advisor:hover,.xg-advisor:focus-visible{background:rgba(0,138,0,.07)}
   .xg-advisor__link{
     display:flex;align-items:center;justify-content:space-between;gap:16px;
     font-family:var(--font-sans);font-size:25px;font-weight:600;
-    color:var(--forest-text);text-decoration:none}
-  .xg-advisor__link:hover{color:var(--color-primary)}
-  .xg-advisor__arrow{flex:none;transition:transform 250ms var(--wur-ease)}
-  .xg-advisor__link:hover .xg-advisor__arrow{transform:translateX(4px)}
+    color:var(--forest-text);text-decoration:none;
+    transition:color 220ms var(--wur-ease)}
+  .xg-advisor:hover .xg-advisor__link{color:var(--color-primary)}
+  .xg-advisor__arrow{
+    flex:none;width:34px;height:34px;margin-right:-4px;color:var(--pine-green);
+    transition:transform 250ms var(--wur-ease),color 220ms var(--wur-ease)}
+  .xg-advisor:hover .xg-advisor__arrow{
+    transform:translateX(4px);color:var(--color-primary)}
   .xg-advisor__aff{
-    font-family:var(--font-sans);font-size:20px;line-height:1.5;
+    display:block;font-family:var(--font-sans);font-size:20px;line-height:1.5;
     color:var(--text-muted);margin-top:2px;text-wrap:pretty}
+  /* The Advisors column is shorter than About beside it, so the three
+     rows spread over the height the card already has and the last rule
+     lands level with the bottom of the About text. */
+  .wur-advisors{display:flex;flex-direction:column}
+  .wur-advisors .wur-fold__body{flex:1 1 auto;justify-content:space-between}
 
   /* ── phone scale ──────────────────────────────────────────────────
      Every size above was measured against the 1290px column: 22px body
@@ -357,10 +397,10 @@
     .xg-card__meta{font-size:13px !important}
     .xg-card__title{font-size:17px !important;margin-bottom:5px !important}
     .xg-card__teaser{font-size:14.5px !important;line-height:1.5 !important}
-    .xg-advisor{padding-bottom:10px !important}
+    .xg-advisor{padding:8px 12px 10px !important;margin:0 -12px !important}
     /* Same reasoning as the card arrow: it slides on hover to say the row
-       goes somewhere, and a tap has no hover. The name is the link and it
-       runs the width of the row, so the glyph only crowded it. */
+       goes somewhere, and a tap has no hover. The whole row is the link
+       here, so the glyph only crowded the name. */
     .xg-advisor__arrow{display:none !important}
     .xg-authorpill{font-size:14px !important;padding:5px 12px !important;
       margin-bottom:16px !important}
@@ -540,12 +580,12 @@
       </div>
       <div class="wur-advisors wur-fold">
         <h2 class="wur-fold__head" style="font-family: var(--font-serif); font-size: 38px; font-weight: 700; color: var(--pine-green); margin: 0 0 14px">Advisors</h2>
-        <div class="wur-fold__body" style="display:flex;flex-direction:column;gap:14px">
+        <div class="wur-fold__body" style="display:flex;flex-direction:column;gap:4px">
           <sc-for list="{{ advisors }}" as="a" hint-placeholder-count="3">
-            <div class="xg-advisor">
-              <a href="{{ a.link }}" target="_blank" rel="noopener" class="xg-advisor__link"><span>{{ a.name }}</span><span class="xg-advisor__arrow" aria-hidden="true">→</span></a>
-              <div class="xg-advisor__aff">{{ a.affiliation }}</div>
-            </div>
+            <a href="{{ a.link }}" target="_blank" rel="noopener" class="xg-advisor">
+              <span class="xg-advisor__link"><span>{{ a.name }}</span><span class="xg-advisor__arrow xg-arrow-ico" aria-hidden="true"></span></span>
+              <span class="xg-advisor__aff">{{ a.affiliation }}</span>
+            </a>
           </sc-for>
         </div>
       </div>
@@ -563,7 +603,7 @@
     <sc-for list="{{ homePublications }}" as="p" hint-placeholder-count="3">
       <div class="wur-rowmotion">
         <a href="{{ p.hash }}" class="xg-card xg-card--sm">
-          <span class="xg-card__arrow" aria-hidden="true">→</span>
+          <span class="xg-card__arrow xg-arrow-ico" aria-hidden="true"></span>
           <div class="xg-card__top"><span class="xg-pill">{{ p.badgeRole }}</span><span class="xg-card__meta">{{ p.metaTail }}</span></div>
           <div class="xg-card__title">{{ p.title }}</div>
           <div class="xg-card__teaser">{{ p.blurb }}</div>
@@ -583,7 +623,7 @@
     <sc-for list="{{ homeProjects }}" as="e" hint-placeholder-count="3">
       <div class="wur-rowmotion">
         <a href="{{ e.hash }}" class="xg-card xg-card--sm">
-          <span class="xg-card__arrow" aria-hidden="true">→</span>
+          <span class="xg-card__arrow xg-arrow-ico" aria-hidden="true"></span>
           <div class="xg-card__top"><span class="xg-pill">{{ e.badgeRole }}</span><span class="xg-card__meta">{{ e.metaTail }}</span></div>
           <div class="xg-card__title">{{ e.title }}</div>
           <div class="xg-card__teaser">{{ e.blurb }}</div>
@@ -624,7 +664,7 @@
       <sc-for list="{{ publications }}" as="p" hint-placeholder-count="4">
         <div class="wur-rowmotion">
           <a href="{{ p.hash }}" class="xg-card">
-            <span class="xg-card__arrow" aria-hidden="true">→</span>
+            <span class="xg-card__arrow xg-arrow-ico" aria-hidden="true"></span>
             <div class="xg-card__top"><span class="xg-pill">{{ p.badgeRole }}</span><span class="xg-card__meta">{{ p.metaTail }}</span></div>
             <div class="xg-card__title">{{ p.title }}</div>
             <div class="xg-card__teaser">{{ p.blurb }}</div>
@@ -639,7 +679,7 @@
       <sc-for list="{{ manuscripts }}" as="m" hint-placeholder-count="4">
         <div class="wur-rowmotion">
           <a href="{{ m.hash }}" class="xg-card">
-            <span class="xg-card__arrow" aria-hidden="true">→</span>
+            <span class="xg-card__arrow xg-arrow-ico" aria-hidden="true"></span>
             <div class="xg-card__top"><span class="xg-pill">{{ m.badgeRole }}</span><span class="xg-card__meta">{{ m.metaTail }}</span></div>
             <div class="xg-card__title">{{ m.title }}</div>
             <div class="xg-card__teaser">{{ m.blurb }}</div>
@@ -665,7 +705,7 @@
       <sc-for list="{{ ongoingProjects }}" as="e" hint-placeholder-count="4">
         <div class="wur-rowmotion">
           <a href="{{ e.hash }}" class="xg-card">
-            <span class="xg-card__arrow" aria-hidden="true">→</span>
+            <span class="xg-card__arrow xg-arrow-ico" aria-hidden="true"></span>
             <div class="xg-card__top"><span class="xg-pill">{{ e.badgeRole }}</span><span class="xg-card__meta">{{ e.metaTail }}</span></div>
             <div class="xg-card__title">{{ e.title }}</div>
             <div class="xg-card__teaser">{{ e.blurb }}</div>
@@ -681,7 +721,7 @@
       <sc-for list="{{ finishedProjects }}" as="e" hint-placeholder-count="4">
         <div class="wur-rowmotion">
           <a href="{{ e.hash }}" class="xg-card">
-            <span class="xg-card__arrow" aria-hidden="true">→</span>
+            <span class="xg-card__arrow xg-arrow-ico" aria-hidden="true"></span>
             <div class="xg-card__top"><span class="xg-pill">{{ e.badgeRole }}</span><span class="xg-card__meta">{{ e.metaTail }}</span></div>
             <div class="xg-card__title">{{ e.title }}</div>
             <div class="xg-card__teaser">{{ e.blurb }}</div>
