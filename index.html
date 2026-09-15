@@ -536,6 +536,18 @@
        was spacing for a body that is not there. */
     .wur-fold:not([data-open]) .wur-fold__head{margin-bottom:0 !important}
     .wur-fold:not([data-open]).wur-about__main{border-bottom:0 !important;padding-bottom:0 !important}
+    /* Which of the two is open. About and Advisors stack inside one card
+       on a phone, so from the headings alone an open About and an open
+       Advisors look the same. The open one takes the wash the advisor
+       rows take on hover — painted past its own edges with a spread
+       shadow rather than padding, so opening a section moves nothing
+       around it. The hairline under About is what separated the two
+       before; the wash says it now, so it goes. */
+    .wur-about > .wur-fold[data-open]{
+      background:rgba(0,138,0,.07);border-radius:6px;
+      box-shadow:0 0 0 10px rgba(0,138,0,.07)}
+    .wur-about > .wur-fold[data-open].wur-about__main{
+      border-bottom:0 !important;padding-bottom:6px !important}
 
     /* Touch targets. A 15px-tall nav link is a coin flip with a thumb;
        44px is the size Apple and Google both publish. Padding does the
