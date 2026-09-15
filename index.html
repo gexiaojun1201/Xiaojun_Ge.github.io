@@ -407,25 +407,19 @@
     /* Inner pages (Publications, Research, Skills) lead with a 42px title. */
     .wur-page section h1{font-size:30px !important;margin-top:12px !important}
 
-    /* Publication / project / education cards. The disc stays, at 30px,
-       because a phone has no hover to say the row opens with.
-       What it does not do is take a gutter off the whole card the way
-       the wide layout does: a tenth of a 390px column carved out of the
-       title costs a line or two of wrapping, and the title never sits
-       beside the disc anyway. Only the teaser, which does, is inset. */
+    /* Publication / project / education cards. The disc goes: it was
+       drawn for a pointer, where it slides on hover to say the row
+       opens. A tap has no hover and the whole card is already the
+       target, so on a phone the disc says nothing the card does not,
+       and the column it stands in is better spent on the words. */
     .xg-card, .xg-card--sm{padding:14px 16px !important}
-    .xg-card__arrow{right:16px !important;bottom:12px !important;
-      width:30px !important;height:30px !important}
-    /* Nothing to lead into without a hover, so the glyph sits dead
-       centre rather than a pixel short of it. */
-    .xg-card__arrow::before{transform:none !important}
+    .xg-card__arrow{display:none !important}
     .xg-card__top{gap:7px 9px !important;margin-bottom:9px !important}
     .xg-pill{font-size:10.5px !important;letter-spacing:.06em !important;
       padding:4px 10px !important;min-width:134px !important}
     .xg-card__meta{font-size:13px !important}
     .xg-card__title{font-size:17px !important;margin-bottom:5px !important}
-    .xg-card__teaser{font-size:14.5px !important;line-height:1.5 !important;
-      padding-right:38px !important}
+    .xg-card__teaser{font-size:14.5px !important;line-height:1.5 !important}
     .xg-advisor{padding:8px 12px 10px !important;margin:0 -12px !important}
     /* The advisor glyph is bare rather than on a disc, so it scales
        with the name beside it — 18px here, against 25px on the wide
