@@ -277,6 +277,73 @@
     border-radius:9999px;padding:6px 15px;margin:0 0 22px;
     text-wrap:pretty}
 
+  /* ── Phone: the hero's two folded controls ───────────
+     Below 760px the three hero links and the five interest tags are not
+     three buttons and five rows, they are two: "Links" and "Research
+     themes". Both exist in the markup at every width and are shown only
+     on the phone, so the wide hero is exactly as it was.
+     The pair takes the shape of the Preview / All publications row
+     further down the page — one half each, sand and green — and what
+     they open is a sheet of dark glass over a dimmed page: enough to
+     read, not enough to take the screen away from what is behind it. */
+  .xg-duo{display:none;gap:8px;margin-bottom:6px}
+  .xg-duo__btn{
+    flex:1 1 0;min-width:0;appearance:none;border:0;cursor:pointer;
+    font-family:var(--font-sans);font-weight:600;line-height:1.2;
+    font-size:15.4px;border-radius:9999px;padding:10px 14px;
+    display:inline-flex;align-items:center;justify-content:center;gap:7px;
+    white-space:nowrap;-webkit-tap-highlight-color:transparent;
+    transition:transform 220ms var(--wur-ease)}
+  .xg-duo__btn--links{background:#DFD7B8;color:#3D3323}
+  .xg-duo__btn--themes{background:#008A00;color:#FFFFFF}
+  .xg-duo__btn[aria-expanded="true"]{transform:scale(.97)}
+  .xg-duo__chev{
+    flex:none;width:10px;height:10px;
+    border-right:2px solid currentColor;border-bottom:2px solid currentColor;
+    transform:translateY(-2px) rotate(45deg);opacity:.8;
+    transition:transform 200ms ease-out}
+  .xg-duo__btn[aria-expanded="true"] .xg-duo__chev{transform:translateY(2px) rotate(-135deg)}
+
+  /* The dim is half a mask: the page stays legible through it, and the
+     2px blur is what stops the hero's video from pulling the eye back. */
+  .xg-scrim{
+    display:none;position:fixed;inset:0;z-index:55;touch-action:none;
+    background:rgba(10,33,16,.34);
+    backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);
+    opacity:0;transition:opacity 220ms var(--wur-ease)}
+  .xg-scrim[data-open]{display:block}
+  .xg-scrim[data-on]{opacity:1}
+  /* Shape, scale and ink are written by the spring in motion.js — what is
+     here is only where it comes to rest. `overflow:hidden` is load-bearing:
+     it is what keeps the words inside the pebble while it is still one. */
+  .xg-sheet{
+    display:none;position:fixed;z-index:60;overflow:hidden;
+    box-sizing:border-box;padding:8px;
+    background:rgba(17,46,21,.72);color:#FFFFFF;
+    border:1px solid rgba(255,255,255,.22);border-radius:22px;
+    box-shadow:0 18px 44px rgba(6,28,15,.40),inset 0 1px rgba(255,255,255,.18);
+    backdrop-filter:blur(24px) saturate(1.4);
+    -webkit-backdrop-filter:blur(24px) saturate(1.4);
+    transform-origin:var(--xg-origin,left top)}
+  .xg-sheet[data-open]{display:block}
+  .xg-sheet__in{opacity:var(--xg-ink,1)}
+  .xg-sheet__hd{
+    font-family:var(--font-sans);font-size:11px;font-weight:700;
+    letter-spacing:.09em;text-transform:uppercase;
+    color:rgba(255,255,255,.62);padding:6px 10px 8px}
+  .xg-sheet a{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    font-family:var(--font-sans);font-size:15px;font-weight:600;
+    color:#FFFFFF;text-decoration:none;padding:12px;
+    -webkit-tap-highlight-color:transparent}
+  .xg-sheet a + a{border-top:1px solid rgba(255,255,255,.14)}
+  .xg-sheet a .xg-arrow-ico{flex:none;width:18px;height:18px;opacity:.55}
+  .xg-sheet__theme{
+    display:flex;align-items:center;gap:10px;
+    font-family:var(--font-sans);font-size:14px;font-weight:500;line-height:1.4;
+    color:#FFFFFF;padding:9px 12px}
+  .xg-sheet__theme i{flex:none;width:3px;align-self:stretch;border-radius:2px;background:var(--c)}
+
   /* ── Portrait ────────────────────────────────────────
      The same pebble the project photos are cut to, as a static clip —
      no morph, the hero is not a hover surface. */
@@ -446,12 +513,44 @@
 
     /* Navbar. The design system spaces four links and a pill for a wide
        bar; at 390px they wrapped to three rows and ate 199px — a quarter
-       of the first screen — before a word of content. A smaller label and
-       a tighter gap put all five on one row under the brand. */
-    body nav{padding-top:10px !important;padding-bottom:10px !important;row-gap:6px !important}
-    body nav a{font-size:14px !important;white-space:nowrap}
-    body nav > div:last-child{gap:12px !important}
-    body nav a:last-child{padding:0 16px !important}
+       of the first screen — before a word of content.
+       On the phone the bar is the four views and nothing else. The brand
+       goes: it prints the same name the hero sets two lines below it, at
+       a fifth of the size. Contact goes with it — the address is in Links
+       and in the footer, and a fifth item left the four views sharing
+       what was left of the row.
+       What is left spans the width with an even gap between every pair
+       of words, and the one you are on is a deep green capsule that
+       slides to the tab you tap. The bar sticks, so changing page never
+       costs a scroll back up. */
+    body nav{position:sticky;top:0;z-index:30;
+      padding:6px 8px !important;row-gap:0 !important;
+      border-bottom:1px solid var(--border-subtle);
+      box-shadow:0 2px 10px rgba(21,56,22,.06)}
+    body nav > div:first-child{display:none !important}
+    body nav > div:last-child{position:relative;flex:1 1 100%;
+      gap:0 !important;justify-content:space-between}
+    body nav > div:last-child > a:last-child{display:none !important}
+    /* Even gaps, not even cells. Four equal quarters put "Home" adrift in
+       the middle of its share while "Publications" filled its own, so the
+       words sat at four different distances from each other. Sized to the
+       label with the same padding each, and spread by the row, every gap
+       between two words is the same and the line reads as one rhythm. */
+    body nav a{flex:0 1 auto;min-width:0;justify-content:center;position:relative;z-index:1;
+      padding:0 12px !important;
+      font-size:13.5px !important;font-weight:600;white-space:nowrap;
+      border-radius:9999px;-webkit-tap-highlight-color:transparent;
+      transition:color 220ms var(--wur-ease)}
+    body nav a[aria-current="page"]{color:#FFFFFF !important}
+    /* The capsule is the tab's own box, so it is the width of the word
+       plus its padding — a mark, not a banner. Placed from the script. */
+    .xg-navcap{position:absolute;left:0;top:3px;bottom:3px;width:0;
+      background:#004D00;border-radius:9999px;transform-origin:left center;
+      box-shadow:0 2px 8px rgba(0,77,0,.28);pointer-events:none}
+
+    /* The hero's links and interest tags are in the two sheets now. */
+    .wur-hero__actions, .wur-hero__tags{display:none !important}
+    .xg-duo{display:flex !important}
 
     /* Collapsible sections. Closed is the default, so the phone opens on a
        list of what is here and each section costs one tap instead of
@@ -592,12 +691,41 @@
           <a href="mailto:isgexiaojun@gmail.com" class="wur-pill wur-pill--ghost">Email me</a>
           <a href="https://orcid.org/0009-0002-9282-2804" class="wur-pill wur-pill--ghost">ORCID</a>
         </div>
+        <!-- Phone only: the three buttons above and the five tags below
+             fold into these two. Hidden at every other width. -->
+        <div class="xg-duo">
+          <button type="button" class="xg-duo__btn xg-duo__btn--links" aria-expanded="false" aria-controls="xg-sheet-links" data-xg-sheet="xg-sheet-links">Links<span class="xg-duo__chev" aria-hidden="true"></span></button>
+          <button type="button" class="xg-duo__btn xg-duo__btn--themes" aria-expanded="false" aria-controls="xg-sheet-themes" data-xg-sheet="xg-sheet-themes">Research themes<span class="xg-duo__chev" aria-hidden="true"></span></button>
+        </div>
         <div class="wur-hero__tags" style="display:flex;flex-wrap:wrap;gap:0.6em">
           <sc-for list="{{ interestsColored }}" as="it" hint-placeholder-count="5">
             <span class="wur-tag" style="--tag-bg: {{ it.bg }}; --tag-fg: {{ it.fg }}; font-family: var(--font-sans); font-size: 16px; font-weight: 600; line-height: 1.2; border-radius: 12px; padding: 0.5em 1.05em; background: {{ it.bg }}; color: {{ it.fg }}">{{ it.label }}</span>
           </sc-for>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- The two sheets and their dim. Fixed, so they sit outside the hero's
+       own stacking context and the script can place them from the button
+       that opens them. Nothing shows until that happens. -->
+  <div class="xg-scrim" id="xg-scrim"></div>
+
+  <div class="xg-sheet" id="xg-sheet-links" role="dialog" aria-modal="true" aria-label="Links">
+    <div class="xg-sheet__in">
+      <div class="xg-sheet__hd">Links</div>
+      <a href="{{ cvHref }}">Download CV<span class="xg-arrow-ico" aria-hidden="true"></span></a>
+      <a href="mailto:isgexiaojun@gmail.com">Email<span class="xg-arrow-ico" aria-hidden="true"></span></a>
+      <a href="https://orcid.org/0009-0002-9282-2804" target="_blank" rel="noopener">ORCID<span class="xg-arrow-ico" aria-hidden="true"></span></a>
+    </div>
+  </div>
+
+  <div class="xg-sheet" id="xg-sheet-themes" role="dialog" aria-modal="true" aria-label="Research themes">
+    <div class="xg-sheet__in">
+      <div class="xg-sheet__hd">Research themes</div>
+      <sc-for list="{{ interestsColored }}" as="it" hint-placeholder-count="5">
+        <div class="xg-sheet__theme" style="--c: {{ it.bg }}"><i></i>{{ it.label }}</div>
+      </sc-for>
     </div>
   </div>
 
