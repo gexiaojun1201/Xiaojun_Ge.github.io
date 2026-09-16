@@ -538,14 +538,249 @@
     fitPillRows();
   }
 
-  narrow.addEventListener('change', refreshFolds);
+  narrow.addEventListener('change', function () {
+    refreshFolds();
+    closeSheet(true);
+    capW = 0;
+    placeCap(false);
+  });
 
   /* Rotation and the address bar collapsing both change the column the
      pair has to fit in. One frame's worth of coalescing is enough. */
   var fitFrame = 0;
   window.addEventListener('resize', function () {
     if (fitFrame) return;
-    fitFrame = requestAnimationFrame(function () { fitFrame = 0; refreshFolds(); });
+    fitFrame = requestAnimationFrame(function () {
+      fitFrame = 0;
+      refreshFolds();
+      capW = 0;
+      placeCap(false);
+    });
+  });
+
+  /* ── 5. Phone chrome ────────────────────────────────────────────────
+     Two things that exist only below 760px, both of which have to be
+     wired from here: the navbar ships from the design system, so its
+     current-view capsule has to be added to it, and the hero's two
+     sheets are placed from the button they grow out of, which is a
+     measurement, not a stylesheet. Above 760px neither runs. */
+
+  function pageZoom() {
+    var z = parseFloat(getComputedStyle(document.documentElement)
+      .getPropertyValue('--page-zoom'));
+    return z > 0 ? z : 1;
+  }
+
+  /* ── 5a. The navbar capsule ─────────────────────────────────────── */
+
+  var capX = 0, capW = 0;
+
+  /* The bar is brand + row; the row's last anchor is the Contact pill,
+     which the phone hides, so the views are everything before it. */
+  function navBits() {
+    var nav = document.querySelector('body nav');
+    if (!nav) return null;
+    var row = nav.lastElementChild;
+    if (!row || row === nav.firstElementChild) return null;
+    var links = [].slice.call(row.querySelectorAll('a'));
+    links.pop();
+    if (!links.length) return null;
+    var cap = row.querySelector('.xg-navcap');
+    if (!cap) {
+      cap = document.createElement('span');
+      cap.className = 'xg-navcap';
+      cap.setAttribute('aria-hidden', 'true');
+      row.insertBefore(cap, row.firstChild);
+      capW = 0;
+    }
+    return { row: row, links: links, cap: cap };
+  }
+
+  function placeCap(animate) {
+    if (!narrow.matches) return;
+    var bits = navBits();
+    if (!bits) return;
+
+    var hash = window.location.hash || '#home';
+    var active = bits.links[0];
+    bits.links.forEach(function (a) {
+      a.removeAttribute('aria-current');
+      if ((a.getAttribute('href') || '') === hash) active = a;
+    });
+    active.setAttribute('aria-current', 'page');
+
+    /* The tabs are sized to their labels and spread by the row, so the
+       capsule is simply the tab's own box. */
+    var w = active.offsetWidth;
+    var x = active.offsetLeft;
+    if (!w) return;
+
+    var fromX = capW ? capX : x, fromW = capW || w;
+    bits.cap.style.width = w + 'px';
+    bits.cap.style.transform = 'translateX(' + x + 'px)';
+    capX = x; capW = w;
+    if (!animate || reduced.matches || (fromX === x && fromW === w)) return;
+
+    /* It stretches towards where it is going and settles back — one thing
+       moving across the bar, rather than a box repainted somewhere else. */
+    bits.cap.animate([
+      { transform: 'translateX(' + fromX + 'px) scaleX(' + (fromW / w) + ') scaleY(1)' },
+      { transform: 'translateX(' + ((fromX + x) / 2) + 'px) scaleX(' +
+                   ((fromW / w) * 1.14) + ') scaleY(.88)', offset: .45 },
+      { transform: 'translateX(' + x + 'px) scaleX(1) scaleY(1)' }
+    ], { duration: 460, easing: 'cubic-bezier(.34,1.24,.5,1)' });
+  }
+
+  /* ── 5b. The hero sheets ────────────────────────────────────────────
+     Opening is a spring, not a sequence of poses: one value runs from 0
+     to 1 through the same integrator the photo outlines morph on, and the
+     pebble, the scale, the stretch and the ink are each read off it every
+     frame. That is what makes it flow — nothing here waits for the step
+     before it to finish.
+     Underdamped on purpose (k 230 / c 15 is a damping ratio near .49), so
+     it overshoots by about a sixth and comes back. Closing takes the same
+     spring with the damping raised past critical: a sheet that bounced on
+     its way out would be asking to be looked at as it left. */
+  var SHEET = { k: 230, c: 15, cOut: 33, mass: 1 };
+  /* The portrait's pebble as eight radii: four shares of the width, then
+     four of the height. */
+  var BLOB = [.58, .42, .46, .54, .54, .58, .42, .46];
+  var sheetEl = null, sheetTo = 0, sheetVal = 0, sheetVel = 0;
+  var sheetRaf = 0, sheetPrev = 0, sheetAcc = 0;
+
+  function paintSheet(sheet, value, v) {
+    var t = value < 0 ? 0 : value;
+    var w = sheet.offsetWidth, h = sheet.offsetHeight;
+    /* The corners hold the pebble a beat longer than the box holds its
+       size — the curve is slow to leave the blob and quick to finish — so
+       the outline is still flowing while the spring bounces. */
+    var u = Math.pow(Math.max(0, Math.min(1, t)), 1.6);
+    var r = [], i;
+    for (i = 0; i < 8; i++) {
+      var from = BLOB[i] * (i < 4 ? w : h);
+      r.push((from + (22 - from) * u).toFixed(1) + 'px');
+    }
+    sheet.style.borderRadius =
+      r[0] + ' ' + r[1] + ' ' + r[2] + ' ' + r[3] + ' / ' +
+      r[4] + ' ' + r[5] + ' ' + r[6] + ' ' + r[7];
+
+    /* Jelly: the faster it moves the wider and shorter it is, so it
+       stretches on the way out and squashes on the way back. */
+    var jelly = Math.max(-1, Math.min(1, v / 7)) * .1;
+    var scale = .26 + .74 * t;
+    /* The overshoot is free to grow downwards but not sideways: the sheet
+       is already 16px from each edge, so an unclamped bounce put its
+       corners through them. Held to the room it has, the spring reads as
+       a bounce rather than as a card hitting a wall. */
+    var room = (window.innerWidth / pageZoom() - 8) / w;
+    var sx = Math.min(scale * (1 + jelly), room);
+    sheet.style.transform =
+      'translateY(' + ((1 - t) * -16).toFixed(2) + 'px) scale(' +
+      sx.toFixed(4) + ',' + (scale * (1 - jelly)).toFixed(4) + ')';
+    sheet.style.opacity = Math.min(1, Math.max(0, t * 2.2)).toFixed(3);
+    /* The words arrive behind the shape, so the pebble is a pebble before
+       it is a list. */
+    sheet.style.setProperty('--xg-ink',
+      Math.min(1, Math.max(0, (t - .3) * 2.2)).toFixed(3));
+  }
+
+  function sheetFrame(now) {
+    if (!sheetPrev) sheetPrev = now;
+    sheetAcc += Math.min(now - sheetPrev, 64) / 1000;
+    sheetPrev = now;
+    var damping = sheetTo ? SHEET.c : SHEET.cOut;
+    while (sheetAcc >= STEP) {
+      var next = integrate(sheetVal, sheetVel, sheetTo, STEP,
+                           SHEET.k, damping, SHEET.mass);
+      sheetVal = next[0]; sheetVel = next[1];
+      sheetAcc -= STEP;
+    }
+    if (sheetEl) paintSheet(sheetEl, sheetVal, sheetVel);
+    if (Math.abs(sheetVal - sheetTo) < .002 && Math.abs(sheetVel) < .02) {
+      sheetVal = sheetTo; sheetVel = 0;
+      sheetRaf = 0; sheetPrev = 0; sheetAcc = 0;
+      if (sheetEl) {
+        paintSheet(sheetEl, sheetVal, 0);
+        if (!sheetTo) hideSheet();
+      }
+      return;
+    }
+    sheetRaf = requestAnimationFrame(sheetFrame);
+  }
+
+  function hideSheet() {
+    var scrim = document.getElementById('xg-scrim');
+    if (sheetEl) sheetEl.removeAttribute('data-open');
+    if (scrim) { scrim.removeAttribute('data-on'); scrim.removeAttribute('data-open'); }
+    sheetEl = null;
+  }
+
+  function closeSheet(instant) {
+    if (!sheetEl) return;
+    var btn = document.querySelector('[data-xg-sheet="' + sheetEl.id + '"]');
+    if (btn) btn.setAttribute('aria-expanded', 'false');
+    var scrim = document.getElementById('xg-scrim');
+    if (scrim) scrim.removeAttribute('data-on');
+    if (instant || reduced.matches) {
+      if (sheetRaf) { cancelAnimationFrame(sheetRaf); sheetRaf = 0; }
+      sheetVal = 0; sheetVel = 0; sheetTo = 0; sheetPrev = 0; sheetAcc = 0;
+      hideSheet();
+      return;
+    }
+    sheetTo = 0;
+    if (!sheetRaf) { sheetPrev = 0; sheetAcc = 0; sheetRaf = requestAnimationFrame(sheetFrame); }
+  }
+
+  function openSheetFor(btn) {
+    var sheet = document.getElementById(btn.getAttribute('data-xg-sheet'));
+    if (!sheet) return;
+    var again = sheetEl === sheet;
+    closeSheet(true);
+    if (again) return;
+
+    var scrim = document.getElementById('xg-scrim');
+    var zoom = pageZoom();
+    var row = btn.parentNode.getBoundingClientRect();
+    var box = btn.getBoundingClientRect();
+    /* Both edges come from the row the buttons are in, so the sheet lines
+       up with them whatever the column is doing. */
+    sheet.style.left = Math.round(row.left / zoom) + 'px';
+    sheet.style.width = Math.round(row.width / zoom) + 'px';
+    sheet.style.top = Math.round(box.bottom / zoom + 10) + 'px';
+    sheet.style.setProperty('--xg-origin',
+      Math.round((box.left - row.left + box.width / 2) / zoom) + 'px top');
+
+    if (scrim) { scrim.setAttribute('data-open', ''); }
+    sheet.setAttribute('data-open', '');
+    btn.setAttribute('aria-expanded', 'true');
+    sheetEl = sheet;
+    sheetVal = 0; sheetVel = 0; sheetTo = 1;
+    paintSheet(sheet, 0, 0);
+    requestAnimationFrame(function () { if (scrim) scrim.setAttribute('data-on', ''); });
+    if (reduced.matches) { sheetVal = 1; paintSheet(sheet, 1, 0); return; }
+    if (!sheetRaf) { sheetPrev = 0; sheetAcc = 0; sheetRaf = requestAnimationFrame(sheetFrame); }
+  }
+
+  function setupDuoBtn(btn) {
+    btn.addEventListener('click', function () {
+      if (!narrow.matches) return;
+      openSheetFor(btn);
+    });
+  }
+
+  window.addEventListener('hashchange', function () {
+    closeSheet(true);
+    placeCap(true);
+  });
+  window.addEventListener('scroll', function () {
+    if (sheetEl) closeSheet();
+  }, { passive: true });
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') closeSheet();
+  });
+  document.addEventListener('click', function (event) {
+    if (!sheetEl) return;
+    if (event.target.id === 'xg-scrim') closeSheet();
   });
 
   function shotsSignature(root) {
@@ -571,6 +806,14 @@
       newFolds[f].setAttribute('data-wur-fold', '');
       setupFold(newFolds[f]);
     }
+    var duo = document.querySelectorAll('[data-xg-sheet]:not([data-xg-on])');
+    for (var b = 0; b < duo.length; b++) {
+      duo[b].setAttribute('data-xg-on', '');
+      setupDuoBtn(duo[b]);
+    }
+    /* The runtime rebuilds the navbar on a route change, taking the
+       capsule and the current-view flag with it. */
+    placeCap(false);
     /* A marker attribute is not enough here: when one modal replaces
        another the runtime keeps the same element and only swaps the slot
        data, so the check has to be on content, not on "seen before". */
