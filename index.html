@@ -264,18 +264,101 @@
      only two things in it, so centring the row centres them on each other. */
   .wur-fold__head > h2{flex:1 1 auto;min-width:0}
 
-  /* The author line under a modal title is the one line on the page that
-     says where I sit on the paper, and set as muted body copy it read as
-     a caption. A capsule the width of the words lifts it out of the prose
-     without competing with the serif title above — the blue is the one
-     colour on the page that is neither the greens of the chrome nor the
-     sand of the card capsules, so it is not mistaken for either. */
+  /* The row under a modal title, carrying whatever places the work: on a
+     paper the one line saying where I sit on the author list, on a
+     project the fields it belongs to. Both are the same kind of line —
+     everything else in the card is what the work found, this is what it
+     is — so they take the same shape rather than two.
+     Set as muted body copy it read as a caption; a capsule the width of
+     the words lifts it out of the prose without competing with the serif
+     title above. The blue is the one colour on the page that is neither
+     the greens of the chrome nor the sand of the card capsules, so it is
+     not mistaken for either.
+     Three fields per project, each a word or two: the row is allowed to
+     wrap, and two lines is where it stops being a line under the title
+     and starts being a block of its own. A fourth field, or one long
+     enough to hold a line by itself, breaks that on a 390px screen. */
+  .xg-mtags{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px}
   .xg-authorpill{
     display:inline-block;box-sizing:border-box;max-width:100%;
     font-family:var(--font-sans);font-size:16px;font-weight:600;line-height:1.45;
     color:#153816;background:#B3D2F6;
-    border-radius:9999px;padding:6px 15px;margin:0 0 22px;
+    border-radius:9999px;padding:6px 15px;
     text-wrap:pretty}
+
+  /* ── Detail modal ────────────────────────────────────
+     What a card opens into. The wide layout is set the way a journal
+     sets a paper: no boxes, hairlines between sections, and the section
+     name in a column of its own to the left of the text it names. The
+     names are the page's pink — the same capsule the "Selected work"
+     and "Background" eyebrows wear — so the one warm colour on the page
+     marks the same thing everywhere: this is what you are looking at.
+     The phone takes the same content apart differently; see the scale
+     at the bottom of this stylesheet. */
+  .wur-scrim{
+    position:fixed;inset:0;z-index:100;
+    display:flex;align-items:center;justify-content:center;
+    padding:clamp(16px,4vw,40px);
+    background:rgba(20,25,20,0.45);
+    backdrop-filter:blur(2.5px);-webkit-backdrop-filter:blur(2.5px)}
+  .wur-modal{
+    width:100%;max-width:820px;box-sizing:border-box;
+    background:var(--bg-surface);border:1px solid var(--border-subtle);
+    border-radius:var(--radius-card);box-shadow:0 24px 60px rgba(21,56,22,0.25);
+    overflow-y:auto;overflow-x:hidden;padding:44px 48px 40px}
+  .xg-mhead{
+    display:flex;align-items:flex-start;justify-content:space-between;
+    gap:24px;margin-bottom:10px}
+  .xg-mmeta{
+    font-family:var(--font-sans);font-size:13px;font-weight:700;
+    letter-spacing:0.11em;text-transform:uppercase;color:var(--color-primary)}
+  .xg-mclose{
+    font-family:var(--font-sans);font-size:26px;line-height:1;flex-shrink:0;
+    color:var(--text-muted);cursor:pointer;padding:2px 6px}
+  /* 400, not the card's 700: at 35px the serif carries the line on its
+     own, and the bold weight next to a pink capsule read as two things
+     shouting. */
+  .xg-mtitle{
+    font-family:var(--font-serif);font-size:35px;font-weight:400;line-height:1.16;
+    color:var(--pine-green);margin:0 0 16px;text-wrap:pretty}
+  .xg-mbody{display:flex;flex-direction:column}
+  .xg-msec{
+    display:grid;grid-template-columns:170px 1fr;gap:0 24px;
+    border-top:1px solid var(--border-subtle);padding-top:20px;margin-top:20px}
+  /* `start` on both axes: a grid item stretches by default, and the
+     capsule has to be the size of its words, not of the section beside
+     it. */
+  .xg-mlab{
+    grid-column:1;justify-self:start;align-self:start;margin-top:3px;
+    font-family:var(--font-sans);font-size:11px;font-weight:700;line-height:1.2;
+    letter-spacing:0.08em;text-transform:uppercase;white-space:nowrap;
+    color:#153816;background:#FFA8A8;border-radius:9999px;padding:6px 13px}
+  .xg-msec > :not(.xg-mlab){grid-column:2}
+  .xg-mtext{
+    font-family:var(--font-sans);font-size:17px;line-height:1.72;
+    color:var(--text-primary);margin:0;text-wrap:pretty}
+  /* A dot in the house green, set as a glyph rather than a drawn circle.
+     The drawn version was the first try — under the page's fractional
+     zoom every second one landed on a different sub-pixel row and
+     rasterised a shade heavier, so eight bullets read as two weights. A
+     glyph is antialiased the same way at any offset. */
+  .xg-mlist{margin:0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:7px}
+  .xg-mlist li{
+    position:relative;padding-left:19px;
+    font-family:var(--font-sans);font-size:17px;line-height:1.7;
+    color:var(--text-primary);text-wrap:pretty}
+  .xg-mlist li::before{
+    content:"\2022";position:absolute;left:1px;top:0;
+    color:var(--color-primary)}
+  /* The chevron exists in the markup at every width and is shown only on
+     the phone, where the sections fold. */
+  .xg-mchev{display:none}
+  .xg-mlinks{
+    display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+    border-top:1px solid var(--border-subtle);padding-top:22px;margin-top:20px}
+  .xg-mdoi{
+    font-family:var(--font-sans);font-size:15px;color:var(--text-muted);
+    min-width:0;max-width:100%;overflow-wrap:break-word;word-break:break-word}
 
   /* ── Phone: the hero's two folded controls ───────────
      Below 760px the three hero links and the five interest tags are not
@@ -492,8 +575,75 @@
        goes somewhere, and a tap has no hover. The whole row is the link
        here, so the glyph only crowded the name. */
     .xg-advisor__arrow{display:none !important}
-    .xg-authorpill{font-size:14px !important;padding:5px 12px !important;
-      margin-bottom:16px !important}
+
+    /* Detail modal. The wide layout puts every section on the page at
+       once, which on a phone is four screens of scrolling before the
+       reader knows what is in the card. Here the identity — venue, title,
+       where I sit on the paper — stays put and the sections become rows
+       you open, the first one already open so nothing is hidden by
+       surprise. A whole publication then costs about half a screen.
+       The blue author capsule stays: it is the one line that says my
+       position on the paper, and it is the same capsule at both widths.
+       The pink section capsules do not come along — at 11px they would
+       be four warm blocks stacked down a 358px column, where the wide
+       layout has them in a column of their own. */
+    .wur-scrim{padding:10px}
+    .wur-modal{border-radius:18px;padding:16px;max-height:92vh}
+    .xg-mhead{gap:10px;margin-bottom:9px}
+    .xg-mmeta{font-size:11.5px;letter-spacing:0.05em;line-height:1.45;
+      color:var(--text-muted)}
+    .xg-mclose{font-size:21px;padding:0 4px}
+    .xg-mtitle{font-size:19px;font-weight:700;line-height:1.28;margin:0 0 9px}
+    /* Room for the open section's wash, which is painted 8px past its
+       own edge and would otherwise run into the line above it. */
+    .xg-mbody{padding-top:8px}
+    .xg-mtags{gap:6px;margin-bottom:16px}
+    .xg-authorpill{font-size:14px !important;padding:5px 12px !important}
+    .xg-msec{
+      display:block;border-top:1px solid var(--border-subtle);
+      padding-top:0;margin-top:0;border-radius:8px;
+      transition:background-color 220ms var(--wur-ease)}
+    .xg-msec:first-child{border-top:0}
+    /* `place-self` back to auto: the capsule's `start` is what keeps it
+       the width of its words in the wide layout's grid, and Chrome honours
+       it in block layout too — left on, the row shrank to its label and
+       the chevron sat against the words instead of the far edge. */
+    .xg-mlab{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      place-self:auto;margin-top:0;white-space:normal;padding:13px 2px;
+      background:transparent;border-radius:0;color:var(--color-primary);
+      font-size:11px;letter-spacing:0.09em;
+      cursor:pointer;-webkit-tap-highlight-color:transparent}
+    .xg-mchev{
+      display:block;flex:none;width:8px;height:8px;
+      border-right:2px solid currentColor;border-bottom:2px solid currentColor;
+      transform:translateY(-2px) rotate(45deg);opacity:0.65;
+      transition:transform 180ms ease-out}
+    .xg-msec.is-open .xg-mchev{transform:translateY(2px) rotate(-135deg)}
+    .xg-msec:not(.is-open) > :not(.xg-mlab){display:none}
+    .xg-msec > :not(.xg-mlab){padding-bottom:15px}
+    /* The open section takes the wash an open About or Advisors takes on
+       the home page, painted past its own edges with a spread shadow
+       rather than padding, so opening one moves nothing around it. The
+       hairline it shares with its neighbour is what the wash replaces. */
+    .xg-msec.is-open{
+      background:rgba(0,138,0,.07);
+      box-shadow:0 0 0 8px rgba(0,138,0,.07);
+      border-top-color:transparent}
+    .xg-msec.is-open + .xg-msec{border-top-color:transparent}
+    .xg-mtext,.xg-mlist li{font-size:14px;line-height:1.6}
+    .xg-mlist{gap:6px}
+    .xg-mlist li{padding-left:16px}
+    /* Two to a row. `1 1` let a third tile alone on the last row grow to
+       the full width and print one photo at twice the size of the two
+       above it. */
+    .wur-shots{gap:8px;padding-block:4px}
+    .wur-shot{flex:0 1 calc(50% - 4px);max-width:calc(50% - 4px)}
+    .wur-shot__cap{font-size:10.5px}
+    .xg-mlinks{margin-top:0;padding-top:14px;gap:10px}
+    .xg-mlinks .wur-pill{font-size:13px;padding:9px 16px;min-height:0}
+    .xg-mdoi{font-size:11.5px}
+
     .wur-edcard{padding:16px 18px !important}
     .wur-edcard > div:nth-child(1){font-size:13px !important;margin-bottom:6px !important}
     .wur-edcard > div:nth-child(2){font-size:17px !important}
@@ -933,50 +1083,56 @@
 <x-import component-from-global-scope="WURDesignSystem_fcf266.Footer" from="" brand="Xiaojun Ge" columns="{{ footerColumns }}" hint-size="100%,240px"></x-import>
 
 <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
-<div onClick="{{ closeModal }}" class="wur-scrim" style="position:fixed;inset:0;background:rgba(20,25,20,0.45);backdrop-filter:blur(2.5px);-webkit-backdrop-filter:blur(2.5px);display:flex;align-items:center;justify-content:center;padding:clamp(16px,4vw,40px);z-index:100">
-  <div onClick="{{ stop }}" class="wur-modal" style="background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-card);box-shadow:0 24px 60px rgba(21,56,22,0.25);max-width:780px;width:100%;overflow-y:auto;overflow-x:hidden;padding:clamp(24px,4vw,40px)">
-    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-bottom:14px">
-      <div style="font-family:var(--font-sans);font-size:16px;font-weight:600;color:var(--text-muted)">{{ modalMeta }}</div>
-      <div onClick="{{ closeModal }}" style="font-family:var(--font-sans);font-size:26px;line-height:1;color:var(--text-muted);cursor:pointer;padding:2px 6px;flex-shrink:0">×</div>
+<div onClick="{{ closeModal }}" class="wur-scrim">
+  <div onClick="{{ stop }}" class="wur-modal">
+    <div class="xg-mhead">
+      <div class="xg-mmeta">{{ modalMeta }}</div>
+      <div onClick="{{ closeModal }}" class="xg-mclose">×</div>
     </div>
-    <h2 style="font-family:var(--font-serif);font-size:28px;line-height:1.25;font-weight:700;color:var(--pine-green);margin:0 0 12px">{{ modalTitle }}</h2>
-    <sc-if value="{{ modalAuthors }}" hint-placeholder-val="{{ false }}">
-      <p class="xg-authorpill">{{ modalAuthors }}</p>
+    <h2 class="xg-mtitle">{{ modalTitle }}</h2>
+    <sc-if value="{{ modalHasPills }}" hint-placeholder-val="{{ false }}">
+      <div class="xg-mtags">
+        <sc-for list="{{ modalPills }}" as="t" hint-placeholder-count="3">
+          <span class="xg-authorpill">{{ t }}</span>
+        </sc-for>
+      </div>
     </sc-if>
-    <div style="display:flex;flex-direction:column;gap:22px">
+    <div class="xg-mbody">
+      <!-- `is-open` is what the phone reads to unfold a section; the wide
+           layout has no use for it and shows every section either way. -->
       <sc-for list="{{ modalSections }}" as="s" hint-placeholder-count="3">
-        <div>
-          <div style="font-family:var(--font-sans);font-size:14px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-primary);margin-bottom:8px">{{ s.label }}</div>
+        <div class="xg-msec {{ s.openClass }}">
+          <div class="xg-mlab" onClick="{{ s.toggle }}">{{ s.label }}<span class="xg-mchev" aria-hidden="true"></span></div>
           <sc-if value="{{ s.hasText }}" hint-placeholder-val="{{ true }}">
-            <p style="font-family:var(--font-sans);font-size:17px;line-height:1.7;color:var(--text-primary);margin:0;text-wrap:pretty">{{ s.text }}</p>
+            <p class="xg-mtext">{{ s.text }}</p>
           </sc-if>
           <sc-if value="{{ s.hasBullets }}" hint-placeholder-val="{{ false }}">
-            <ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:7px">
+            <ul class="xg-mlist">
               <sc-for list="{{ s.bullets }}" as="b" hint-placeholder-count="3">
-                <li style="font-family:var(--font-sans);font-size:17px;line-height:1.6;color:var(--text-primary);text-wrap:pretty">{{ b }}</li>
+                <li>{{ b }}</li>
               </sc-for>
             </ul>
           </sc-if>
         </div>
       </sc-for>
-    </div>
-    <sc-if value="{{ modalHasPhotos }}" hint-placeholder-val="{{ false }}">
-      <div style="margin-top:26px">
-        <div style="font-family:var(--font-sans);font-size:14px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-primary);margin-bottom:10px">Field &amp; lab photos</div>
-        <div class="wur-shots">
-          <sc-for list="{{ modalPhotos }}" as="ph" hint-placeholder-count="3">
-            <figure class="wur-shot" style="margin:0">
-              <button type="button" class="wur-shot__btn" data-photo="{{ ph.src }}" data-caption="{{ ph.label }}" data-shape="{{ ph.shape }}" aria-label="{{ ph.zoomLabel }}"></button>
-              <figcaption class="wur-shot__cap">{{ ph.label }}</figcaption>
-            </figure>
-          </sc-for>
+      <sc-if value="{{ modalHasPhotos }}" hint-placeholder-val="{{ false }}">
+        <div class="xg-msec {{ modalPhotosOpen }}">
+          <div class="xg-mlab" onClick="{{ togglePhotos }}">Field &amp; lab photos<span class="xg-mchev" aria-hidden="true"></span></div>
+          <div class="wur-shots">
+            <sc-for list="{{ modalPhotos }}" as="ph" hint-placeholder-count="3">
+              <figure class="wur-shot" style="margin:0">
+                <button type="button" class="wur-shot__btn" data-photo="{{ ph.src }}" data-caption="{{ ph.label }}" data-shape="{{ ph.shape }}" aria-label="{{ ph.zoomLabel }}"></button>
+                <figcaption class="wur-shot__cap">{{ ph.label }}</figcaption>
+              </figure>
+            </sc-for>
+          </div>
         </div>
-      </div>
-    </sc-if>
+      </sc-if>
+    </div>
     <sc-if value="{{ modalLink }}" hint-placeholder-val="{{ false }}">
-      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:26px;padding-top:22px">
+      <div class="xg-mlinks">
         <a href="{{ modalLink }}" target="_blank" rel="noopener" class="wur-pill wur-pill--primary">View paper <span aria-hidden="true">→</span></a>
-        <span style="font-family:var(--font-sans);font-size:15px;color:var(--text-muted);min-width:0;max-width:100%;overflow-wrap:break-word;word-break:break-word">{{ modalDoi }}</span>
+        <span class="xg-mdoi">{{ modalDoi }}</span>
       </div>
     </sc-if>
   </div>
@@ -1109,7 +1265,7 @@ const MANUSCRIPTS = [
 ];
 
 const ONGOING = [
-  {id:'ong-0', theme:'water', contributor:'First author', period:'Ongoing', statusLabel:'Manuscript in preparation', title:'Antibiotic effects on nitrogen transformation in constructed wetland sediments',
+  {id:'ong-0', fields:['Microbial ecology', 'Nitrogen cycling', 'Wetlands'], theme:'water', contributor:'First author', period:'Ongoing', statusLabel:'Manuscript in preparation', title:'Antibiotic effects on nitrogen transformation in constructed wetland sediments',
    focus:'How short- and long-term antibiotic exposure alters microbially mediated nitrogen transformation in surface-flow constructed wetland sediment.',
    overview:'Surface-flow constructed wetlands are a low-cost polishing step for rural and aquaculture wastewater, but the same water carries antibiotic residues into the sediment where nitrogen removal actually takes place. This project exposes wetland sediment to single-dose and repeated antibiotic loading and tracks how the microbially mediated nitrogen reduction–oxidation processes respond over time, so that treatment performance can be interpreted alongside the contaminant load the wetland receives.',
    role:[
@@ -1122,7 +1278,7 @@ const ONGOING = [
      'Manuscript in preparation, first author.',
      'Paired rate and microbial community dataset linking antibiotic loading to shifts in the nitrogen removal pathway.'
    ]},
-  {id:'ong-1', theme:'biobased', contributor:'First author', period:'Ongoing', statusLabel:'Submitted to Soil and Tillage Research', title:'Deep vertical rotary tillage and soil aggregate stability in Latosolic Red Soil',
+  {id:'ong-1', fields:['Soil physics', 'Aggregate stability', 'Tillage'], theme:'biobased', contributor:'First author', period:'Ongoing', statusLabel:'Submitted to Soil and Tillage Research', title:'Deep vertical rotary tillage and soil aggregate stability in Latosolic Red Soil',
    focus:'Aggregate stability and fragmentation mechanisms of Latosolic Red Soil under deep vertical rotary tillage.',
    overview:'Latosolic Red Soil under long-term sugarcane cultivation develops a compacted plough pan that limits rooting depth and infiltration. Deep vertical rotary tillage breaks that layer, but it also reworks the soil structure that holds the surface together. This project measures how aggregate stability responds to the practice and which fragmentation mechanism dominates afterwards.',
    role:[
@@ -1135,7 +1291,7 @@ const ONGOING = [
      'Submitted to Soil and Tillage Research, first author.',
      'Aggregate stability dataset for Latosolic Red Soil under deep vertical rotary tillage.'
    ]},
-  {id:'ong-2', theme:'health', contributor:'Third author', period:'Ongoing', statusLabel:'In revision at Journal of Hazardous Materials', title:'Biochar for heavy metal risk mitigation in forest soil remediation',
+  {id:'ong-2', fields:['Soil remediation', 'Trace metals', 'Biochar'], theme:'health', contributor:'Third author', period:'Ongoing', statusLabel:'In revision at Journal of Hazardous Materials', title:'Biochar for heavy metal risk mitigation in forest soil remediation',
    focus:'Biochar addition during sludge amelioration of forest soil, evaluating differential heavy metal loss across multiple media.',
    overview:'Sewage sludge improves the fertility of degraded forest soil but brings heavy metals with it. This project adds biochar during sludge amelioration and evaluates whether it reduces metal migration, comparing losses across surface runoff, interflow, and eroded sediment so that the mitigation effect is judged on the whole transport system rather than one medium.',
    role:[
@@ -1147,7 +1303,7 @@ const ONGOING = [
      'In revision at Journal of Hazardous Materials, third author.',
      'Evidence on whether biochar addition lowers heavy metal risk during sludge reuse in forest soil.'
    ]},
-  {id:'ong-3', theme:'food', contributor:'First author', period:'Ongoing', statusLabel:'Manuscript in preparation', title:'Tillage effects on sheet erosion in sugarcane cultivation systems',
+  {id:'ong-3', fields:['Soil erosion', 'Tillage', 'Crop systems'], theme:'food', contributor:'First author', period:'Ongoing', statusLabel:'Manuscript in preparation', title:'Tillage effects on sheet erosion in sugarcane cultivation systems',
    focus:'Sheet erosion processes during sugarcane growth in Latosolic Red Soil cultivation areas under different tillage regimes.',
    overview:'Sugarcane fields in Latosolic Red Soil areas lose most of their soil to sheet erosion in the early growth stages, before the canopy closes. This project follows sheet erosion across the full growth cycle under different tillage regimes to locate the window in which protection matters most and to test whether deep vertical rotary tillage widens or narrows it.',
    role:[
@@ -1162,7 +1318,7 @@ const ONGOING = [
 ];
 
 const FINISHED = [
-  {id:'proj-0', theme:'water', contributor:'Co-first author', period:'2024–2025', statusLabel:'Finished', title:'Nitrogen and Phosphorus Runoff from Forest Soils',
+  {id:'proj-0', fields:['Hydrology', 'Nutrient transport', 'Water quality'], theme:'water', contributor:'Co-first author', period:'2024–2025', statusLabel:'Finished', title:'Nitrogen and Phosphorus Runoff from Forest Soils',
    focus:'Nutrient loss pathways and ecological risk assessment in sludge-amended eucalyptus plantations.',
    overview:'Sludge-amended eucalyptus plantation soils were put through extreme simulated rainfall to establish where nitrogen and phosphorus actually leave the slope. The project separated surface runoff, interflow, and sediment as transport pathways, measured how nutrients are enriched in different sediment particle sizes, and turned the results into sludge application strategies that keep ecological risk within an acceptable range.',
    role:[
@@ -1176,7 +1332,7 @@ const FINISHED = [
      'Quantified N and P transport across three pathways and identified particle-size dependent enrichment in sediment.',
      'Derived sludge application strategies that limit nutrient export under extreme rainfall.'
    ]},
-  {id:'proj-1', theme:'climate', contributor:'First author', period:'2023–2024', statusLabel:'Finished', title:'Agricultural Carbon Budget Assessment',
+  {id:'proj-1', fields:['Carbon accounting', 'Greenhouse gases', 'Agriculture'], theme:'climate', contributor:'First author', period:'2023–2024', statusLabel:'Finished', title:'Agricultural Carbon Budget Assessment',
    focus:'Long-term agricultural carbon emissions, sequestration, and net carbon sink dynamics in Guangxi Province.',
    overview:'A provincial-scale carbon account for Guangxi agriculture covering 1978 to 2021. Emission factor methods were applied to agricultural inputs, rice cultivation, and machinery use, and carbon sequestration parameters to crop production, giving a 43-year time series of the net carbon sink and the factors that moved it.',
    role:[
@@ -1190,7 +1346,7 @@ const FINISHED = [
      '43-year time series of agricultural carbon emissions, sequestration, and net carbon sink for Guangxi.',
      'Fertilizer input, rice cultivation, crop yield, and mechanization identified as dominant drivers.'
    ]},
-  {id:'proj-2', theme:'food', contributor:'First author', period:'2021–2022', statusLabel:'Finished', title:'Agricultural Non-Point Source Pollution',
+  {id:'proj-2', fields:['Water quality', 'Source apportionment', 'Geospatial analysis'], theme:'food', contributor:'First author', period:'2021–2022', statusLabel:'Finished', title:'Agricultural Non-Point Source Pollution',
    focus:'Spatial-temporal patterns and source apportionment of agricultural pollution in Guangdong Province.',
    overview:'Two decades of agricultural non-point source pollution in Guangdong Province, reconstructed as COD, total nitrogen, and total phosphorus loads by source category. The project resolved how those loads shifted between prefectures and between sources from 1999 to 2019, giving a provincial baseline for diffuse pollution control.',
    role:[
@@ -1204,7 +1360,7 @@ const FINISHED = [
      '20-year load inventory for COD, TN, and TP by source category.',
      'Livestock breeding and rapidly expanding aquaculture identified as the major contributors.'
    ]},
-  {id:'proj-3', theme:'health', contributor:'Fourth author', period:'2021–2022', statusLabel:'Finished', title:'Heavy Metal Migration and Biochar Remediation',
+  {id:'proj-3', fields:['Soil remediation', 'Trace metals', 'Rainfall simulation'], theme:'health', contributor:'Fourth author', period:'2021–2022', statusLabel:'Finished', title:'Heavy Metal Migration and Biochar Remediation',
    focus:'Cadmium loss characteristics and biochar immobilization effects under simulated rainfall.',
    overview:'Cadmium export from acidic red soil was measured under simulated rainfall at two intensities, with biochar added at 0 to 7% to test immobilization. Both dissolved and sediment-bound Cd loss were tracked, so the project could identify the application rate beyond which biochar stops protecting the system and starts aggravating erosion.',
    role:[
@@ -1273,7 +1429,9 @@ function applyZoom(z) {
 }
 
 class Component extends DCLogic {
-  state = { view: 'home', modalId: null, zoom: readZoom() };
+  /* `openSec` is which section of the open card is unfolded — the phone
+     shows one at a time, -1 for none. The wide layout ignores it. */
+  state = { view: 'home', modalId: null, openSec: 0, zoom: readZoom() };
 
   lock(on) { document.body.style.overflow = on ? 'hidden' : ''; }
 
@@ -1327,7 +1485,7 @@ class Component extends DCLogic {
     this.route = () => {
       const h = (window.location.hash || '').replace('#','');
       const known = h && !!this.findItem(h);
-      if (known) { this.setState({modalId: h}); this.lock(true); }
+      if (known) { this.setState({modalId: h, openSec: 0}); this.lock(true); }
       else if (VIEWS.indexOf(h) >= 0) { this.setState({view: h, modalId: null}); this.lock(false); }
       else { this.setState({view: 'home', modalId: null}); this.lock(false); }
     };
@@ -1386,9 +1544,14 @@ class Component extends DCLogic {
     return out;
   }
 
+  /* Tapping the open section closes it, so the phone can also be left
+     with the title and a list of what is in the card. */
+  openSection = (i) => this.setState({openSec: this.state.openSec === i ? -1 : i});
+
   renderVals() {
     const view = this.state.view;
     const item = this.state.modalId ? this.findItem(this.state.modalId) : null;
+    const sections = item ? this.sectionsFor(item) : [];
     const showEducation = true;
     const deco = (arr) => arr.map(x => Object.assign({}, x, {hash: '#' + x.id}));
     // Every card reads the same two slots: the capsule, then a plain tail.
@@ -1439,9 +1602,19 @@ class Component extends DCLogic {
       modalOpen: !!item,
       modalMeta: item ? (item.statusLabel ? item.period + ' · ' + item.statusLabel : (item.status || (item.venue + ', ' + item.year + ' · ' + item.authors))) : '',
       modalTitle: item ? item.title : '',
-      modalAuthors: item ? (item.authorsFull || '') : '',
-      modalSections: item ? this.sectionsFor(item) : [],
+      // A paper carries its author line here, a project the fields it
+      // belongs to; no card has both.
+      modalPills: !item ? [] : (item.authorsFull ? [item.authorsFull] : (item.fields || [])),
+      modalHasPills: !!(item && (item.authorsFull || (item.fields && item.fields.length))),
+      modalSections: sections.map((s, i) => Object.assign({}, s, {
+        openClass: this.state.openSec === i ? 'is-open' : '',
+        toggle: () => this.openSection(i)
+      })),
       modalHasPhotos: !!(item && item.statusLabel),
+      // The photo strip folds like a section, so it takes the slot after
+      // the last one.
+      modalPhotosOpen: this.state.openSec === sections.length ? 'is-open' : '',
+      togglePhotos: () => this.openSection(sections.length),
       // Give a project a `photos:[{src, label}]` (or bare path strings) and
       // those replace the empty slots — two, three or however many; the row
       // divides itself by the count.
