@@ -264,12 +264,16 @@
      only two things in it, so centring the row centres them on each other. */
   .wur-fold__head > h2{flex:1 1 auto;min-width:0}
 
-  /* The author line under a modal title is the one line on the page that
-     says where I sit on the paper, and set as muted body copy it read as
-     a caption. A capsule the width of the words lifts it out of the prose
-     without competing with the serif title above — the blue is the one
-     colour on the page that is neither the greens of the chrome nor the
-     sand of the card capsules, so it is not mistaken for either. */
+  /* One capsule under a modal title, carrying whichever line places the
+     work: on a paper it is where I sit on the author list, on a project
+     it is the field the project belongs to. Both are the same kind of
+     line — everything else in the card is what the work found, this is
+     what it is — so they take the same shape rather than two.
+     Set as muted body copy it read as a caption; a capsule the width of
+     the words lifts it out of the prose without competing with the serif
+     title above. The blue is the one colour on the page that is neither
+     the greens of the chrome nor the sand of the card capsules, so it is
+     not mistaken for either. */
   .xg-authorpill{
     display:inline-block;box-sizing:border-box;max-width:100%;
     font-family:var(--font-sans);font-size:16px;font-weight:600;line-height:1.45;
@@ -1081,8 +1085,8 @@
       <div onClick="{{ closeModal }}" class="xg-mclose">×</div>
     </div>
     <h2 class="xg-mtitle">{{ modalTitle }}</h2>
-    <sc-if value="{{ modalAuthors }}" hint-placeholder-val="{{ false }}">
-      <p class="xg-authorpill">{{ modalAuthors }}</p>
+    <sc-if value="{{ modalPill }}" hint-placeholder-val="{{ false }}">
+      <p class="xg-authorpill">{{ modalPill }}</p>
     </sc-if>
     <div class="xg-mbody">
       <!-- `is-open` is what the phone reads to unfold a section; the wide
@@ -1252,7 +1256,7 @@ const MANUSCRIPTS = [
 ];
 
 const ONGOING = [
-  {id:'ong-0', theme:'water', contributor:'First author', period:'Ongoing', statusLabel:'Manuscript in preparation', title:'Antibiotic effects on nitrogen transformation in constructed wetland sediments',
+  {id:'ong-0', field:'Environmental microbiology', theme:'water', contributor:'First author', period:'Ongoing', statusLabel:'Manuscript in preparation', title:'Antibiotic effects on nitrogen transformation in constructed wetland sediments',
    focus:'How short- and long-term antibiotic exposure alters microbially mediated nitrogen transformation in surface-flow constructed wetland sediment.',
    overview:'Surface-flow constructed wetlands are a low-cost polishing step for rural and aquaculture wastewater, but the same water carries antibiotic residues into the sediment where nitrogen removal actually takes place. This project exposes wetland sediment to single-dose and repeated antibiotic loading and tracks how the microbially mediated nitrogen reduction–oxidation processes respond over time, so that treatment performance can be interpreted alongside the contaminant load the wetland receives.',
    role:[
@@ -1265,7 +1269,7 @@ const ONGOING = [
      'Manuscript in preparation, first author.',
      'Paired rate and microbial community dataset linking antibiotic loading to shifts in the nitrogen removal pathway.'
    ]},
-  {id:'ong-1', theme:'biobased', contributor:'First author', period:'Ongoing', statusLabel:'Submitted to Soil and Tillage Research', title:'Deep vertical rotary tillage and soil aggregate stability in Latosolic Red Soil',
+  {id:'ong-1', field:'Soil physics', theme:'biobased', contributor:'First author', period:'Ongoing', statusLabel:'Submitted to Soil and Tillage Research', title:'Deep vertical rotary tillage and soil aggregate stability in Latosolic Red Soil',
    focus:'Aggregate stability and fragmentation mechanisms of Latosolic Red Soil under deep vertical rotary tillage.',
    overview:'Latosolic Red Soil under long-term sugarcane cultivation develops a compacted plough pan that limits rooting depth and infiltration. Deep vertical rotary tillage breaks that layer, but it also reworks the soil structure that holds the surface together. This project measures how aggregate stability responds to the practice and which fragmentation mechanism dominates afterwards.',
    role:[
@@ -1278,7 +1282,7 @@ const ONGOING = [
      'Submitted to Soil and Tillage Research, first author.',
      'Aggregate stability dataset for Latosolic Red Soil under deep vertical rotary tillage.'
    ]},
-  {id:'ong-2', theme:'health', contributor:'Third author', period:'Ongoing', statusLabel:'In revision at Journal of Hazardous Materials', title:'Biochar for heavy metal risk mitigation in forest soil remediation',
+  {id:'ong-2', field:'Soil remediation', theme:'health', contributor:'Third author', period:'Ongoing', statusLabel:'In revision at Journal of Hazardous Materials', title:'Biochar for heavy metal risk mitigation in forest soil remediation',
    focus:'Biochar addition during sludge amelioration of forest soil, evaluating differential heavy metal loss across multiple media.',
    overview:'Sewage sludge improves the fertility of degraded forest soil but brings heavy metals with it. This project adds biochar during sludge amelioration and evaluates whether it reduces metal migration, comparing losses across surface runoff, interflow, and eroded sediment so that the mitigation effect is judged on the whole transport system rather than one medium.',
    role:[
@@ -1290,7 +1294,7 @@ const ONGOING = [
      'In revision at Journal of Hazardous Materials, third author.',
      'Evidence on whether biochar addition lowers heavy metal risk during sludge reuse in forest soil.'
    ]},
-  {id:'ong-3', theme:'food', contributor:'First author', period:'Ongoing', statusLabel:'Manuscript in preparation', title:'Tillage effects on sheet erosion in sugarcane cultivation systems',
+  {id:'ong-3', field:'Soil erosion', theme:'food', contributor:'First author', period:'Ongoing', statusLabel:'Manuscript in preparation', title:'Tillage effects on sheet erosion in sugarcane cultivation systems',
    focus:'Sheet erosion processes during sugarcane growth in Latosolic Red Soil cultivation areas under different tillage regimes.',
    overview:'Sugarcane fields in Latosolic Red Soil areas lose most of their soil to sheet erosion in the early growth stages, before the canopy closes. This project follows sheet erosion across the full growth cycle under different tillage regimes to locate the window in which protection matters most and to test whether deep vertical rotary tillage widens or narrows it.',
    role:[
@@ -1305,7 +1309,7 @@ const ONGOING = [
 ];
 
 const FINISHED = [
-  {id:'proj-0', theme:'water', contributor:'Co-first author', period:'2024–2025', statusLabel:'Finished', title:'Nitrogen and Phosphorus Runoff from Forest Soils',
+  {id:'proj-0', field:'Hydrology', theme:'water', contributor:'Co-first author', period:'2024–2025', statusLabel:'Finished', title:'Nitrogen and Phosphorus Runoff from Forest Soils',
    focus:'Nutrient loss pathways and ecological risk assessment in sludge-amended eucalyptus plantations.',
    overview:'Sludge-amended eucalyptus plantation soils were put through extreme simulated rainfall to establish where nitrogen and phosphorus actually leave the slope. The project separated surface runoff, interflow, and sediment as transport pathways, measured how nutrients are enriched in different sediment particle sizes, and turned the results into sludge application strategies that keep ecological risk within an acceptable range.',
    role:[
@@ -1319,7 +1323,7 @@ const FINISHED = [
      'Quantified N and P transport across three pathways and identified particle-size dependent enrichment in sediment.',
      'Derived sludge application strategies that limit nutrient export under extreme rainfall.'
    ]},
-  {id:'proj-1', theme:'climate', contributor:'First author', period:'2023–2024', statusLabel:'Finished', title:'Agricultural Carbon Budget Assessment',
+  {id:'proj-1', field:'Carbon accounting', theme:'climate', contributor:'First author', period:'2023–2024', statusLabel:'Finished', title:'Agricultural Carbon Budget Assessment',
    focus:'Long-term agricultural carbon emissions, sequestration, and net carbon sink dynamics in Guangxi Province.',
    overview:'A provincial-scale carbon account for Guangxi agriculture covering 1978 to 2021. Emission factor methods were applied to agricultural inputs, rice cultivation, and machinery use, and carbon sequestration parameters to crop production, giving a 43-year time series of the net carbon sink and the factors that moved it.',
    role:[
@@ -1333,7 +1337,7 @@ const FINISHED = [
      '43-year time series of agricultural carbon emissions, sequestration, and net carbon sink for Guangxi.',
      'Fertilizer input, rice cultivation, crop yield, and mechanization identified as dominant drivers.'
    ]},
-  {id:'proj-2', theme:'food', contributor:'First author', period:'2021–2022', statusLabel:'Finished', title:'Agricultural Non-Point Source Pollution',
+  {id:'proj-2', field:'Water quality', theme:'food', contributor:'First author', period:'2021–2022', statusLabel:'Finished', title:'Agricultural Non-Point Source Pollution',
    focus:'Spatial-temporal patterns and source apportionment of agricultural pollution in Guangdong Province.',
    overview:'Two decades of agricultural non-point source pollution in Guangdong Province, reconstructed as COD, total nitrogen, and total phosphorus loads by source category. The project resolved how those loads shifted between prefectures and between sources from 1999 to 2019, giving a provincial baseline for diffuse pollution control.',
    role:[
@@ -1347,7 +1351,7 @@ const FINISHED = [
      '20-year load inventory for COD, TN, and TP by source category.',
      'Livestock breeding and rapidly expanding aquaculture identified as the major contributors.'
    ]},
-  {id:'proj-3', theme:'health', contributor:'Fourth author', period:'2021–2022', statusLabel:'Finished', title:'Heavy Metal Migration and Biochar Remediation',
+  {id:'proj-3', field:'Soil remediation', theme:'health', contributor:'Fourth author', period:'2021–2022', statusLabel:'Finished', title:'Heavy Metal Migration and Biochar Remediation',
    focus:'Cadmium loss characteristics and biochar immobilization effects under simulated rainfall.',
    overview:'Cadmium export from acidic red soil was measured under simulated rainfall at two intensities, with biochar added at 0 to 7% to test immobilization. Both dissolved and sediment-bound Cd loss were tracked, so the project could identify the application rate beyond which biochar stops protecting the system and starts aggravating erosion.',
    role:[
@@ -1589,7 +1593,9 @@ class Component extends DCLogic {
       modalOpen: !!item,
       modalMeta: item ? (item.statusLabel ? item.period + ' · ' + item.statusLabel : (item.status || (item.venue + ', ' + item.year + ' · ' + item.authors))) : '',
       modalTitle: item ? item.title : '',
-      modalAuthors: item ? (item.authorsFull || '') : '',
+      // A paper carries its author line here, a project the field it
+      // belongs to; no card has both.
+      modalPill: item ? (item.authorsFull || item.field || '') : '',
       modalSections: sections.map((s, i) => Object.assign({}, s, {
         openClass: this.state.openSec === i ? 'is-open' : '',
         toggle: () => this.openSection(i)
