@@ -249,8 +249,14 @@
   .xg-card__teaser{
     font-family:var(--font-sans);font-size:17px;line-height:1.55;
     color:var(--text-muted);text-wrap:pretty}
-  /* "All publications" / "All projects" — a pill that takes the card's
-     scale on hover and darkens from the mid green to the deep one. */
+  /* "All publications" / "All projects", and "View paper" at the foot of a
+     detail card — a pill that takes the card's scale on hover and darkens
+     from the mid green to the deep one.
+     "View paper" wore `--primary` before, which is the same colours at the
+     same padding but carries the base pill's 43px floor and a 1.4 line —
+     8px taller than this one, and next to it on the same page that read as
+     a second, heavier button rather than the same one. The floor is what
+     did it, not the padding. */
   .xg-morepill{
     box-sizing:border-box;min-height:0;
     padding:8px 24px;font-size:16px;font-weight:600;line-height:1.2;
@@ -1131,7 +1137,7 @@
     </div>
     <sc-if value="{{ modalLink }}" hint-placeholder-val="{{ false }}">
       <div class="xg-mlinks">
-        <a href="{{ modalLink }}" target="_blank" rel="noopener" class="wur-pill wur-pill--primary">View paper <span aria-hidden="true">→</span></a>
+        <a href="{{ modalLink }}" target="_blank" rel="noopener" class="wur-pill wur-arrowlink xg-morepill">View paper <span class="wur-arrow" aria-hidden="true">→</span></a>
         <span class="xg-mdoi">{{ modalDoi }}</span>
       </div>
     </sc-if>
