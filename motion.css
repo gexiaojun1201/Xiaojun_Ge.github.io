@@ -129,7 +129,20 @@
    300ms on the browser's default `ease`. These rows are full-bleed inside
    a clamp(24px, 5vw, 64px) gutter, so the 2.5% each side has room to grow
    into up to roughly a 2560px viewport; past that the gutter stops being
-   wide enough and the growth would reach the screen edge. */
+   wide enough and the growth would reach the screen edge.
+
+   The condition is "does this thing have a mouse", which is what the
+   effect is actually for — a width was standing in for it, and the stand-in
+   was wrong in both directions. A 1280px window at 125% browser zoom is
+   1024 CSS px, at 150% it is 853, and either way the rows quietly stopped
+   growing on a desktop that plainly has a pointer; meanwhile a 1024px
+   tablet with no mouse at all was inside the rule, where a tap leaves the
+   card stuck in its hover state.
+
+   761px is still the floor, to match the width where the rest of the page
+   switches to its phone layout. It is not the point where the growth stops
+   fitting: measured, a row at 780px grows to 17.8px each side inside a
+   24px gutter, so the room runs out well below the layout does. */
 
 .wur-rowmotion {
   position: relative;
@@ -138,7 +151,7 @@
   transition: transform 300ms ease;   /* the browser's default `ease` */
 }
 
-@media (min-width: 1024px) {
+@media (hover: hover) and (min-width: 761px) {
   .wur-rowmotion:hover,
   .wur-rowmotion:focus-within {
     z-index: 3;
