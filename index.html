@@ -330,18 +330,24 @@
     color:var(--pine-green);margin:0 0 16px;text-wrap:pretty}
   .xg-mbody{display:flex;flex-direction:column}
   .xg-msec{
-    display:grid;grid-template-columns:170px 1fr;gap:0 24px;
+    display:block;
     border-top:1px solid var(--border-subtle);padding-top:20px;margin-top:20px}
-  /* `start` on both axes: a grid item stretches by default, and the
-     capsule has to be the size of its words, not of the section beside
-     it. */
+  /* `inline-block`: the capsule has to be the size of its words, and a
+     block-level div would stretch and print it as a full-width bar. The
+     label sat in a 170px column of its own before, which left the prose
+     530px of the card's 724 and set a long abstract 49 lines deep. */
   .xg-mlab{
-    grid-column:1;justify-self:start;align-self:start;margin-top:3px;
+    display:inline-block;margin:0 0 13px;
     font-family:var(--font-sans);font-size:11px;font-weight:700;line-height:1.2;
     letter-spacing:0.08em;text-transform:uppercase;white-space:nowrap;
     color:#153816;background:#FFA8A8;border-radius:9999px;padding:6px 13px}
-  .xg-msec > :not(.xg-mlab){grid-column:2}
+  /* The abstract scrolls inside its own box rather than setting the
+     height of the whole card: the key points and the DOI stay on the
+     first screen whatever the paper's length. `padding-right` keeps the
+     prose off the scrollbar; a line cut in half at the foot is what says
+     there is more. */
   .xg-mtext{
+    max-height:420px;overflow-y:auto;padding-right:14px;
     font-family:var(--font-sans);font-size:17px;line-height:1.72;
     color:var(--text-primary);margin:0;text-wrap:pretty}
   /* A dot in the house green, set as a glyph rather than a drawn circle.
@@ -638,6 +644,9 @@
       box-shadow:0 0 0 8px rgba(0,138,0,.07);
       border-top-color:transparent}
     .xg-msec.is-open + .xg-msec{border-top-color:transparent}
+    /* No box inside a box on a phone: the sections already fold, and the
+       card scrolls on its own. */
+    .xg-mtext{max-height:none;overflow:visible;padding-right:0}
     .xg-mtext,.xg-mlist li{font-size:14px;line-height:1.6}
     .xg-mlist{gap:6px}
     .xg-mlist li{padding-left:16px}
