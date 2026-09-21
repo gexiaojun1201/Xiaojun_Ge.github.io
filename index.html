@@ -248,7 +248,8 @@
     color:var(--pine-green);margin-bottom:9px;text-wrap:pretty}
   .xg-card__teaser{
     font-family:var(--font-sans);font-size:17px;line-height:1.55;
-    color:var(--text-muted);text-wrap:pretty}
+    color:var(--text-muted);text-wrap:pretty;
+    display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
   /* "All publications" / "All projects", and "View paper" at the foot of a
      detail card — a pill that takes the card's scale on hover and darkens
      from the mid green to the deep one.
@@ -329,18 +330,24 @@
     color:var(--pine-green);margin:0 0 16px;text-wrap:pretty}
   .xg-mbody{display:flex;flex-direction:column}
   .xg-msec{
-    display:grid;grid-template-columns:170px 1fr;gap:0 24px;
+    display:block;
     border-top:1px solid var(--border-subtle);padding-top:20px;margin-top:20px}
-  /* `start` on both axes: a grid item stretches by default, and the
-     capsule has to be the size of its words, not of the section beside
-     it. */
+  /* `inline-block`: the capsule has to be the size of its words, and a
+     block-level div would stretch and print it as a full-width bar. The
+     label sat in a 170px column of its own before, which left the prose
+     530px of the card's 724 and set a long abstract 49 lines deep. */
   .xg-mlab{
-    grid-column:1;justify-self:start;align-self:start;margin-top:3px;
+    display:inline-block;margin:0 0 13px;
     font-family:var(--font-sans);font-size:11px;font-weight:700;line-height:1.2;
     letter-spacing:0.08em;text-transform:uppercase;white-space:nowrap;
     color:#153816;background:#FFA8A8;border-radius:9999px;padding:6px 13px}
-  .xg-msec > :not(.xg-mlab){grid-column:2}
+  /* The abstract scrolls inside its own box rather than setting the
+     height of the whole card: the key points and the DOI stay on the
+     first screen whatever the paper's length. `padding-right` keeps the
+     prose off the scrollbar; a line cut in half at the foot is what says
+     there is more. */
   .xg-mtext{
+    max-height:420px;overflow-y:auto;padding-right:14px;
     font-family:var(--font-sans);font-size:17px;line-height:1.72;
     color:var(--text-primary);margin:0;text-wrap:pretty}
   /* A dot in the house green, set as a glyph rather than a drawn circle.
@@ -637,6 +644,9 @@
       box-shadow:0 0 0 8px rgba(0,138,0,.07);
       border-top-color:transparent}
     .xg-msec.is-open + .xg-msec{border-top-color:transparent}
+    /* No box inside a box on a phone: the sections already fold, and the
+       card scrolls on its own. */
+    .xg-mtext{max-height:none;overflow:visible;padding-right:0}
     .xg-mtext,.xg-mlist li{font-size:14px;line-height:1.6}
     .xg-mlist{gap:6px}
     .xg-mlist li{padding-left:16px}
@@ -1185,48 +1195,60 @@ const INTERESTS = [
 ];
 
 const PUBLICATIONS = [
-  {id:'pub-0', year:'2025', theme:'water', title:'Risk and driving factors of nitrogen and phosphorus runoff losses under extreme rainfall conditions: sludge application strategies in forest soils', venue:'CATENA', authors:'co-First author',
-   authorsFull:'Yang et al. — Xiaojun Ge, co-first author',
-   teaser:'Nitrogen and phosphorus losses via runoff, interflow, and sediment in sludge-amended eucalyptus forest soils.',
-   abstract:'Sewage sludge is increasingly applied to eucalyptus plantation soils as an organic amendment, but how the added nutrients behave under extreme rainfall is poorly constrained. This study used simulated extreme rainfall on sludge-amended forest soils to quantify nitrogen and phosphorus losses through three separate pathways — surface runoff, interflow, and eroded sediment — and to identify the conditions under which nutrient export becomes an ecological risk. Sludge application rate, rainfall regime, and particle-size-dependent enrichment of nutrients in sediment emerged as the dominant controls on nutrient transport, and the results are used to derive application strategies that keep losses within an acceptable range.',
+  {id:'pub-4', year:'2026', theme:'health', title:'Alleviating heavy metal migration risks by adding biochar during sludge amelioration of forest soil: Evaluating differential loss across multiple media', venue:'Journal of Hazardous Materials', authors:'Third author',
+   authorsFull:'Yuantong Yang, Yangli Zhang, Xiaojun Ge, Peiqi Pan, Wei Zhang, Jiamin Zhang, Chaohai Wei, Jianbo Liao*',
+   abstract:'The land application of municipal sludge risks heavy metals (HMs) migration via runoff, necessitating effective immobilization strategies. Although biochar can immobilize HMs and reduce erosion, its feedstock-dependent efficacy and role in multi-media transport (surface runoff, interflow, sediment) remain unclear. We evaluated sludge applied alone (SS) or combined with 5 % sludge biochar (SSC), eucalyptus leaf biochar (SSE), or pine sawdust biochar (SSP) in field-simulated rainfall experiments. Biochar properties critically influenced the "soil structure-hydrology-speciation" nexus, dictating HM fate. SSC and SSP reduced surface runoff (7.3–8.4 %) and sediment erosion (12.4–18.3 %), whereas SSE increased the losses. SSC and SSP significantly promoted particle aggregation, increased the > 1 mm particle size fraction by 29.5–50.4 % and reduced the loss of soluble Cd in both surface runoff and interflow by 20.5–44.7 %. In contrast, strongly hydrophobic SSE promoted the leaching of soluble Cd, where the Cd concentration in interflow was 22.58 times higher than that in surface runoff, identified as a critical hidden risk pathway. Sediments were the primary migration carriers, accounting for 44.2–79.2 % of the total loss, and enriched with fine particles (< 0.054 mm). Ecological risk assessment revealed a discrepancy between concentration-based (WQI) and flux-based (RI) indices: though interflow WQI values were all greater than 300 (Unfit for drinking), only the presence of SSE treatment posed a moderate potential ecological risk (RI = 152.4), with Cd being the primary risk factor (Ei > 80). This study underscores the importance of feedstock-specific biochar selection, recommends SSC for optimal risk mitigation, and advocates monitoring interflow and bioavailable HMs to ensure sludge utilization safety.',
    points:[
-     'N and P losses partitioned across surface runoff, interflow, and sediment under extreme simulated rainfall.',
-     'Sludge application rate and rainfall regime control the magnitude of nutrient export.',
-     'Nutrients are enriched in the fine sediment fractions, making sediment a key loss pathway.',
-     'Application strategies proposed to limit ecological risk in eucalyptus plantation soils.'
+     'Sludge biochar cuts Cd migration by 33.6 % via precipitation and boosts large aggregates by 29.5 %.',
+     'Eucalyptus biochar raises interflow Cd by 2258.2 % versus runoff, revealing a critical hidden pathway.',
+     'Sediment carries 44.2–79.2 % of heavy metals, with fine particles (< 0.054 mm) being the main carrier.',
+     'Feedstock dictates biochar\'s role: sludge char precipitates, pine char adsorbs, leaf char leaches HMs.',
+     'Biochar feedstocks shaped metal export across media in field-simulated storms.',
+     'Interflow assessments diverged between concentration- and flux-based indices.',
+     'Sludge biochar best reduced runoff risk; pine biochar best reduced interflow risk.'
+   ],
+   doi:'https://doi.org/10.1016/j.jhazmat.2026.141098'},
+  {id:'pub-0', year:'2025', theme:'water', title:'Risk and driving factors of nitrogen and phosphorus runoff losses under extreme rainfall conditions: sludge application strategies in forest soils', venue:'CATENA', authors:'co-First author',
+   authorsFull:[
+     'Yuantong Yang†, Xiaojun Ge†, Weixun Feng, Lihua Xian, Guodong Shao, Jianbo Liao, Shucai Zeng*',
+     '† Yuantong Yang and Xiaojun Ge contributed equally to this work.'
+   ],
+   abstract:'Sewage sludge (SS), enriched with organic matter (OM), nitrogen (N), and phosphorus (P), holds the potential for rehabilitating degraded forest soils, yet poses non-point pollution risks through rainfall-induced nutrient migration. We systematically quantified N and P losses under five SS application rates using six simulated rainfall events (90 mm·h⁻¹). Results showed that SS amendment increased interflow and sediment erosion, while reducing surface runoff. Cumulative nutrient losses increased proportionally with the application rates. Surface runoff was responsible for 43.5 % of total nitrogen (TN) transport, whereas sediments mediated 96.2 % of P loss. Notably, interflow exhibited TN concentrations that were 6–70 times higher than other pathways, and its contribution to N loss increased from 16.2 % to 40.6 % following SS application. The first flush effect on ammonium nitrogen and nitrate nitrogen (AN and NN) was detected in the surface runoff, while increased exports of organic nitrogen (ON) and AN were observed in interflow. SS application preferentially enriched N and P in 0.25–1 mm sediment particles, raising the percentage of TN carried by this fraction from 12.5 % to 37.9 % and that of total phosphorus (TP) from 11.8 % to 35.8 %. Multivariate analysis indicated SS application rate, rainfall frequency, and particle size as the key drivers that modulate nutrient loss by modifying soil porosity. Ecological risk assessments recommend limiting SS application to ≤6 kg·m⁻² in eucalyptus plantations to reduce nutrient leaching, protect groundwater, and adjacent aquatic environments. Our findings provide important insights into how SS can be sustainably applied as a soil amendment, while minimizing the environmental risk of N and P loss from forest soils through runoff.',
+   points:[
+     'Surface runoff carried 43.5% of nitrogen; sediment carried 96.2% of phosphorus.',
+     'Sludge raised interflow\'s share of nitrogen loss from 16.2% to 40.6%.',
+     'Surface inorganic nitrogen flushed early; interflow nitrogen peaked later.',
+     'Interflow risk was moderate above 6 kg m⁻² of sludge in simulated storms.'
    ],
    doi:'https://doi.org/10.1016/j.catena.2025.109318'},
-  {id:'pub-1', year:'2023', theme:'climate', title:'Temporal characteristics and influencing factors of agricultural net carbon sink in Guangxi from 1978 to 2021', venue:'Chinese Journal of Eco-Agriculture', authors:'First author',
-   authorsFull:'Xiaojun Ge (first author), et al.',
-   teaser:'A 43-year account of agricultural carbon emissions, sequestration, and net carbon sink in Guangxi.',
-   abstract:'Agriculture is both a source of greenhouse gas emissions and a carbon sink, and the balance between the two decides whether a regional agricultural system adds to or offsets climate pressure. This study built a 43-year account (1978–2021) of agricultural carbon emissions and crop carbon sequestration in Guangxi using emission factor and carbon sequestration parameter methods, then analysed the temporal characteristics of the resulting net carbon sink. Fertilizer input, rice cultivation, crop yield, and agricultural mechanization were identified as the dominant factors shaping the regional agricultural carbon budget.',
+  {id:'pub-1', year:'2024', theme:'climate', title:'Temporal characteristics and influencing factors of agricultural net carbon sink in Guangxi from 1978 to 2021', venue:'Chinese Journal of Eco-Agriculture', authors:'First author',
+   authorsFull:'GE Xiaojun, WU Dan, LI Shubin*, AN Qiang',
+   abstract:'Guangxi is a major agricultural region in China, and the agricultural system is not only an important source of carbon emissions that cause global climate change, but also a significant pathway for carbon sequestration. To achieve the "dual carbon" targets in agriculture and high-quality development of the rural economy in Guangxi, this study comprehensively estimates the amount of agricultural carbon budget in Guangxi from 1978 to 2021. It also identified the key factors influencing agricultural carbon budget. Agricultural carbon budget, including carbon emissions, carbon sequestration, and net carbon sinks, was estimated and analyzed using total agricultural material inputs, paddy cultivated area, livestock and poultry farming, amount of crop residue burned, crop yield, and aquaculture production from Guangxi statistical database using the emission factors approach and the carbon sequestration parameter method. Based on this, the main factors influencing agricultural carbon budgets were identified using the revised Stochastic Impacts by Regression on Population, Affluence and Technology (STIRPAT) model. The results revealed that the value of carbon emissions, carbon sequestration and net carbon sink increased from 1166.61×10⁴ t, 872.81×10⁴ t and –293.79×10⁴ t to 1457.17×10⁴ t, 3271.57×10⁴ t and 1862.14×10⁴ t, with an average annual increase of 0.55%, 3.45% and 18.92%, respectively, from 1978 to 2021. In 1990, carbon emissions and sequestration reached a balance, then the net carbon sink from agricultural system showed a trend of first increasing and then stabilizing. From 1979 to 2021, carbon emissions from agricultural materials input showed an increasing trend, and it contributed to 36.44% of total carbon emissions. Carbon emissions from paddy field, livestock and poultry farming, and crop reside burning were 26.41%, 21.93% and 15.22% in 2021, respectively. Specifically, fertilizer application, medium rice cultivation, cattle breeding, and rice straw burning were the major contributors to carbon emissions. Carbon sequestration by crops has been the dominant source of carbon sequestration over the past several decades. Of these, sugarcane has increased and become the major source of carbon sequestration (57.35% in 2021), while rice carbon sequestration has declined from 75.57% in 1978 to 28.62% in 2021. Aquaculture accounts for about 10% of total carbon sequestration, with oysters accounting for 99% of aquaculture\'s carbon sequestration. The STIRPAT model demonstrated that the agricultural carbon budget in Guangxi was affected by many factors. Carbon emissions were correlated with rice production and fertilizer application, and every 1% increase in the two factors led to 0.417% and 0.035% increases in carbon emissions, respectively. Carbon sequestration and net carbon sink were driven by the total agricultural population, level of agricultural economic development, fertilizer application, and crop yield. The total agricultural population and rice sown area had negative impacts on carbon sequestration and net carbon sink, while crop yield was the most influential factor. An increase of 1% in crop yield led to increase of 0.17%−0.39% in carbon sequestration. The results of this study showed that carbon emissions can be reduced and carbon sequestration can be increased through precision fertilization, intensive farming, and increased crop yields. The present results provide scientific data for policy formulation and agricultural carbon emission predictions.',
    points:[
-     'Agricultural carbon emissions, sequestration, and net carbon sink reconstructed for 1978–2021.',
-     'Emission factor and carbon sequestration parameter methods applied at provincial scale.',
-     'Fertilizer input, rice cultivation, and mechanization dominate the emission side.',
-     'Crop yield growth is the main driver of the sequestration side.'
+     'A 1978–2021 inventory tracks Guangxi’s farm emissions and carbon uptake.',
+     'Estimated carbon uptake exceeds agricultural emissions from around 1990.',
+     'Sugarcane accounts for 57.35% of estimated crop carbon uptake in 2021.',
+     'Modelling links rice production and fertilizer use to agricultural emissions.'
    ],
    doi:'https://doi.org/10.12357/cjea.20230523'},
-  {id:'pub-2', year:'2022', theme:'health', title:'Effects of biochar application on the loss characteristics of Cd from acidic soil under simulated rainfall conditions', venue:'Environmental Science and Pollution Research', authors:'Fourth author',
-   authorsFull:'Yuan et al. — Xiaojun Ge, fourth author',
-   teaser:'Biochar dose effects on cadmium availability and export from acidic red soil under simulated rainfall.',
-   abstract:'Cadmium in acidic red soil is mobile and readily exported during heavy rainfall, and biochar is widely proposed as an immobilizing amendment. This study applied simulated rainfall at 60 and 120 mm per hour to acidic soil amended with 0–7% biochar and tracked how Cd was partitioned between runoff and sediment. Biochar generally reduced Cd availability and total Cd loss, but the highest application rate combined with intense rainfall aggravated erosion and increased sediment-borne Cd export, indicating a dose beyond which the amendment becomes counterproductive.',
+  {id:'pub-2', year:'2022', theme:'health', title:'Effects of biochar application on the loss characteristics of Cd from acidic soil under simulated rainfall conditions', venue:'Environmental Science and Pollution Research', authors:'Sixth author',
+   authorsFull:'Zaijian Yuan, Yueyan Song, Dingqiang Li, Bin Huang*, Yunhui Chen, Xiaojun Ge, Mingguo Zheng, Yishan Liao, Zhenyue Xie',
+   abstract:'Biochar is widely used for immobilizing heavy metals in soil as a kind of high-effective passivator. This research conducted incubation and simulated rainfall experiments to study the effects of biochar application on the loss characteristics of runoff and sediment, as well as the transportation of the Cd during the water erosion process. Two rainfall intensities (60 and 120 mm h⁻¹) and five biochar application rates (0%, 1%, 3%, 5%, and 7%) were considered in the experiment. The result showed that slaking had a greater effect than mechanical stirring in aggregate breakdown of the soil, and the addition of biochar generally increased the sensitivity of the soil to wet stirring, while had no obvious influence on the resistance to slaking. The H₂O and CaCl₂ extractable Cd in soil significantly decreased with the increase of biochar application rate. The runoff yields decreased with the increase of biochar application rate at both the two rainfall intensities, while the eroded sediment generally decreased at the 120 mm h⁻¹ rainfall intensity. The addition of biochar tended to increase the loss of the middle-sized (1–0.05 mm) aggregates at the 60 mm h⁻¹ rainfall intensity, whereas reduced their loss at the 120 mm h⁻¹ rainfall intensity. Biochar application could significantly reduce the concentration of Cd in the runoff and decreased the total loss amount of Cd (sediment+runoff) in most of the cases. Excessively high level (7%) of biochar application may aggravate soil erosion and result in more Cd loss.',
    points:[
-     'Simulated rainfall at 60 and 120 mm per hour with biochar addition of 0–7%.',
-     'Biochar lowered Cd availability and both runoff- and sediment-borne Cd loss at moderate rates.',
-     'Excessive addition (7%) under intense rainfall aggravated erosion and Cd export.',
-     'An optimum application window exists for biochar remediation of acidic Cd-contaminated soil.'
+     'Biochar suppresses soluble cadmium loss under simulated rainfall.',
+     'Sediment carries 75.6–98.6% of cadmium exported under simulated rainfall.',
+     'Rainfall intensity alters aggregate loss and cadmium enrichment in sediment.',
+     'Biochar at 7% increases erosion under intense simulated rainfall.'
    ],
    doi:'https://doi.org/10.1007/s11356-022-21623-x'},
   {id:'pub-3', year:'2022', theme:'food', title:'Temporal and spatial variation characteristics and source analysis of agricultural non-point source pollution load in Guangdong during the past 20 years', venue:'Environmental Science', authors:'First author',
-   authorsFull:'Xiaojun Ge (first author), et al.',
-   teaser:'Two decades of agricultural non-point source pollution loads and their sources in Guangdong Province.',
-   abstract:'Agricultural non-point source pollution is the main diffuse pressure on water quality in rapidly developing coastal provinces. This study quantified COD, total nitrogen, and total phosphorus loads from agricultural sources across Guangdong Province from 1999 to 2019 and resolved their spatial and temporal variation and source structure. Livestock breeding, fertilizer application, and a rapidly expanding aquaculture sector were the dominant contributors shaping the province\u2019s pollution load over the two decades.',
+   authorsFull:'GE Xiao-jun, HUANG Bin, YUAN Zai-jian*, WANG Dong-dong, WANG Quan-quan, CHEN Jia-cun, XIE Zhen-yue',
+   abstract:'The agricultural non-point source pollution (ANPSP) load in Guangdong province is very large and has a serious impact on the regional ecological environment. Inventory analysis was used to assess and analyze the temporal and spatial variation characteristics of the ANPSP load of Guangdong province during 1999–2019, and the sources of ANPSP were discussed, as well as the relationship between them. The results showed that, during the past 20 years, the total ANPSP pollution loads of Guangdong province decreased by 6.08%, and the pollution loads of chemical oxygen demand (COD), total nitrogen (TN), and total phosphorus (TP) increased by -11.88%, 4.99%, and 26.17%, respectively. The input intensity of chemical fertilizers and pesticides increased by 112.19% and 60.38%, respectively. The Pearl River Delta had the highest ANPSP loads in Guangdong province, followed by those in northern, western, and eastern Guangdong. Livestock and poultry breeding were the main sources of COD, the total percent fertilizers and livestock and poultry breeding were the main sources of TN, and livestock and poultry breeding and aquaculture were the main sources of TP. In addition, the contribution of pollutants discharged from aquaculture showed an obvious increasing trend. There were certain differences in the pollution sources in different regions. In western Guangdong, northern Guangdong, and eastern Guangdong, livestock and poultry breeding were the main sources of COD and TP, and fertilizer was the main source of TN; by contrast in the Pearl River Delta, aquaculture had become the main source of TN and TP pollution loads. The correlation results showed that the decline in the total ANPSP in Guangdong province was mainly due to the increase in high urbanization rate and the decrease in the proportion of rural population. In general, there were stage changes in the time and differences in spatial characteristics and sources of ANPSP in Guangdong province. A combination of comprehensive treatment and targeted pollution treatment should be adopted, and fertilizer reduction measures and pollution treatment in the aquaculture should be strengthened in an all-around way, focusing on strengthening the treatment of pollution from aquaculture in the Pearl River Delta region and the treatment of rural life pollution in northern Guangdong.',
    points:[
-     'COD, TN, and TP loads from agricultural sources quantified for 1999–2019.',
-     'Spatial and temporal variation resolved across the province.',
-     'Livestock breeding and fertilizer application are the largest load contributors.',
-     'Aquaculture expansion emerges as a fast-growing source over the study period.'
+     'A 1999–2019 inventory tracks five agricultural pollution sources in Guangdong.',
+     'Nitrogen and phosphorus loads rise despite a 6.08% decline in total pollution.',
+     'Aquaculture dominates nitrogen and phosphorus loads in the Pearl River Delta.',
+     'Fertilizer and pesticide inputs per hectare rise as total pollution falls.'
    ],
    doi:'https://doi.org/10.13227/j.hjkx.202108071'}
 ];
@@ -1258,15 +1280,6 @@ const MANUSCRIPTS = [
      'Short-term and multi-term antibiotic exposure compared in the same sediment system.',
      'Nitrogen transformation rates measured alongside microbial community composition.',
      'Targets the nitrogen removal pathway that determines constructed wetland performance.'
-   ]},
-  {id:'ms-3', theme:'health', title:'Alleviating heavy metal migration risks by adding biochar during sludge amelioration of forest soil: evaluating differential loss across multiple media', status:'In revision at Journal of Hazardous Materials', statusShort:'In revision', venue:'Journal of Hazardous Materials', authors:'Third author',
-   authorsFull:'Xiaojun Ge, third author',
-   summary:'Evaluates biochar as a mitigation measure for heavy metal migration during sludge amelioration of forest soil, across runoff, interflow, and sediment.',
-   abstract:'Sewage sludge improves the fertility of degraded forest soil but carries heavy metals with it. This study adds biochar during sludge amelioration and evaluates whether it reduces metal migration, comparing losses across surface runoff, interflow, and eroded sediment instead of assessing a single medium.',
-   points:[
-     'Heavy metal loss compared across three transport media rather than one.',
-     'Biochar tested as a mitigation measure inside a realistic sludge amendment scenario.',
-     'Supports safer sludge reuse in forest soil amelioration.'
    ]}
 ];
 
@@ -1563,7 +1576,7 @@ class Component extends DCLogic {
     // Every card reads the same two slots: the capsule, then a plain tail.
     const tail = (a, b) => [a, b].filter(Boolean).join(' \u00B7 ');
     const pubs = deco(PUBLICATIONS).map(p => Object.assign({}, p, {
-      badgeRole: p.authors, metaTail: tail(p.year, p.venue), blurb: p.teaser
+      badgeRole: p.authors, metaTail: tail(p.year, p.venue), blurb: p.abstract
     }));
     const ms = deco(MANUSCRIPTS).map(m => Object.assign({}, m, {
       badgeRole: m.authors, metaTail: tail(m.statusShort, m.venue), blurb: m.summary
@@ -1610,7 +1623,7 @@ class Component extends DCLogic {
       modalTitle: item ? item.title : '',
       // A paper carries its author line here, a project the fields it
       // belongs to; no card has both.
-      modalPills: !item ? [] : (item.authorsFull ? [item.authorsFull] : (item.fields || [])),
+      modalPills: !item ? [] : (item.authorsFull ? [].concat(item.authorsFull) : (item.fields || [])),
       modalHasPills: !!(item && (item.authorsFull || (item.fields && item.fields.length))),
       modalSections: sections.map((s, i) => Object.assign({}, s, {
         openClass: this.state.openSec === i ? 'is-open' : '',
