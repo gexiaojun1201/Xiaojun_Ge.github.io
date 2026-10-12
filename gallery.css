@@ -2,9 +2,10 @@
    Gallery.
 
    The shelf, the open / close / switch animations and every duration and
-   curve below are ported one-to-one from the prototype in gallery-prototype/
-   (src/styles.css). Colours, fonts, radii and the "Project details" pill are
-   this site's, read from the design-system tokens.
+   curve below are ported one-to-one from the Gallery prototype's
+   src/styles.css (a separate project, not part of this repo). Colours,
+   fonts, radii and the "Project details" pill are this site's, read from
+   the design-system tokens.
 
    Two layers:
      .xgal        the shelf, which lives inside the page (and so inside the

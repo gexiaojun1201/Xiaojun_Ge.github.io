@@ -1,13 +1,14 @@
 /* ─────────────────────────────────────────────────────────────────────────
    Gallery.
 
-   A plain-JS port of the prototype in gallery-prototype/ (React there, no
-   build step here). The behaviour and every timing follow the prototype:
+   A plain-JS port of the Gallery prototype (React there, no build step
+   here). The behaviour and every timing follow the prototype:
 
      CinemaApp.tsx   → openAt / requestClose / alignShelf / flyStageTo
      DetailStage.tsx → go / nudge / bright / swipe / the delayed text
      Shelf.tsx       → rows, drag to scroll, arrow buttons, keyboard cursor
      Art.tsx         → picture with a loading shimmer
+   (file names from the prototype project, which is not part of this repo)
 
    The page is drawn by the template runtime, which rebuilds a view on every
    route change. So this file does not run once: it watches for the
