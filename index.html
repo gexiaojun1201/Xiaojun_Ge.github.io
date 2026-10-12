@@ -38,6 +38,7 @@
 <link rel="stylesheet" href="_ds/wur-design-system-fcf266a9-50a7-420d-bee6-00e313ecfd49/styles.css">
 <script src="_ds/wur-design-system-fcf266a9-50a7-420d-bee6-00e313ecfd49/_ds_bundle.js"></script>
 <link rel="stylesheet" href="motion.css">
+<link rel="stylesheet" href="gallery.css">
 <style>
   /* The 12px --radius-pill override is gone, so the navbar CTA and the
      modal button are real pills again — 9999px, as measured. Card radius
@@ -837,6 +838,7 @@
   }
 </style>
 <script src="./motion.js"></script>
+<script src="./gallery.js"></script>
 </helmet>
 
 <div class="wur-page" style="background:var(--bg-page)">
@@ -967,6 +969,15 @@
         </a>
       </div>
     </sc-for>
+  </div>
+</section>
+
+<section class="wur-fold" style="padding:calc(36px * var(--space-y)) var(--pad-x) calc(48px * var(--space-y))">
+  <div class="wur-eyebrow" style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:16px">Photographs</div>
+  <h2 class="wur-fold__head" style="font-family:var(--font-serif);font-size:30px;font-weight:700;color:var(--pine-green);margin:0 0 20px">Gallery</h2>
+  <div class="wur-fold__body">
+    <!-- gallery.js fills this in; the photos are listed at the top of that file. -->
+    <div data-xgal></div>
   </div>
 </section>
 
@@ -1373,6 +1384,8 @@ const SKILL_GROUPS = [
 
 const VIEWS = ['home','publications','research','skills'];
 const PROJECTS = ONGOING.concat(FINISHED);
+// The gallery (gallery.js) reads its project text from here.
+window.XG_PROJECTS = PROJECTS;
 
 // Every card reads the same two slots: the capsule, then a plain tail.
 const tail = (...parts) => parts.filter(Boolean).join(' \u00B7 ');
