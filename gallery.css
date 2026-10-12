@@ -648,14 +648,14 @@
   .xgal-stage,
   .xgal-chrome { border-radius: 0; }
   .xgal-back { top: calc(0.75rem + env(safe-area-inset-top)); left: 0.75rem; }
-  /* Project titles are long, and the text block climbs the screen: park the
-     arrows above it so they never sit on a word. */
-  .xgal-nav { top: 17%; }
   .xgal-logline { max-width: none; font-size: 0.95rem; }
 }
 
-@media (hover: none) {
-  .xgal-rowbtn { opacity: 1; }
+/* On a touch screen a finger swipes the rows and the viewer, so neither gets
+   arrow buttons. */
+@media (max-width: 760px), (hover: none) and (pointer: coarse) {
+  .xgal-rowbtn,
+  .xgal-nav { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
