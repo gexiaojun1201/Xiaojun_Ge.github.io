@@ -710,10 +710,14 @@
        the middle of its share while "Publications" filled its own, so the
        words sat at four different distances from each other. Sized to the
        label with the same padding each, and spread by the row, every gap
-       between two words is the same and the line reads as one rhythm. */
+       between two words is the same and the line reads as one rhythm.
+       Five words now (Gallery is the fifth): at a fixed 12px and 13.5px the
+       row came out 3px wider than a 390px screen and "Gallery" dropped to a
+       second line, so both ease off on narrower screens and are full size
+       from about 390px up. */
     body nav a{flex:0 1 auto;min-width:0;justify-content:center;position:relative;z-index:1;
-      padding:0 12px !important;
-      font-size:13.5px !important;font-weight:600;white-space:nowrap;
+      padding:0 clamp(6px, 2.4vw, 12px) !important;
+      font-size:clamp(11.5px, 3.45vw, 13.5px) !important;font-weight:600;white-space:nowrap;
       border-radius:9999px;-webkit-tap-highlight-color:transparent;
       transition:color 220ms var(--wur-ease)}
     body nav a[aria-current="page"]{color:#FFFFFF !important}
@@ -972,15 +976,6 @@
   </div>
 </section>
 
-<section class="wur-fold" style="padding:calc(36px * var(--space-y)) var(--pad-x) calc(48px * var(--space-y))">
-  <div class="wur-eyebrow" style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:16px">Photographs</div>
-  <h2 class="wur-fold__head" style="font-family:var(--font-serif);font-size:30px;font-weight:700;color:var(--pine-green);margin:0 0 20px">Gallery</h2>
-  <div class="wur-fold__body">
-    <!-- gallery.js fills this in; the photos are listed at the top of that file. -->
-    <div data-xgal></div>
-  </div>
-</section>
-
 <sc-if value="{{ showEducation }}" hint-placeholder-val="{{ false }}">
 <section class="wur-fold" style="padding:calc(32px * var(--space-y)) var(--pad-x) calc(36px * var(--space-y))">
   <div class="wur-eyebrow" style="display:inline-block;background:#FFA8A8;color:#153816;font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;border-radius:7px;padding:5px 10px;margin-bottom:16px">Background</div>
@@ -1114,6 +1109,19 @@
         </div>
       </sc-for>
     </div>
+  </section>
+</div>
+</sc-if>
+
+<sc-if value="{{ isGallery }}" hint-placeholder-val="{{ false }}">
+<div>
+  <section style="padding:calc(40px * var(--space-y)) var(--pad-x) calc(26px * var(--space-y))">
+    <a href="#home" class="wur-arrowlink wur-arrowlink--back"><span class="wur-arrow" aria-hidden="true">←</span> Home</a>
+    <h1 style="font-family:var(--font-serif);font-size:42px;font-weight:700;color:var(--pine-green);margin:16px 0 8px">Gallery</h1>
+  </section>
+  <section style="padding:0 var(--pad-x) calc(72px * var(--space-y))">
+    <!-- gallery.js fills this in; the photos are listed at the top of that file. -->
+    <div data-xgal></div>
   </section>
 </div>
 </sc-if>
@@ -1382,7 +1390,7 @@ const SKILL_GROUPS = [
   ]}
 ];
 
-const VIEWS = ['home','publications','research','skills'];
+const VIEWS = ['home','publications','research','skills','gallery'];
 const PROJECTS = ONGOING.concat(FINISHED);
 // The gallery (gallery.js) reads its project text from here.
 window.XG_PROJECTS = PROJECTS;
@@ -1584,12 +1592,14 @@ class Component extends DCLogic {
         {label:'Home', href:'#home'},
         {label:'Publications', href:'#publications'},
         {label:'Research', href:'#research'},
-        {label:'Skills', href:'#skills'}
+        {label:'Skills', href:'#skills'},
+        {label:'Gallery', href:'#gallery'}
       ],
       isHome: view === 'home',
       isPublications: view === 'publications',
       isResearch: view === 'research',
       isSkills: view === 'skills',
+      isGallery: view === 'gallery',
       cvHref: this.props.cvHref ?? './cv/Xiaojun_Ge_CV.pdf',
       showEducation: showEducation,
       education: EDUCATION,

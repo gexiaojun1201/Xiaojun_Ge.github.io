@@ -9,9 +9,9 @@
      Shelf.tsx       → rows, drag to scroll, arrow buttons, keyboard cursor
      Art.tsx         → picture with a loading shimmer
 
-   The page is drawn by the template runtime, which rebuilds the home view
-   on every route change. So this file does not run once: it watches for the
-   empty `[data-xgal]` element in the home view and fills it whenever a new
+   The page is drawn by the template runtime, which rebuilds a view on every
+   route change. So this file does not run once: it watches for the
+   empty `[data-xgal]` element in the Gallery view and fills it whenever a new
    one shows up — the same way motion.js picks up its pills and folds.
 
    The words come from the project cards (index.html publishes them as
@@ -171,11 +171,13 @@
      78 (of 255); a mid-dark green photo came out "light" and got dark text
      on dark. Light text with its own dark wash holds on anything but a
      clearly light picture, so the switch sits at 140. */
-  function measureTone(src, focus) {
+  function measureTone(src, focus, aspect) {
     return new Promise(function (resolve) {
       var img = new Image();
       img.onload = function () {
-        var w = 48, h = 27;
+        /* Sampled at the shape of the window the picture is cropped to — a
+           wide stage on a desktop, a tall one on a phone. */
+        var h = 27, w = Math.max(12, Math.round(h * aspect));
         var canvas = document.createElement('canvas');
         canvas.width = w;
         canvas.height = h;
@@ -615,11 +617,14 @@
       D.next.classList.toggle('is-dim', D.index === n - 1);
       D.sr.textContent = D.row.project.title + '. ' + item.caption;
 
-      var known = D.tones[item.id];
+      var box = D.stage.getBoundingClientRect();
+      var aspect = box.width > 0 && box.height > 0 ? box.width / box.height : 16 / 9;
+      var key = item.id + '@' + aspect.toFixed(1);
+      var known = D.tones[key];
       if (known) { setTone(known); return; }
-      measureTone(item.src, item.focus).then(function (tone) {
+      measureTone(item.src, item.focus, aspect).then(function (tone) {
         if (!D) return;
-        D.tones[item.id] = tone;
+        D.tones[key] = tone;
         if (D.row.items[D.index] === item) setTone(tone);
       });
     }
@@ -747,7 +752,7 @@
   }
 
   /* ── Mounting ─────────────────────────────────────────────────────────
-     The home view is torn down and rebuilt on every route change, so the
+     The Gallery view is torn down and rebuilt on every route change, so the
      check runs on every DOM change (once per frame) and on a short retry
      while the project data is still on its way. */
 
