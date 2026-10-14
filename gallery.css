@@ -159,6 +159,11 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+.xgal-card.is-portrait {
+  width: calc(var(--xgal-card-w) * 0.46875);   /* 16:10 height at 3:4 */
+  aspect-ratio: 3 / 4;
+}
+
 .xgal-card:focus-visible { outline: 3px solid var(--color-primary); outline-offset: 3px; }
 
 .xgal-card.is-focus {
@@ -358,7 +363,13 @@
   opacity: 1;
 }
 
-.xgal-slide .xgal-art.is-portrait img:not(.xgal-art__back) { object-fit: contain; }
+/* The sharp photo has to be positioned too: an absolutely positioned
+   backdrop otherwise paints over a static image and hides it. */
+.xgal-slide .xgal-art.is-portrait img:not(.xgal-art__back) {
+  position: relative;
+  z-index: 1;
+  object-fit: contain;
+}
 
 /* Leaving: the strip collapses to the one picture on show, and the stage
    (flown by gallery.js) carries it back to its card. The strip's slide
@@ -500,29 +511,19 @@
   );
 }
 
-.xgal-chrome .xgal-service,
-.xgal-chrome .xgal-counter,
-.xgal-chrome .xgal-cast {
+.xgal-chrome .xgal-counter {
   color: color-mix(in srgb, currentColor 80%, transparent);
 }
 
-.xgal-chrome .xgal-cast b,
 .xgal-chrome .xgal-title,
 .xgal-chrome .xgal-logline { color: inherit; }
 
 .xgal-chrome.is-paper .xgal-title,
-.xgal-chrome.is-paper .xgal-logline,
-.xgal-chrome.is-paper .xgal-cast b { text-shadow: 0 1px 2px rgba(8, 14, 12, 0.55); }
+.xgal-chrome.is-paper .xgal-logline { text-shadow: 0 1px 2px rgba(8, 14, 12, 0.55); }
 
 .xgal-chrome.is-ink .xgal-title,
-.xgal-chrome.is-ink .xgal-logline,
-.xgal-chrome.is-ink .xgal-cast b {
+.xgal-chrome.is-ink .xgal-logline {
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.72), 0 8px 18px rgba(251, 246, 229, 0.45);
-}
-
-.xgal-chrome .xgal-pill {
-  border-color: color-mix(in srgb, currentColor 42%, transparent);
-  color: inherit;
 }
 
 .xgal-chrome > * {
@@ -543,11 +544,8 @@
 .xgal-chrome.is-on > *:nth-child(2) { transition-delay: 180ms; }
 .xgal-chrome.is-on > *:nth-child(3) { transition-delay: 320ms; }
 .xgal-chrome.is-on > *:nth-child(4) { transition-delay: 460ms; }
-.xgal-chrome.is-on > *:nth-child(5) { transition-delay: 600ms; }
-.xgal-chrome.is-on > *:nth-child(6) { transition-delay: 740ms; }
 
 .xgal-badge-row,
-.xgal-service,
 .xgal-actions {
   display: flex;
   flex-wrap: wrap;
@@ -570,45 +568,56 @@
   text-transform: uppercase;
 }
 
-.xgal-title-block {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(9rem, 20vw);
-  gap: 1.5rem;
-  align-items: end;
-}
-
-/* Project titles are whole sentences, not film titles: the prototype's
-   4.6rem would run to five lines. */
+/* A photo's own title is a few words, so it takes the prototype's large
+   hero size back, in the site's serif. */
 .xgal-title {
   max-width: 52rem;
   margin: 0.15rem 0 0;
   font-family: var(--font-serif);
-  font-size: clamp(1.7rem, 3vw, 2.9rem);
+  font-size: clamp(2.1rem, 4.2vw, 4rem);
   font-weight: 700;
-  letter-spacing: -0.01em;
-  line-height: 1.12;
+  letter-spacing: -0.015em;
+  line-height: 1.05;
   text-wrap: balance;
 }
 
-.xgal-service { margin-top: 0.45rem; font-size: 0.88rem; font-weight: 600; }
-
-.xgal-pill {
-  padding: 0.02rem 0.5rem;
-  border: 1px solid;
-  border-radius: 999px;
-}
-
-.xgal-cast { margin: 0; font-size: 0.86rem; }
-.xgal-cast b { display: block; margin-bottom: 0.15rem; font-weight: 700; }
-
+/* Two lines on a desktop: the measure is set so ~140 characters wrap once. */
 .xgal-logline {
-  max-width: 40rem;
-  margin: 0;
-  font-size: 1rem;
+  max-width: 42rem;
+  margin: 0.2rem 0 0.35rem;
+  font-size: 1.06rem;
   line-height: 1.5;
 }
 
-.xgal-actions { gap: 0.55rem; pointer-events: auto; }
+.xgal-actions { gap: 0.6rem; margin-top: 0.2rem; pointer-events: auto; }
+
+/* "Original": the photo at full resolution, on R2. A quieter outline pill
+   beside the green "Project details", drawn in the text's own colour so it
+   reads on a dark or a light photo alike. */
+.xgal-orig {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border: 1.5px solid color-mix(in srgb, currentColor 70%, transparent);
+  border-radius: 9999px;
+  color: inherit;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: background-color 200ms ease, border-color 200ms ease;
+}
+
+.xgal-orig:hover,
+.xgal-orig:focus-visible {
+  color: inherit;
+  border-color: currentColor;
+  background: color-mix(in srgb, currentColor 14%, transparent);
+}
+
+.xgal-orig svg { width: 15px; height: 15px; }
 
 .xgal-sr {
   position: absolute;
@@ -643,8 +652,7 @@
     --xgal-gap: 0.45rem;
   }
 
-  .xgal-title-block { grid-template-columns: 1fr; gap: 0.4rem; }
-  .xgal-title { font-size: 1.6rem; }
+  .xgal-title { font-size: 2rem; }
   .xgal-chrome { padding: 4.4rem calc(var(--xgal-peek) + 0.85rem) 1rem; }
   .xgal-stage,
   .xgal-chrome { border-radius: 0; }

@@ -15,58 +15,89 @@
    empty `[data-xgal]` element in the Gallery view and fills it whenever a new
    one shows up — the same way motion.js picks up its pills and folds.
 
-   The words come from the project cards (index.html publishes them as
-   window.XG_PROJECTS), so a project is described in one place. What this
-   file adds is the photos, below.
+   Each photo carries its own title and two lines of text, below. A row
+   tied to a project takes its years and its "Project details" link from
+   the project cards (index.html publishes them as window.XG_PROJECTS).
    ───────────────────────────────────────────────────────────────────────── */
 (function () {
   'use strict';
 
   /* ── The photos ───────────────────────────────────────────────────────
-     One shelf row per project, in the order of the projects on the page.
-     To use a real photo, put the file in images/gallery/ and change `src`.
-     `caption` is the line under the picture; `focus` is which part of the
-     photo stays in view when it is cropped to a card ("center 30%" keeps
-     the upper third of a portrait photo, say). Add or remove entries
-     freely — a row takes any number of photos. */
-  var GALLERY = {
-    'proj-carbon-sink': {
-      label: 'Plantation carbon sink',
-      photos: [
-        { src: 'images/gallery/carbon-sink-1.svg', caption: 'Field site or sampling', focus: 'center' },
-        { src: 'images/gallery/carbon-sink-2.svg', caption: 'Laboratory or instrument', focus: 'center' },
-        { src: 'images/gallery/carbon-sink-3.svg', caption: 'Data, plot or team', focus: 'center' },
-        { src: 'images/gallery/carbon-sink-4.svg', caption: 'Study site', focus: 'center' }
-      ]
-    },
-    'proj-wetland': {
-      label: 'Constructed wetlands',
-      photos: [
-        { src: 'images/gallery/wetland-1.svg', caption: 'Field site or sampling', focus: 'center' },
-        { src: 'images/gallery/wetland-2.svg', caption: 'Laboratory or instrument', focus: 'center' },
-        { src: 'images/gallery/wetland-3.svg', caption: 'Data, plot or team', focus: 'center 30%' },
-        { src: 'images/gallery/wetland-4.svg', caption: 'Study site', focus: 'center' }
-      ]
-    },
-    'proj-nanling': {
-      label: 'Nanling forest soils',
-      photos: [
-        { src: 'images/gallery/nanling-1.svg', caption: 'Field site or sampling', focus: 'center' },
-        { src: 'images/gallery/nanling-2.svg', caption: 'Laboratory or instrument', focus: 'center' },
-        { src: 'images/gallery/nanling-3.svg', caption: 'Data, plot or team', focus: 'center' },
-        { src: 'images/gallery/nanling-4.svg', caption: 'Study site', focus: 'center' }
-      ]
-    },
-    'proj-dvrt': {
-      label: 'Deep tillage & erosion',
-      photos: [
-        { src: 'images/gallery/dvrt-1.svg', caption: 'Field site or sampling', focus: 'center' },
-        { src: 'images/gallery/dvrt-2.svg', caption: 'Laboratory or instrument', focus: 'center' },
-        { src: 'images/gallery/dvrt-3.svg', caption: 'Data, plot or team', focus: 'center' },
-        { src: 'images/gallery/dvrt-4.svg', caption: 'Study site', focus: 'center' }
-      ]
-    }
-  };
+     One shelf row per entry, top to bottom. A row with `project` takes its
+     years and its "Project details" link from that project; a row without
+     one gives its own `years`.
+     Each photo `file` has three copies with that name:
+       images/gallery/<file>.jpg      2400px, shown when the photo is open
+       images/gallery/<file>-sm.jpg   small, the card on the shelf
+       ORIGINALS/<file>.jpg           full resolution on Cloudflare R2
+     Landscape photos are cut to 16:10, portrait ones to 3:4 and marked
+     `portrait: true`, which gives them a narrower card of the same height. */
+  var ORIGINALS = 'https://pub-faa01bc7d5264c278b9d220cd7ffa6c8.r2.dev/originals/';
+
+  var GALLERY = [
+    { project: 'proj-wetland', label: 'Constructed wetlands', photos: [
+      { file: 'wetland-01', title: 'A wetland for swine farm wastewater',
+        text: 'An existing constructed wetland treating swine farm wastewater, seen whole during the early survey, its long cells laid out between concrete walkways.' },
+      { file: 'wetland-02', title: 'The planted cells',
+        text: 'A closer look at the planted zone of the same wetland, with the wastewater spreading through the dense plants in each cell.' },
+      { file: 'wetland-03', portrait: true, title: 'Pretreatment ponds',
+        text: 'Wastewater first settles in the pretreatment ponds, before it flows on into the planted wetland cells.' },
+      { file: 'wetland-04', title: 'Filling the mesocosms',
+        text: 'Loading soil into the tanks on the rooftop, the first step in building the mesocosm surface-flow wetlands.' },
+      { file: 'wetland-05', title: 'Flooded and left to settle',
+        text: 'The mesocosm tanks filled with water and left to settle under a shade canopy, before any plants went in.' },
+      { file: 'wetland-06', title: 'Before planting',
+        text: 'The field-scale surface-flow wetland while it was being built: already flooded, the red soil banks still bare and no plants in yet.' },
+      { file: 'wetland-07', title: 'First growth in the mesocosms',
+        text: 'Young plants taking hold in the mesocosm tanks in the early weeks of the experiment, the water still visible between them.' },
+      { file: 'wetland-08', title: 'After the typhoon',
+        text: 'The shelter over the mesocosms after a typhoon passed through, its plastic cover torn away from the frame.' },
+      { file: 'wetland-09', title: 'Mesocosms in full growth',
+        text: 'The rooftop mesocosm wetlands under their shelter, the plants spilling over the edges of the tanks by harvest time.' },
+      { file: 'wetland-10', title: 'Readings in the mesocosms',
+        text: 'Handheld meters reading water quality directly in the planted mesocosms during one of the sampling rounds.' },
+      { file: 'wetland-11', title: 'Sediment incubations',
+        text: 'Sediment incubations set up in foil-wrapped jars in the laboratory, part of the work on nitrogen transformation.' },
+      { file: 'wetland-12', portrait: true, title: 'Harvest in the field wetland',
+        text: 'The field-scale wetland at harvest, its water surface hidden under a dense mat of plants, with one of the team wading in among them.' }
+    ]},
+    { project: 'proj-nanling', label: 'Nanling forest soils', photos: [
+      { file: 'nanling-01', title: 'Above the clouds',
+        text: 'On a sampling trip in the Nanling mountains, the ridges below sit in cloud. The plots were laid out along an altitudinal gradient.' },
+      { file: 'nanling-02', title: 'A mine under restoration',
+        text: 'A quarried rock face at a mine restoration site, seen during the same round of fieldwork in the Nanling region.' },
+      { file: 'nanling-03', title: 'The walk in',
+        text: 'Walking in to the monitoring plots along a forest trail, carrying the sampling gear, on a winter round of soil sampling.' },
+      { file: 'nanling-04', portrait: true, title: 'Coring with a soil auger',
+        text: 'Taking soil cores beneath the forest canopy, for analyses of physicochemical properties, carbon fractions and the microbial community.' }
+    ]},
+    { project: 'proj-dvrt', label: 'Deep tillage & erosion', photos: [
+      { file: 'dvrt-01', title: 'Sugarcane under deep tillage',
+        text: 'The early survey began in the sugarcane fields, comparing how the crop grew under deep vertical rotary tillage and under conventional tillage.' },
+      { file: 'dvrt-02', title: 'Roots dug out in the field',
+        text: 'Sugarcane stools were lifted beside the marked control rows, so the root systems under the two tillage practices could be compared in place.' },
+      { file: 'dvrt-03', title: 'Two root systems, side by side',
+        text: 'Root systems from the two tillage treatments, cleaned and laid out on paper in the laboratory to compare their size and spread.' },
+      { file: 'dvrt-04', portrait: true, title: 'Reading the soil profile',
+        text: 'A freshly cut soil profile among the sugarcane, with a tape for depth. The soil was described layer by layer down the profile.' },
+      { file: 'dvrt-05', title: 'The rainfall simulator at work',
+        text: 'The portable rainfall simulator built for the project, spraying over the sugarcane plots. Its nozzle hangs from a line strung above the crop.' },
+      { file: 'dvrt-06', portrait: true, title: 'Testing rainfall intensity',
+        text: 'Before the runs, the simulator was tested in the field for a steady rainfall intensity, with cups set out along the track to catch the spray.' },
+      { file: 'dvrt-07', portrait: true, title: 'A runoff plot',
+        text: 'A bounded plot among the sugarcane. Its metal border routes surface runoff to the outlet, where it is collected in a bucket.' },
+      { file: 'dvrt-08', portrait: true, title: 'Runoff samples',
+        text: 'Bottled runoff and sediment from the simulated rainfall runs, lined up and ready to go to the laboratory for analysis.' }
+    ]},
+    { label: 'Others', years: '2020', photos: [
+      { file: 'others-01', title: 'Inside a collapsing gully',
+        text: 'Looking up the walls of a benggang, a collapsing gully cut deep into weathered soil, at the start of a sampling climb.' },
+      { file: 'others-02', title: 'The climb back down',
+        text: 'Coming back down through the gully after sampling at its head, between walls of loose, weathered material.' },
+      { file: 'others-03', portrait: true, title: 'Sediment behind the dam',
+        text: 'Fine sediment washed out of the gully settles behind a check dam, then dries and cracks into a mosaic of plates.' }
+    ]}
+  ];
 
   /* ── Timings from the prototype ───────────────────────────────────────
      TRAVEL has to equal --xgal-travel in gallery.css. */
@@ -85,7 +116,8 @@
   var ICONS = {
     left: '<path d="m15 18-6-6 6-6"/>',
     right: '<path d="m9 18 6-6-6-6"/>',
-    back: '<path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>'
+    back: '<path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>',
+    out: '<path d="M7 17 17 7"/><path d="M8 7h9v9"/>'
   };
 
   function icon(name) {
@@ -128,8 +160,9 @@
   }
 
   /* Picture that fades in once loaded and shows a shimmer until then.
-     With `contain`, a portrait photo is shown whole over a blurred copy of
-     itself instead of being cropped. */
+     With `contain` (the viewer) it uses the large copy, and a portrait photo
+     is shown whole over a blurred copy of itself instead of being cropped;
+     without it (a shelf card) it uses the small copy. */
   function makeArt(item, contain) {
     var wrap = el('div', 'xgal-art is-loading');
     var img = new Image();
@@ -150,7 +183,7 @@
         back.className = 'xgal-art__back';
         back.alt = '';
         back.setAttribute('aria-hidden', 'true');
-        back.src = item.src;
+        back.src = item.thumb;
         wrap.insertBefore(back, img);
         wrap.classList.add('is-portrait');
       }
@@ -161,7 +194,7 @@
       wrap.classList.remove('is-loading');
       wrap.classList.add('is-error');
     };
-    img.src = item.src;
+    img.src = contain ? item.src : item.thumb;
     if (img.complete && img.naturalWidth > 0) ready();
     wrap.appendChild(img);
     return wrap;
@@ -213,21 +246,28 @@
   }
 
   function buildRows(projects) {
-    var rows = [];
-    projects.forEach(function (p) {
-      var cfg = GALLERY[p.id];
-      if (!cfg || !cfg.photos.length) return;
-      rows.push({
-        id: p.id,
+    return GALLERY.map(function (cfg, r) {
+      var project = null;
+      projects.forEach(function (p) { if (p.id === cfg.project) project = p; });
+      return {
+        id: cfg.project || 'row-' + r,
         label: cfg.label,
-        years: yearSpan(p.period),
-        project: p,
-        items: cfg.photos.map(function (ph, i) {
-          return { id: p.id + ':' + i, src: ph.src, caption: ph.caption || '', focus: ph.focus || 'center' };
+        years: project ? yearSpan(project.period) : cfg.years || '',
+        project: project,
+        items: cfg.photos.map(function (ph) {
+          return {
+            id: ph.file,
+            title: ph.title,
+            text: ph.text,
+            portrait: !!ph.portrait,
+            src: 'images/gallery/' + ph.file + '.jpg',
+            thumb: 'images/gallery/' + ph.file + '-sm.jpg',
+            original: ORIGINALS + ph.file + '.jpg',
+            focus: 'center'
+          };
         })
-      });
-    });
-    return rows;
+      };
+    }).filter(function (row) { return row.items.length; });
   }
 
   /* ── One gallery ────────────────────────────────────────────────────── */
@@ -296,7 +336,7 @@
       scroller.addEventListener('pointercancel', function () { drag.down = false; });
 
       row.items.forEach(function (item, col) {
-        var card = button('xgal-card', row.label + ': ' + item.caption);
+        var card = button('xgal-card' + (item.portrait ? ' is-portrait' : ''), row.label + ': ' + item.title);
         card.appendChild(makeArt(item, false));
         card.addEventListener('focus', function () { cursor = { row: rowIndex, col: col }; });
         card.addEventListener('click', function () {
@@ -488,12 +528,12 @@
       var root = el('div', 'xgal-detail');
       root.setAttribute('role', 'dialog');
       root.setAttribute('aria-modal', 'true');
-      root.setAttribute('aria-label', D.row.project.title);
+      root.setAttribute('aria-label', D.row.label);
 
       var ambient = el('div', 'xgal-ambient');
       var ambientImg = new Image();
       ambientImg.alt = '';
-      ambientImg.src = item.src;
+      ambientImg.src = item.thumb;
       ambient.appendChild(ambientImg);
 
       var stage = el('div', 'xgal-stage');
@@ -538,47 +578,40 @@
       back.appendChild(document.createTextNode('Back'));
       back.addEventListener('click', requestClose);
 
-      /* The text: five blocks that arrive one after another. */
+      /* The text: four blocks that arrive one after another — the row it
+         belongs to, the photo's title, its two lines, and the links. */
       var p = D.row.project;
       var chrome = el('div', 'xgal-chrome is-paper');
 
       var badgeRow = el('div', 'xgal-badge-row');
-      var badge = el('span', 'xgal-badge', /present/i.test(p.period || '') ? 'Ongoing' : 'Completed');
+      badgeRow.appendChild(el('span', 'xgal-badge', D.row.label));
       var counter = el('span', 'xgal-counter');
-      badgeRow.appendChild(badge);
       badgeRow.appendChild(counter);
 
-      var titleBlock = el('div', 'xgal-title-block');
-      var titleCol = el('div');
-      titleCol.appendChild(el('h2', 'xgal-title', p.title));
-      var service = el('div', 'xgal-service');
-      service.appendChild(el('span', '', (p.fields || []).join(' · ')));
-      if (p.period) service.appendChild(el('span', 'xgal-pill', p.period));
-      titleCol.appendChild(service);
-      var cast = el('p', 'xgal-cast');
-      cast.appendChild(el('b', '', 'Position'));
-      cast.appendChild(document.createTextNode([p.contributor, p.orgShort].filter(Boolean).join(', ')));
-      titleBlock.appendChild(titleCol);
-      titleBlock.appendChild(cast);
-
-      var logline = el('p', 'xgal-logline', p.focus || '');
-      var caption = el('div', 'xgal-service');
+      var title = el('h2', 'xgal-title');
+      var text = el('p', 'xgal-logline');
 
       var actions = el('div', 'xgal-actions');
-      var more = el('a', 'wur-pill wur-arrowlink xg-morepill', 'Project details ');
-      more.href = '#' + p.id;
-      var arrow = el('span', 'wur-arrow', '→');
-      arrow.setAttribute('aria-hidden', 'true');
-      more.appendChild(arrow);
-      /* The project card opens on the page behind; the viewer steps aside
-         at once rather than flying back. */
-      more.addEventListener('click', closeNow);
-      actions.appendChild(more);
+      if (p) {
+        var more = el('a', 'wur-pill wur-arrowlink xg-morepill', 'Project details ');
+        more.href = '#' + p.id;
+        var arrow = el('span', 'wur-arrow', '\u2192');
+        arrow.setAttribute('aria-hidden', 'true');
+        more.appendChild(arrow);
+        /* The project card opens on the page behind; the viewer steps aside
+           at once rather than flying back. */
+        more.addEventListener('click', closeNow);
+        actions.appendChild(more);
+      }
+      var orig = el('a', 'xgal-orig', 'Original ');
+      orig.target = '_blank';
+      orig.rel = 'noopener';
+      orig.appendChild(icon('out'));
+      actions.appendChild(orig);
 
       chrome.appendChild(badgeRow);
-      chrome.appendChild(titleBlock);
-      chrome.appendChild(logline);
-      chrome.appendChild(caption);
+      chrome.appendChild(title);
+      chrome.appendChild(text);
       chrome.appendChild(actions);
 
       var sr = el('p', 'xgal-sr');
@@ -598,32 +631,37 @@
       D.next = next;
       D.chrome = chrome;
       D.counter = counter;
-      D.caption = caption;
+      D.title = title;
+      D.text = text;
+      D.orig = orig;
       D.ambientImg = ambientImg;
       D.sr = sr;
 
       fillItem();
     }
 
-    /* What changes from picture to picture: the counter, the caption, the
-       blurred backdrop, the end stops on the arrows and the ink colour. */
+    /* What changes from picture to picture: the counter, the words, the
+       link to the original, the blurred backdrop, the end stops on the
+       arrows and the ink colour. */
     function fillItem() {
       var item = D.row.items[D.index];
       var n = D.row.items.length;
       D.counter.textContent = (D.index + 1) + ' / ' + n;
-      D.caption.textContent = '';
-      D.caption.appendChild(el('span', '', item.caption));
-      D.ambientImg.src = item.src;
+      D.title.textContent = item.title;
+      D.text.textContent = item.text;
+      D.orig.href = item.original;
+      D.orig.setAttribute('aria-label', 'Original photo, full resolution: ' + item.title);
+      D.ambientImg.src = item.thumb;
       D.prev.classList.toggle('is-dim', D.index === 0);
       D.next.classList.toggle('is-dim', D.index === n - 1);
-      D.sr.textContent = D.row.project.title + '. ' + item.caption;
+      D.sr.textContent = item.title + '. ' + item.text;
 
       var box = D.stage.getBoundingClientRect();
       var aspect = box.width > 0 && box.height > 0 ? box.width / box.height : 16 / 9;
       var key = item.id + '@' + aspect.toFixed(1);
       var known = D.tones[key];
       if (known) { setTone(known); return; }
-      measureTone(item.src, item.focus, aspect).then(function (tone) {
+      measureTone(item.thumb, item.focus, aspect).then(function (tone) {
         if (!D) return;
         D.tones[key] = tone;
         if (D.row.items[D.index] === item) setTone(tone);
