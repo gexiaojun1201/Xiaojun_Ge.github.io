@@ -26,75 +26,76 @@
      One shelf row per entry, top to bottom. A row with `project` takes its
      years and its "Project details" link from that project; a row without
      one gives its own `years`.
-     Each photo `file` has three copies with that name:
+     Each photo `file` has two copies in this repo:
        images/gallery/<file>.jpg      2400px, shown when the photo is open
        images/gallery/<file>-sm.jpg   small, the card on the shelf
-       ORIGINALS/<file>.jpg           full resolution on Cloudflare R2
+     and `original` names the untouched camera file on Cloudflare R2
+     (ORIGINALS/<original>.jpg), which the "Original" button opens.
      Landscape photos are cut to 16:10, portrait ones to 3:4 and marked
      `portrait: true`, which gives them a narrower card of the same height. */
-  var ORIGINALS = 'https://pub-faa01bc7d5264c278b9d220cd7ffa6c8.r2.dev/originals/';
+  var ORIGINALS = 'https://pub-faa01bc7d5264c278b9d220cd7ffa6c8.r2.dev/inbox/';
 
   var GALLERY = [
     { project: 'proj-wetland', label: 'Constructed wetlands', photos: [
-      { file: 'wetland-01', title: 'A wetland for swine farm wastewater',
+      { file: 'wetland-01', original: '0022', title: 'A wetland for swine farm wastewater',
         text: 'An existing constructed wetland treating swine farm wastewater, seen whole during the early survey, its long cells laid out between concrete walkways.' },
-      { file: 'wetland-02', title: 'The planted cells',
+      { file: 'wetland-02', original: '0021', title: 'The planted cells',
         text: 'A closer look at the planted zone of the same wetland, with the wastewater spreading through the dense plants in each cell.' },
-      { file: 'wetland-03', portrait: true, title: 'Pretreatment ponds',
+      { file: 'wetland-03', original: '0020', portrait: true, title: 'Pretreatment ponds',
         text: 'Wastewater first settles in the pretreatment ponds, before it flows on into the planted wetland cells.' },
-      { file: 'wetland-04', title: 'Filling the mesocosms',
+      { file: 'wetland-04', original: '0024', title: 'Filling the mesocosms',
         text: 'Loading soil into the tanks on the rooftop, the first step in building the mesocosm surface-flow wetlands.' },
-      { file: 'wetland-05', title: 'Flooded and left to settle',
+      { file: 'wetland-05', original: '0039', title: 'Flooded and left to settle',
         text: 'The mesocosm tanks filled with water and left to settle under a shade canopy, before any plants went in.' },
-      { file: 'wetland-06', title: 'Before planting',
+      { file: 'wetland-06', original: '0040', title: 'Before planting',
         text: 'The field-scale surface-flow wetland while it was being built: already flooded, the red soil banks still bare and no plants in yet.' },
-      { file: 'wetland-07', title: 'First growth in the mesocosms',
+      { file: 'wetland-07', original: '0030', title: 'First growth in the mesocosms',
         text: 'Young plants taking hold in the mesocosm tanks in the early weeks of the experiment, the water still visible between them.' },
-      { file: 'wetland-08', title: 'After the typhoon',
+      { file: 'wetland-08', original: '0034', title: 'After the typhoon',
         text: 'The shelter over the mesocosms after a typhoon passed through, its plastic cover torn away from the frame.' },
-      { file: 'wetland-09', title: 'Mesocosms in full growth',
+      { file: 'wetland-09', original: '0036', title: 'Mesocosms in full growth',
         text: 'The rooftop mesocosm wetlands under their shelter, the plants spilling over the edges of the tanks by harvest time.' },
-      { file: 'wetland-10', title: 'Readings in the mesocosms',
+      { file: 'wetland-10', original: '0026', title: 'Readings in the mesocosms',
         text: 'Handheld meters reading water quality directly in the planted mesocosms during one of the sampling rounds.' },
-      { file: 'wetland-11', title: 'Sediment incubations',
+      { file: 'wetland-11', original: '0023', title: 'Sediment incubations',
         text: 'Sediment incubations set up in foil-wrapped jars in the laboratory, part of the work on nitrogen transformation.' },
-      { file: 'wetland-12', portrait: true, title: 'Harvest in the field wetland',
+      { file: 'wetland-12', original: '0042', portrait: true, title: 'Harvest in the field wetland',
         text: 'The field-scale wetland at harvest, its water surface hidden under a dense mat of plants, with one of the team wading in among them.' }
     ]},
     { project: 'proj-nanling', label: 'Nanling forest soils', photos: [
-      { file: 'nanling-01', title: 'Above the clouds',
+      { file: 'nanling-01', original: '0013', title: 'Above the clouds',
         text: 'On a sampling trip in the Nanling mountains, the ridges below sit in cloud. The plots were laid out along an altitudinal gradient.' },
-      { file: 'nanling-02', title: 'A mine under restoration',
+      { file: 'nanling-02', original: '0014', title: 'A mine under restoration',
         text: 'A quarried rock face at a mine restoration site, seen during the same round of fieldwork in the Nanling region.' },
-      { file: 'nanling-03', title: 'The walk in',
+      { file: 'nanling-03', original: '0015', title: 'The walk in',
         text: 'Walking in to the monitoring plots along a forest trail, carrying the sampling gear, on a winter round of soil sampling.' },
-      { file: 'nanling-04', portrait: true, title: 'Coring with a soil auger',
+      { file: 'nanling-04', original: '0016', portrait: true, title: 'Coring with a soil auger',
         text: 'Taking soil cores beneath the forest canopy, for analyses of physicochemical properties, carbon fractions and the microbial community.' }
     ]},
     { project: 'proj-dvrt', label: 'Deep tillage & erosion', photos: [
-      { file: 'dvrt-01', title: 'Sugarcane under deep tillage',
+      { file: 'dvrt-01', original: '0002', title: 'Sugarcane under deep tillage',
         text: 'The early survey began in the sugarcane fields, comparing how the crop grew under deep vertical rotary tillage and under conventional tillage.' },
-      { file: 'dvrt-02', title: 'Roots dug out in the field',
+      { file: 'dvrt-02', original: '0003', title: 'Roots dug out in the field',
         text: 'Sugarcane stools were lifted beside the marked control rows, so the root systems under the two tillage practices could be compared in place.' },
-      { file: 'dvrt-03', title: 'Two root systems, side by side',
+      { file: 'dvrt-03', original: '0004', title: 'Two root systems, side by side',
         text: 'Root systems from the two tillage treatments, cleaned and laid out on paper in the laboratory to compare their size and spread.' },
-      { file: 'dvrt-04', portrait: true, title: 'Reading the soil profile',
+      { file: 'dvrt-04', original: '0009', portrait: true, title: 'Reading the soil profile',
         text: 'A freshly cut soil profile among the sugarcane, with a tape for depth. The soil was described layer by layer down the profile.' },
-      { file: 'dvrt-05', title: 'The rainfall simulator at work',
+      { file: 'dvrt-05', original: '0006', title: 'The rainfall simulator at work',
         text: 'The portable rainfall simulator built for the project, spraying over the sugarcane plots. Its nozzle hangs from a line strung above the crop.' },
-      { file: 'dvrt-06', portrait: true, title: 'Testing rainfall intensity',
+      { file: 'dvrt-06', original: '0007', portrait: true, title: 'Testing rainfall intensity',
         text: 'Before the runs, the simulator was tested in the field for a steady rainfall intensity, with cups set out along the track to catch the spray.' },
-      { file: 'dvrt-07', portrait: true, title: 'A runoff plot',
+      { file: 'dvrt-07', original: '0008', portrait: true, title: 'A runoff plot',
         text: 'A bounded plot among the sugarcane. Its metal border routes surface runoff to the outlet, where it is collected in a bucket.' },
-      { file: 'dvrt-08', portrait: true, title: 'Runoff samples',
+      { file: 'dvrt-08', original: '0011', portrait: true, title: 'Runoff samples',
         text: 'Bottled runoff and sediment from the simulated rainfall runs, lined up and ready to go to the laboratory for analysis.' }
     ]},
     { label: 'Others', years: '2020', photos: [
-      { file: 'others-01', title: 'Inside a collapsing gully',
+      { file: 'others-01', original: '0017', title: 'Inside a collapsing gully',
         text: 'Looking up the walls of a benggang, a collapsing gully cut deep into weathered soil, at the start of a sampling climb.' },
-      { file: 'others-02', title: 'The climb back down',
+      { file: 'others-02', original: '0018', title: 'The climb back down',
         text: 'Coming back down through the gully after sampling at its head, between walls of loose, weathered material.' },
-      { file: 'others-03', portrait: true, title: 'Sediment behind the dam',
+      { file: 'others-03', original: '0019', portrait: true, title: 'Sediment behind the dam',
         text: 'Fine sediment washed out of the gully settles behind a check dam, then dries and cracks into a mosaic of plates.' }
     ]}
   ];
@@ -262,7 +263,7 @@
             portrait: !!ph.portrait,
             src: 'images/gallery/' + ph.file + '.jpg',
             thumb: 'images/gallery/' + ph.file + '-sm.jpg',
-            original: ORIGINALS + ph.file + '.jpg',
+            original: ORIGINALS + ph.original + '.jpg',
             focus: 'center'
           };
         })
