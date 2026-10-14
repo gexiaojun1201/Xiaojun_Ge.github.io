@@ -1,0 +1,4 @@
+# Files in the repository that are not part of the website. Cloudflare
+# uploads everything in the assets directory (./), and the git history
+# alone grew past its 25 MiB per-file limit.
+.git

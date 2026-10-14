@@ -1,0 +1,685 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   Gallery.
+
+   The shelf, the open / close / switch animations and every duration and
+   curve below are ported one-to-one from the Gallery prototype's
+   src/styles.css (a separate project, not part of this repo). Colours,
+   fonts, radii and the "Project details" pill are this site's, read from
+   the design-system tokens.
+
+   Two layers:
+     .xgal        the shelf, which lives inside the page (and so inside the
+                  page's `body{zoom}`).
+     .xgal-layer  the full-screen viewer, appended to <body>. It counter-zooms
+                  by --page-zoom-inv — the same trick the zoom bar uses — so
+                  inside it one CSS pixel is one screen pixel and vh / vw
+                  mean what the prototype meant by them.
+
+   `.is-lite` is set by gallery.js on phones and under reduced motion: the
+   viewer then fades in and out instead of flying back to the card, and the
+   text arrives in one piece instead of line by line.
+   ───────────────────────────────────────────────────────────────────────── */
+
+.xgal,
+.xgal-layer {
+  --xgal-travel: 800ms;                          /* TRAVEL in gallery.js  */
+  --xgal-slide: cubic-bezier(0.45, 0.05, 0.55, 1);
+  --xgal-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --xgal-ink: #153816;                           /* forest-text           */
+  --xgal-paper: #FBF6E5;                         /* ivory-card            */
+}
+
+.xgal button,
+.xgal-layer button {
+  font: inherit;
+  cursor: pointer;
+}
+
+/* ── Shelf ──────────────────────────────────────────────────────────── */
+
+.xgal {
+  --xgal-card-w: 330px;
+  outline: none;
+}
+
+.xgal-shelf {
+  transform-origin: center 18%;
+  transition: transform 520ms var(--xgal-ease);
+}
+
+.xgal.is-behind:not(.is-lite) .xgal-shelf { transform: scale(0.965); }
+
+.xgal-row {
+  position: relative;
+  opacity: 0;
+}
+
+.xgal-row + .xgal-row { margin-top: 8px; }
+
+.xgal.is-live .xgal-row { animation: xgal-row-in 680ms var(--xgal-ease) both; }
+.xgal.is-live .xgal-row:nth-child(2) { animation-delay: 90ms; }
+.xgal.is-live .xgal-row:nth-child(3) { animation-delay: 170ms; }
+.xgal.is-live .xgal-row:nth-child(4) { animation-delay: 250ms; }
+.xgal.is-live .xgal-row:nth-child(5) { animation-delay: 320ms; }
+
+@keyframes xgal-row-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+
+.xgal-label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+  margin: 0;
+}
+
+/* The pink capsule the page's eyebrows wear ("Selected work", "In the
+   field"), at the same colours and the same radius, a size smaller. */
+.xgal-label__years {
+  display: inline-block;
+  padding: 4px 9px;
+  border-radius: 7px;
+  background: #FFA8A8;
+  color: #153816;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.xgal-label__name {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--pine-green);
+}
+
+/* The negative margin / matching padding leaves room for a card to lift and
+   grow past the column edge without the scroller clipping it. */
+.xgal-scroller {
+  display: flex;
+  gap: 14px;
+  margin: 0 -10px;
+  padding: 14px 10px 24px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.xgal-scroller::-webkit-scrollbar { display: none; }
+.xgal-scroller.is-drag { cursor: grabbing; }
+
+.xgal-rowbtn {
+  position: absolute;
+  top: 50%;
+  z-index: 3;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  background: var(--bg-surface);
+  color: var(--forest-text);
+  box-shadow: 0 8px 22px rgba(21, 56, 22, 0.14);
+  opacity: 0;
+  transition: opacity 180ms ease, transform 150ms ease;
+}
+
+.xgal-row:hover .xgal-rowbtn,
+.xgal-row:focus-within .xgal-rowbtn { opacity: 1; }
+
+.xgal-rowbtn.prev { left: -6px; }
+.xgal-rowbtn.next { right: -6px; }
+.xgal-rowbtn:active { transform: scale(0.96); }
+.xgal-rowbtn svg { width: 20px; height: 20px; }
+
+.xgal-card {
+  position: relative;
+  flex: 0 0 auto;
+  width: var(--xgal-card-w);
+  aspect-ratio: 16 / 10;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-card-sm, 16px);
+  overflow: hidden;
+  color: var(--xgal-paper);
+  background: var(--sand-border);
+  box-shadow: var(--shadow-card);
+  text-align: left;
+  transition: transform 220ms var(--xgal-ease), box-shadow 220ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.xgal-card.is-portrait {
+  width: calc(var(--xgal-card-w) * 0.46875);   /* 16:10 height at 3:4 */
+  aspect-ratio: 3 / 4;
+}
+
+.xgal-card:focus-visible { outline: 3px solid var(--color-primary); outline-offset: 3px; }
+
+.xgal-card.is-focus {
+  outline: none;
+  transform: translateY(-6px) scale(1.035);
+  box-shadow: 0 0 0 3px var(--color-primary), 0 16px 34px rgba(21, 56, 22, 0.14);
+}
+
+/* Hover lift only where there is a mouse; on a phone it would stick after
+   a tap. */
+@media (hover: hover) {
+  .xgal-card:hover {
+    transform: translateY(-6px) scale(1.035);
+    box-shadow: 0 16px 34px rgba(21, 56, 22, 0.16);
+  }
+  .xgal-card.is-focus:hover {
+    box-shadow: 0 0 0 3px var(--color-primary), 0 16px 34px rgba(21, 56, 22, 0.14);
+  }
+}
+
+.xgal-card:active { transform: translateY(-2px) scale(0.99); }
+
+/* ── Picture with a loading shimmer ─────────────────────────────────── */
+
+.xgal-art { position: absolute; inset: 0; }
+
+.xgal-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity 520ms ease, transform 700ms var(--xgal-ease);
+}
+
+.xgal-art.is-ready img { opacity: 1; transform: none; }
+
+.xgal-art.is-loading::before,
+.xgal-art.is-error::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(100deg, transparent 20%, rgba(21, 56, 22, 0.16) 42%, transparent 64%),
+    var(--sand-border);
+  background-size: 220% 100%;
+  animation: xgal-shimmer 1.25s ease-in-out infinite;
+}
+
+.xgal-art.is-error::before { animation: none; }
+
+@keyframes xgal-shimmer {
+  from { background-position: 100% 0; }
+  to { background-position: -100% 0; }
+}
+
+/* The card the viewer flew back to settles in under the arriving window. */
+.xgal.is-settling .xgal-shelf { transform: none; transition: none; }
+
+.xgal.is-settling .xgal-card.is-return .xgal-art.is-ready img {
+  animation: xgal-settle 560ms var(--xgal-ease);
+}
+
+@keyframes xgal-settle {
+  from { opacity: 0.4; transform: scale(1.045); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ── Viewer ─────────────────────────────────────────────────────────── */
+
+.xgal-layer {
+  --xgal-peek: 6.4%;
+  --xgal-gap: 0.7rem;
+  --xgal-inset-y: 2.4vh;
+  --xgal-inset-x: 2.3vw;
+  --xgal-radius: var(--radius-card, 24px);
+  position: fixed;
+  inset: 0;
+  z-index: 95;
+  zoom: var(--page-zoom-inv, 1);
+  pointer-events: none;
+  font-family: var(--font-sans);
+  line-height: 1.5;
+}
+
+.xgal-scrim {
+  position: absolute;
+  inset: 0;
+  background: var(--bg-page);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 480ms ease;
+}
+
+.xgal-scrim.on { opacity: 0.4; }
+
+.xgal-detail {
+  position: absolute;
+  inset: 0;
+  pointer-events: auto;
+}
+
+.xgal-ambient {
+  position: absolute;
+  inset: -6%;
+  overflow: hidden;
+  opacity: 0;
+  filter: blur(28px);
+  transform: scale(1.08);
+  pointer-events: none;
+  transition: opacity 420ms ease;
+}
+
+.xgal-detail.is-in .xgal-ambient { opacity: 0.9; }
+.xgal-detail.is-exit .xgal-ambient { opacity: 0; transition-duration: 160ms; }
+
+.xgal-ambient img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.xgal-stage {
+  position: absolute;
+  top: var(--xgal-inset-y);
+  right: var(--xgal-inset-x);
+  bottom: var(--xgal-inset-y);
+  left: var(--xgal-inset-x);
+  overflow: hidden;
+  border-radius: var(--xgal-radius);
+  background: #102018;
+  opacity: 0;
+  transform: scale(1.035);
+  transition: opacity 360ms ease, transform 520ms var(--xgal-ease);
+  touch-action: pan-y;
+}
+
+.xgal-detail.is-in .xgal-stage { opacity: 1; transform: none; }
+.xgal-detail.is-exit .xgal-stage { transition: none; }
+
+.xgal-shift { position: absolute; inset: 0; }
+
+.xgal-shift.nudge-next { animation: xgal-nudge-next 340ms var(--xgal-ease); }
+.xgal-shift.nudge-prev { animation: xgal-nudge-prev 340ms var(--xgal-ease); }
+
+@keyframes xgal-nudge-next { 40% { transform: translateX(-16px); } }
+@keyframes xgal-nudge-prev { 40% { transform: translateX(16px); } }
+
+/* The film strip: --i is the index on show, and the translate lines the
+   current picture up between the two peeking edges. */
+.xgal-reel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  gap: var(--xgal-gap);
+  width: 100%;
+  height: 100%;
+  transform: translateX(calc(var(--xgal-peek) - var(--i) * (100% - 2 * var(--xgal-peek) + var(--xgal-gap))));
+  transition: transform var(--xgal-travel) var(--xgal-slide);
+  will-change: transform;
+}
+
+.xgal-slide {
+  position: relative;
+  flex: 0 0 calc(100% - 2 * var(--xgal-peek));
+  height: 100%;
+  overflow: hidden;
+  border-radius: 0.8rem;
+  background: var(--bg-surface);
+}
+
+.xgal-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: #05070c;
+  opacity: 0.56;
+  pointer-events: none;
+  transition: opacity 220ms ease;
+}
+
+.xgal-slide.is-bright .xgal-shade { opacity: 0; transition: none; }
+
+.xgal-slide .xgal-art img { opacity: 1; transform: none; transition: none; }
+
+/* A portrait photo is shown whole on a blurred copy of itself; the shelf
+   card and the closing flight still crop it to fill. */
+.xgal-art__back {
+  position: absolute;
+  inset: -8%;
+  width: 116%;
+  height: 116%;
+  object-fit: cover;
+  filter: blur(28px) brightness(0.92);
+  opacity: 1;
+}
+
+/* The sharp photo has to be positioned too: an absolutely positioned
+   backdrop otherwise paints over a static image and hides it. */
+.xgal-slide .xgal-art.is-portrait img:not(.xgal-art__back) {
+  position: relative;
+  z-index: 1;
+  object-fit: contain;
+}
+
+/* Leaving: the strip collapses to the one picture on show, and the stage
+   (flown by gallery.js) carries it back to its card. The strip's slide
+   transition is switched off here — left on, any picture but the first
+   slid in from the side during the flight and the window was empty. */
+.xgal-layer:not(.is-lite) .xgal-detail.is-exit .xgal-reel {
+  transform: none;
+  transition: none;
+  gap: 0;
+  animation: xgal-exit-fade 580ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.xgal-layer:not(.is-lite) .xgal-detail.is-exit .xgal-slide:not(.is-bright) { display: none; }
+
+.xgal-layer:not(.is-lite) .xgal-detail.is-exit .xgal-slide.is-bright {
+  flex: 1 0 100%;
+  width: 100%;
+  border-radius: 0;
+}
+
+.xgal-layer:not(.is-lite) .xgal-detail.is-exit .xgal-slide.is-bright .xgal-art.is-portrait img:not(.xgal-art__back) {
+  object-fit: cover;
+}
+
+.xgal-layer:not(.is-lite) .xgal-detail.is-exit .xgal-art__back { display: none; }
+
+@keyframes xgal-exit-fade {
+  0% { opacity: 1; }
+  74% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.xgal-slide .xgal-art { position: absolute; inset: 0; }
+
+/* Buttons over the viewer */
+
+.xgal-nav,
+.xgal-back {
+  transition: transform 150ms ease, opacity 200ms ease, background 180ms ease;
+}
+
+.xgal-nav:active,
+.xgal-back:active { transform: scale(0.96); }
+
+.xgal-nav {
+  position: absolute;
+  top: 42%;
+  z-index: 5;
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  background: var(--bg-surface);
+  color: var(--forest-text);
+  box-shadow: 0 8px 18px rgba(21, 56, 22, 0.18);
+  opacity: 0;
+}
+
+.xgal-detail.is-in .xgal-nav { opacity: 1; transition-delay: 180ms; }
+.xgal-detail.is-exit .xgal-nav { opacity: 0; transition-delay: 0ms; }
+.xgal-nav.is-dim,
+.xgal-detail.is-in .xgal-nav.is-dim { opacity: 0.32; }
+.xgal-nav.prev { left: 0.85rem; }
+.xgal-nav.next { right: 0.85rem; }
+
+.xgal-back {
+  position: absolute;
+  z-index: 6;
+  top: calc(var(--xgal-inset-y) + 1rem);
+  left: calc(var(--xgal-inset-x) + 1rem);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  height: 44px;
+  padding: 0 0.9rem 0 0.7rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  background: var(--bg-surface);
+  color: var(--forest-text);
+  box-shadow: 0 8px 18px rgba(21, 56, 22, 0.18);
+  font-weight: 700;
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+.xgal-detail.is-in .xgal-back {
+  opacity: 1;
+  transform: none;
+  transition: opacity 240ms ease 160ms, transform 320ms var(--xgal-ease) 160ms, background 180ms ease;
+}
+
+.xgal-detail.is-exit .xgal-back {
+  opacity: 0;
+  transform: translateY(-6px);
+  transition-delay: 0ms;
+}
+
+.xgal-nav svg,
+.xgal-back svg { width: 1.15rem; height: 1.15rem; }
+
+/* The words over the picture. They arrive one block at a time, each from
+   below and out of a blur, and leave all at once. */
+
+.xgal-chrome {
+  position: absolute;
+  top: var(--xgal-inset-y);
+  right: var(--xgal-inset-x);
+  bottom: var(--xgal-inset-y);
+  left: var(--xgal-inset-x);
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.4rem;
+  padding: 4vh calc(var(--xgal-peek) + 2.4vw) 1.35rem;
+  border-radius: var(--xgal-radius);
+  pointer-events: none;
+  color: var(--xgal-paper);
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    transparent 56%,
+    rgba(8, 16, 12, 0.22) 78%,
+    rgba(8, 16, 12, 0.62) 100%
+  );
+}
+
+.xgal-chrome.is-ink {
+  color: var(--xgal-ink);
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    transparent 64%,
+    rgba(251, 246, 229, 0.2) 86%,
+    rgba(251, 246, 229, 0.5) 100%
+  );
+}
+
+.xgal-chrome .xgal-counter {
+  color: color-mix(in srgb, currentColor 80%, transparent);
+}
+
+.xgal-chrome .xgal-title,
+.xgal-chrome .xgal-logline { color: inherit; }
+
+.xgal-chrome.is-paper .xgal-title,
+.xgal-chrome.is-paper .xgal-logline { text-shadow: 0 1px 2px rgba(8, 14, 12, 0.55); }
+
+.xgal-chrome.is-ink .xgal-title,
+.xgal-chrome.is-ink .xgal-logline {
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.72), 0 8px 18px rgba(251, 246, 229, 0.45);
+}
+
+.xgal-chrome > * {
+  opacity: 0;
+  filter: blur(8px);
+  transform: translateY(22px);
+  transition: none;
+}
+
+.xgal-chrome.is-on > * {
+  opacity: 1;
+  filter: none;
+  transform: none;
+  transition: opacity 1100ms ease, transform 1100ms var(--xgal-ease), filter 1100ms ease;
+}
+
+.xgal-chrome.is-on > *:nth-child(1) { transition-delay: 40ms; }
+.xgal-chrome.is-on > *:nth-child(2) { transition-delay: 180ms; }
+.xgal-chrome.is-on > *:nth-child(3) { transition-delay: 320ms; }
+.xgal-chrome.is-on > *:nth-child(4) { transition-delay: 460ms; }
+
+.xgal-badge-row,
+.xgal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.xgal-badge,
+.xgal-counter {
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.xgal-badge {
+  padding: 0.28rem 0.7rem;
+  background: var(--color-primary);
+  color: #fff;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* A photo's own title is a few words, so it takes the prototype's large
+   hero size back, in the site's serif. */
+.xgal-title {
+  max-width: 52rem;
+  margin: 0.15rem 0 0;
+  font-family: var(--font-serif);
+  font-size: clamp(2.1rem, 4.2vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+/* Two lines on a desktop: the measure is set so ~140 characters wrap once. */
+.xgal-logline {
+  max-width: 42rem;
+  margin: 0.2rem 0 0.35rem;
+  font-size: 1.06rem;
+  line-height: 1.5;
+}
+
+.xgal-actions { gap: 0.6rem; margin-top: 0.2rem; pointer-events: auto; }
+
+/* "Original": the photo at full resolution, on R2. A quieter outline pill
+   beside the green "Project details", drawn in the text's own colour so it
+   reads on a dark or a light photo alike. */
+.xgal-orig {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border: 1.5px solid color-mix(in srgb, currentColor 70%, transparent);
+  border-radius: 9999px;
+  color: inherit;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: background-color 200ms ease, border-color 200ms ease;
+}
+
+.xgal-orig:hover,
+.xgal-orig:focus-visible {
+  color: inherit;
+  border-color: currentColor;
+  background: color-mix(in srgb, currentColor 14%, transparent);
+}
+
+.xgal-orig svg { width: 15px; height: 15px; }
+
+.xgal-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+/* ── Phone and reduced motion: the lighter viewer ───────────────────── */
+
+.xgal-layer.is-lite .xgal-stage { transform: none; transition: opacity 300ms ease; }
+.xgal-layer.is-lite .xgal-detail.is-exit .xgal-stage { opacity: 0; transition: opacity 220ms ease; }
+.xgal-layer.is-lite .xgal-ambient { display: none; }
+.xgal-layer.is-lite .xgal-detail.is-exit .xgal-chrome > * { opacity: 0; }
+
+.xgal-layer.is-lite .xgal-chrome > * { filter: none; transform: none; }
+.xgal-layer.is-lite .xgal-chrome.is-on > * {
+  transition: opacity 300ms ease;
+  transition-delay: 0ms;
+}
+
+@media (max-width: 760px) {
+  .xgal { --xgal-card-w: 232px; }
+
+  .xgal-label__name { font-size: 20px; }
+
+  .xgal-layer {
+    --xgal-inset-y: 0px;
+    --xgal-inset-x: 0px;
+    --xgal-peek: 9%;
+    --xgal-gap: 0.45rem;
+  }
+
+  .xgal-title { font-size: 2rem; }
+  .xgal-chrome { padding: 4.4rem calc(var(--xgal-peek) + 0.85rem) 1rem; }
+  .xgal-stage,
+  .xgal-chrome { border-radius: 0; }
+  .xgal-back { top: calc(0.75rem + env(safe-area-inset-top)); left: 0.75rem; }
+  .xgal-logline { max-width: none; font-size: 0.95rem; }
+}
+
+/* On a touch screen a finger swipes the rows and the viewer, so neither gets
+   arrow buttons. */
+@media (max-width: 760px), (hover: none) and (pointer: coarse) {
+  .xgal-rowbtn,
+  .xgal-nav { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xgal-row { opacity: 1; animation: none !important; }
+
+  .xgal-reel,
+  .xgal-shade,
+  .xgal-stage,
+  .xgal-ambient,
+  .xgal-chrome > *,
+  .xgal-shelf,
+  .xgal-scrim,
+  .xgal-card,
+  .xgal-art img {
+    transition: none !important;
+    animation: none !important;
+  }
+}

@@ -38,6 +38,7 @@
 <link rel="stylesheet" href="_ds/wur-design-system-fcf266a9-50a7-420d-bee6-00e313ecfd49/styles.css">
 <script src="_ds/wur-design-system-fcf266a9-50a7-420d-bee6-00e313ecfd49/_ds_bundle.js"></script>
 <link rel="stylesheet" href="motion.css">
+<link rel="stylesheet" href="gallery.css">
 <style>
   /* The 12px --radius-pill override is gone, so the navbar CTA and the
      modal button are real pills again — 9999px, as measured. Card radius
@@ -709,10 +710,14 @@
        the middle of its share while "Publications" filled its own, so the
        words sat at four different distances from each other. Sized to the
        label with the same padding each, and spread by the row, every gap
-       between two words is the same and the line reads as one rhythm. */
+       between two words is the same and the line reads as one rhythm.
+       Five words now (Gallery is the fifth): at a fixed 12px and 13.5px the
+       row came out 3px wider than a 390px screen and "Gallery" dropped to a
+       second line, so both ease off on narrower screens and are full size
+       from about 390px up. */
     body nav a{flex:0 1 auto;min-width:0;justify-content:center;position:relative;z-index:1;
-      padding:0 12px !important;
-      font-size:13.5px !important;font-weight:600;white-space:nowrap;
+      padding:0 clamp(6px, 2.4vw, 12px) !important;
+      font-size:clamp(11.5px, 3.45vw, 13.5px) !important;font-weight:600;white-space:nowrap;
       border-radius:9999px;-webkit-tap-highlight-color:transparent;
       transition:color 220ms var(--wur-ease)}
     body nav a[aria-current="page"]{color:#FFFFFF !important}
@@ -837,6 +842,7 @@
   }
 </style>
 <script src="./motion.js"></script>
+<script src="./gallery.js"></script>
 </helmet>
 
 <div class="wur-page" style="background:var(--bg-page)">
@@ -1107,6 +1113,19 @@
 </div>
 </sc-if>
 
+<sc-if value="{{ isGallery }}" hint-placeholder-val="{{ false }}">
+<div>
+  <section style="padding:calc(40px * var(--space-y)) var(--pad-x) calc(26px * var(--space-y))">
+    <a href="#home" class="wur-arrowlink wur-arrowlink--back"><span class="wur-arrow" aria-hidden="true">←</span> Home</a>
+    <h1 style="font-family:var(--font-serif);font-size:42px;font-weight:700;color:var(--pine-green);margin:16px 0 8px">Gallery</h1>
+  </section>
+  <section style="padding:0 var(--pad-x) calc(72px * var(--space-y))">
+    <!-- gallery.js fills this in; the photos are listed at the top of that file. -->
+    <div data-xgal></div>
+  </section>
+</div>
+</sc-if>
+
 <x-import component-from-global-scope="WURDesignSystem_fcf266.Footer" from="" brand="Xiaojun Ge" columns="{{ footerColumns }}" hint-size="100%,240px"></x-import>
 
 <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
@@ -1371,8 +1390,10 @@ const SKILL_GROUPS = [
   ]}
 ];
 
-const VIEWS = ['home','publications','research','skills'];
+const VIEWS = ['home','publications','research','skills','gallery'];
 const PROJECTS = ONGOING.concat(FINISHED);
+// The gallery (gallery.js) reads its project text from here.
+window.XG_PROJECTS = PROJECTS;
 
 // Every card reads the same two slots: the capsule, then a plain tail.
 const tail = (...parts) => parts.filter(Boolean).join(' \u00B7 ');
@@ -1571,12 +1592,14 @@ class Component extends DCLogic {
         {label:'Home', href:'#home'},
         {label:'Publications', href:'#publications'},
         {label:'Research', href:'#research'},
-        {label:'Skills', href:'#skills'}
+        {label:'Skills', href:'#skills'},
+        {label:'Gallery', href:'#gallery'}
       ],
       isHome: view === 'home',
       isPublications: view === 'publications',
       isResearch: view === 'research',
       isSkills: view === 'skills',
+      isGallery: view === 'gallery',
       cvHref: this.props.cvHref ?? './cv/Xiaojun_Ge_CV.pdf',
       showEducation: showEducation,
       education: EDUCATION,
