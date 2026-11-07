@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="./favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="stylesheet" href="./ai-guide.css">
+<script src="./ai-guide.js" defer></script>
 <script>
 /* Page scale, set before anything paints so the page never renders at one
    density and then jumps to another. The stepper in the bottom-right
@@ -1663,5 +1665,27 @@ class Component extends DCLogic {
 }
 
 </script>
+<!-- Outside x-dc: navigation must not reset the pet or an in-flight question. -->
+<aside id="ai-guide" class="pet-guide" aria-label="Zion AI guide" data-pet-assets="./pet/web/" hidden>
+  <section id="ai-guide-bubble" class="pet-bubble" aria-label="Zion's answer" hidden>
+    <div class="pet-bubble-top"><span>Zion <span class="pet-ai-label">AI</span></span><button id="ai-guide-close" type="button" aria-label="Close answer">×</button></div>
+    <p id="ai-guide-status" class="pet-status" role="status"></p>
+    <div id="ai-guide-result" hidden>
+      <p id="ai-guide-answer"></p>
+      <details id="ai-guide-sources" hidden><summary>Sources</summary><ul></ul></details>
+      <p class="pet-disclaimer">AI-generated · Check the sources</p>
+    </div>
+  </section>
+  <button id="ai-guide-pet" class="pet-handle" type="button" aria-label="Zion: drag to move, or use arrow keys when focused" title="Drag Zion to move">
+    <img class="pet-artwork" width="96" height="104" alt="" draggable="false" hidden>
+    <span class="pet-fallback">Zion</span>
+  </button>
+  <form id="ai-guide-form" class="pet-input-bar">
+    <label for="ai-guide-question" class="pet-sr-only">Ask about Xiaojun's skills and work. Questions are processed by Cloudflare.</label>
+    <input id="ai-guide-question" name="question" type="text" maxlength="2000" required autocomplete="off" placeholder="Ask about Xiaojun…" aria-describedby="ai-guide-privacy">
+    <button id="ai-guide-submit" type="submit" aria-label="Ask Zion"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  </form>
+  <span id="ai-guide-privacy" class="pet-input-note">Zion · AI answers from this website · Cloudflare</span>
+</aside>
 </body>
 </html>

@@ -2,3 +2,19 @@
 # uploads everything in the assets directory (./), and the git history
 # alone grew past its 25 MiB per-file limit.
 .git
+.github
+.claude
+.wrangler
+node_modules
+worker
+tests
+docs
+package.json
+package-lock.json
+wrangler.toml
+.gitignore
+.env
+.env.*
+.dev.vars
+.dev.vars.*
+*.dc.html
