@@ -1,0 +1,52 @@
+.pet-guide {
+  position: fixed; right: 20px; bottom: 76px; z-index: 95;
+  width: min(372px, calc(100vw - 24px)); height: 118px; box-sizing: border-box;
+  font: 14px/1.5 var(--font-sans, system-ui, sans-serif); color: #153816;
+  zoom: var(--page-zoom-inv, 1); pointer-events: none;
+}
+.pet-guide[hidden], .pet-guide [hidden] { display: none !important; }
+.pet-guide button, .pet-guide input { font: inherit; }
+.pet-guide button { -webkit-tap-highlight-color: transparent; }
+.pet-handle {
+  position: absolute; bottom: 18px; left: 0; width: 96px; height: 104px;
+  padding: 0; border: 0; background: none; cursor: grab; touch-action: none;
+  user-select: none; pointer-events: auto; z-index: 2;
+}
+.pet-guide[data-dragging] .pet-handle { cursor: grabbing; }
+.pet-artwork { display: block; width: 96px; height: 104px; object-fit: contain; filter: drop-shadow(0 3px 2px #15381618); pointer-events: none; }
+.pet-fallback { display: grid; place-items: center; margin: 20px auto; width: 60px; height: 60px; border: 1px dashed #72846b; border-radius: 50%; background: #fffdf6; color: #153816; }
+.pet-input-bar {
+  position: absolute; left: 82px; right: 0; bottom: 22px; display: flex; gap: 3px;
+  align-items: center; padding: 4px 5px 4px 13px; border: 1px solid #bccbb3;
+  border-radius: 25px; background: #fffdf7; box-shadow: 0 3px 18px #15381619; pointer-events: auto;
+}
+.pet-input-bar input { width: 100%; min-width: 0; height: 36px; padding: 0; border: 0; outline: 0; color: #153816; background: transparent; font-size: 14px; }
+.pet-input-bar input::placeholder { color: #65765f; }
+.pet-input-bar:focus-within { border-color: #16731d; box-shadow: 0 0 0 2px #16731d22; }
+.pet-input-bar button { display: grid; place-items: center; flex: 0 0 36px; width: 36px; height: 36px; border: 0; border-radius: 50%; background: #153816; color: #fffdf7; cursor: pointer; }
+.pet-input-bar button:disabled { opacity: .5; cursor: wait; }
+.pet-input-note { position: absolute; right: 8px; bottom: 0; color: #475c40; font-size: 10px; padding: 1px 5px; border-radius: 6px; background: #fffdf6dd; }
+.pet-bubble {
+  box-sizing: border-box; position: absolute; right: 0; bottom: calc(100% + 6px);
+  width: min(340px, 100%); max-height: var(--pet-bubble-max-height, 310px);
+  overflow-y: auto; overscroll-behavior: contain; padding: 14px 17px 15px;
+  border: 1px solid #d6dece; border-radius: 18px 18px 18px 5px; background: #fffdf7;
+  box-shadow: 0 6px 30px #15381622; pointer-events: auto; overflow-wrap: anywhere;
+}
+.pet-guide[data-bubble-below] .pet-bubble { top: calc(100% + 6px); bottom: auto; border-radius: 5px 18px 18px 18px; }
+.pet-bubble-top { display: flex; align-items: center; justify-content: space-between; color: #526b47; font-size: 12px; }
+.pet-ai-label { margin-left: 5px; padding: 1px 5px; border: 1px solid #d6dece; border-radius: 5px; font-size: 9px; letter-spacing: .05em; }
+.pet-bubble-top button { display: grid; place-items: center; min-width: 32px; min-height: 32px; padding: 0; margin: -6px -7px -3px 0; border: 0; border-radius: 50%; background: transparent; color: #526b47; font-size: 23px; cursor: pointer; }
+.pet-status { margin: 8px 0 0; font-size: 14px; }
+#ai-guide-answer { margin: 9px 0 10px; font-size: 15px; line-height: 1.65; white-space: pre-wrap; }
+#ai-guide-sources { font-size: 12px; color: #526b47; }
+#ai-guide-sources summary { cursor: pointer; }
+#ai-guide-sources ul { padding-left: 17px; margin: 7px 0; }
+#ai-guide-sources a { color: #17651b; text-underline-offset: 3px; }
+.pet-disclaimer { margin: 10px 0 0; color: #65765f; font-size: 10px; }
+.pet-guide button:focus-visible { outline: 2px solid #008a00; outline-offset: 3px; }
+.pet-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+@media (max-width: 760px) {
+  .pet-guide { right: 12px; bottom: max(16px, env(safe-area-inset-bottom)); }
+  .pet-input-bar input { font-size: 16px; }
+}

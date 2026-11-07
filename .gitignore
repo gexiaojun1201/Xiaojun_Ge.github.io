@@ -7,3 +7,9 @@ Xiaojun Ge Homepage v3.dc.html
 Xiaojun Ge Homepage v4.dc.html
 Xiaojun Ge Homepage v5.dc.html
 .claude/
+node_modules/
+.wrangler/
+.env
+.env.*
+.dev.vars
+.dev.vars.*
